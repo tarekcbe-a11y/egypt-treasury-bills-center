@@ -121,7 +121,7 @@
             text-align: right;
             box-sizing: border-box;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 16px;
         }
 
         .calc-btn {
@@ -166,7 +166,6 @@
             word-break: break-all;
         }
 
-        /* مستطيل القيمة الحالية بنفس حجم مستطيلات النتائج */
         .pv-card {
             background: #0f172a;
             padding: 8px;
@@ -197,7 +196,6 @@
             margin-top: 8px;
         }
 
-        /* زر إدخال جديد أسفل النتائج النهائية */
         .new-btn {
             width: 100%;
             padding: 9px;
@@ -254,7 +252,6 @@
         <select id="days"></select>
     </div>
 
-    <!-- القيمة الحالية للجنيه بحجم مستطيلات النتائج -->
     <div class="pv-card">
         <span id="lblPV">القيمة الحالية للجنيه</span>
         <h4 id="resPV">0.0000 جنيه</h4>
@@ -299,7 +296,6 @@
         </span>
     </div>
 
-    <!-- إدخال جديد في مكانه الصحيح -->
     <button class="new-btn" id="newBtn" onclick="newEntry()">إدخال جديد</button>
 
     <div class="footer">
@@ -382,9 +378,11 @@
             ? 'المبلغ المسترد نهاية المدة:'
             : 'Amount at Maturity:';
 
+        const annualYield = $('resAnnualYield').innerText;
+
         $('lblAnnualYield').innerHTML = isAr
-            ? 'نسبة العائد السنوي: <b id="resAnnualYield">0</b>%'
-            : 'Net Annual Yield: <b id="resAnnualYield">0</b>%';
+            ? 'نسبة العائد السنوي: <b id="resAnnualYield">' + annualYield + '</b>%'
+            : 'Net Annual Yield: <b id="resAnnualYield">' + annualYield + '</b>%';
 
         $('nominal').placeholder = isAr ? 'القيمة' : 'Nominal Value';
         $('rate').placeholder = isAr ? 'سعر العائد السنوي' : 'Annual Yield Rate';
@@ -439,25 +437,12 @@
             return;
         }
 
-        // القيمة الحالية للجنيه
         const pvFactor = getPVFactor();
-
-        // سعر الشراء
         const price = P * pvFactor;
-
-        // الربح الإجمالي
         const profit = P - price;
-
-        // الضريبة
         const tax = profit * 0.20;
-
-        // صافي الربح
         const netProfit = profit - tax;
-
-        // المبلغ المسترد
         const finalAmount = price + netProfit;
-
-        // العائد السنوي الصافي
         const annualYield = (netProfit / price) * (365 / D) * 100;
 
         $('resPV').innerText =
@@ -503,3 +488,4 @@
 
 </body>
 </html>
+

@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffd700">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="حاسبة أذون الخزانة المصرية لحساب سعر الشراء والضريبة وصافي الربح والقيمة الحالية للجنيه.">
+    <title>حاسبة أذون الخزانة - جروب عملاء البنوك المصرية</title>
+
+    <script>
+        function normalizeInput(value) {
+            if (!value) return 0;
+
+            const arabicToEnglish = {
+                '٠':'0','١':'1','٢':'2','٣':'3','٤':'4',
+                '٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'
+            };
+
+            let str = value.toString().replace(/[٠-٩]/g, d => arabicToEnglish[d]);
+            return parseFloat(str.replace(/[^0-9.]/g, '')) || 0;
+        }
+    </script>
+
+    <style>
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 8px;
+            user-select: none;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: auto;
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 14px;
+            border: 2px solid #ffd700;
+            box-sizing: border-box;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .lang-btn {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        img { width: 40px; }
+
+        .sub-title {
+            text-align: center;
+            color: #fff;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .title {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .market-btns {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .market-btn {
+            flex: 1;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #ffd700;
+            background: #0f172a;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .market-btn.active {
+            background: #ffd700;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .field { margin-bottom: 6px; }
+
+        .field label {
+            display: block;
+            font-size: 10px;
+            color: #cbd5e1;
+            margin-bottom: 2px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 3px 0;
+            border-radius: 6px;
+            background: #0f172a;
+            color: white;
+            border: 1px solid #ffd700;
+            text-align: right;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .calc-btn {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            background: #ffd700;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .card {
+            background: #0f172a;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ffd700;
+            text-align: center;
+        }
+
+        .card span {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 3px;
+            color: #cbd5e1;
+        }
+
+        .card h4 {
+            margin: 0;
+            color: #ffd700;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        /* مستطيل القيمة الحالية بنفس حجم مستطيلات النتائج */
+        .pv-card {
+            background: #0f172a;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ffd700;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        .pv-card span {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 3px;
+            color: #cbd5e1;
+        }
+
+        .pv-card h4 {
+            margin: 0;
+            color: #ffd700;
+            font-size: 12px;
+        }
+
+        .total-box {
+            border: 2px solid #ff4d4d;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* زر إدخال جديد أسفل النتائج النهائية */
+        .new-btn {
+            width: 100%;
+            padding: 9px;
+            margin-top: 7px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 11px;
+            color: #ffd700;
+            border-top: 1px solid #ffd700;
+            padding-top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-row">
+        <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div class="sub-title" id="subTitle">حاسبة أذون الخزانة</div>
+    <div class="title" id="groupTitle">جروب عملاء البنوك المصرية</div>
+
+    <div class="market-btns">
+        <button class="market-btn active" id="btn1" onclick="setMarket('primary')">السوق الأولي</button>
+        <button class="market-btn" id="btn2" onclick="setMarket('secondary')">السوق الثانوي</button>
+    </div>
+
+    <div class="field">
+        <label id="lblNominal">القيمة الاسمية</label>
+        <input type="text" id="nominal" placeholder="القيمة" inputmode="decimal">
+    </div>
+
+    <div class="field">
+        <label id="lblRate">سعر العائد (%)</label>
+        <input type="text" id="rate" placeholder="سعر العائد السنوي" inputmode="decimal">
+    </div>
+
+    <div class="field">
+        <label id="lblDays">مدة الأذن</label>
+        <select id="days"></select>
+    </div>
+
+    <!-- القيمة الحالية للجنيه بحجم مستطيلات النتائج -->
+    <div class="pv-card">
+        <span id="lblPV">القيمة الحالية للجنيه</span>
+        <h4 id="resPV">0.0000 جنيه</h4>
+    </div>
+
+    <button class="calc-btn" id="calcBtn" onclick="calc()">احسب الآن</button>
+
+    <div class="results">
+
+        <div class="card">
+            <span id="lblPrice">سعر الشراء</span>
+            <h4 id="resPrice">0</h4>
+        </div>
+
+        <div class="card">
+            <span id="lblReturn">مبلغ راجع يوم الإصدار</span>
+            <h4 id="resReturn">0</h4>
+        </div>
+
+        <div class="card">
+            <span id="lblTax">الضريبة (20%)</span>
+            <h4 id="resTax">0</h4>
+        </div>
+
+        <div class="card">
+            <span id="lblNet">الربح الصافي</span>
+            <h4 id="resNet">0</h4>
+        </div>
+
+    </div>
+
+    <div class="total-box">
+        <span id="lblTotal" style="font-size:12px">
+            المبلغ المسترد نهاية المدة:
+        </span>
+
+        <h4 id="resTotal" style="margin:3px 0 0 0; font-size:13px;">0</h4>
+
+        <span id="lblAnnualYield" style="font-size:11px; margin-top:4px; color:#ffd700; display:block;">
+            نسبة العائد السنوي:
+            <b id="resAnnualYield">0</b>%
+        </span>
+    </div>
+
+    <!-- إدخال جديد في مكانه الصحيح -->
+    <button class="new-btn" id="newBtn" onclick="newEntry()">إدخال جديد</button>
+
+    <div class="footer">
+        🛡️ جروب عملاء البنوك المصرية<br>
+        Developed by Tarek Metwally
+    </div>
+
+</div>
+
+<script>
+    let isAr = true;
+    let currentType = 'primary';
+
+    const $ = id => document.getElementById(id);
+
+    function formatNumber(value, decimals = 2) {
+        return value.toLocaleString('en-US', {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals
+        });
+    }
+
+    function getPVFactor() {
+        const R = normalizeInput($('rate').value) / 100;
+        const D = parseInt($('days').value) || 0;
+
+        if (D <= 0 || R < 0) return 0;
+
+        return 1 / (1 + (R * D / 365));
+    }
+
+    function updatePresentValue() {
+        const factor = getPVFactor();
+
+        $('resPV').innerText = factor > 0
+            ? formatNumber(factor, 4) + (isAr ? ' جنيه' : ' EGP')
+            : (isAr ? '0.0000 جنيه' : '0.0000 EGP');
+    }
+
+    function toggleLang() {
+        isAr = !isAr;
+
+        document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+        document.documentElement.lang = isAr ? 'ar' : 'en';
+
+        $('langBtn').innerText = isAr ? 'English' : 'العربية';
+
+        $('subTitle').innerText = isAr
+            ? 'حاسبة أذون الخزانة'
+            : 'T-Bills Calculator';
+
+        $('groupTitle').innerText = isAr
+            ? 'جروب عملاء البنوك المصرية'
+            : 'Egyptian Bank Clients Group';
+
+        $('btn1').innerText = isAr ? 'السوق الأولي' : 'Primary Market';
+        $('btn2').innerText = isAr ? 'السوق الثانوي' : 'Secondary Market';
+
+        $('lblNominal').innerText = isAr ? 'القيمة الاسمية' : 'Nominal Value';
+        $('lblRate').innerText = isAr ? 'سعر العائد (%)' : 'Yield Rate (%)';
+        $('lblDays').innerText = isAr ? 'مدة الأذن' : 'Tenor (Days)';
+
+        $('lblPV').innerText = isAr
+            ? 'القيمة الحالية للجنيه'
+            : 'Present Value of One Pound';
+
+        $('calcBtn').innerText = isAr ? 'احسب الآن' : 'Calculate Now';
+        $('newBtn').innerText = isAr ? 'إدخال جديد' : 'New Entry';
+
+        $('lblPrice').innerText = isAr ? 'سعر الشراء' : 'Purchase Price';
+
+        $('lblReturn').innerText = isAr
+            ? 'مبلغ راجع يوم الإصدار'
+            : 'Gross Profit';
+
+        $('lblTax').innerText = isAr ? 'الضريبة (20%)' : 'Tax (20%)';
+        $('lblNet').innerText = isAr ? 'الربح الصافي' : 'Net Profit';
+
+        $('lblTotal').innerText = isAr
+            ? 'المبلغ المسترد نهاية المدة:'
+            : 'Amount at Maturity:';
+
+        $('lblAnnualYield').innerHTML = isAr
+            ? 'نسبة العائد السنوي: <b id="resAnnualYield">0</b>%'
+            : 'Net Annual Yield: <b id="resAnnualYield">0</b>%';
+
+        $('nominal').placeholder = isAr ? 'القيمة' : 'Nominal Value';
+        $('rate').placeholder = isAr ? 'سعر العائد السنوي' : 'Annual Yield Rate';
+
+        setMarket(currentType);
+        updatePresentValue();
+    }
+
+    function setMarket(type) {
+        currentType = type;
+
+        $('btn1').className = type === 'primary'
+            ? 'market-btn active' : 'market-btn';
+
+        $('btn2').className = type === 'secondary'
+            ? 'market-btn active' : 'market-btn';
+
+        const select = $('days');
+        const previousValue = parseInt(select.value);
+
+        select.innerHTML = '';
+
+        const unit = isAr ? ' يوم' : ' Days';
+
+        const values = type === 'primary'
+            ? [91, 182, 273, 364]
+            : Array.from({length: 364}, (_, i) => i + 1);
+
+        values.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.text = d + unit;
+            select.add(opt);
+        });
+
+        if (values.includes(previousValue)) {
+            select.value = previousValue;
+        }
+
+        updatePresentValue();
+    }
+
+    function calc() {
+        const P = normalizeInput($('nominal').value);
+        const R = normalizeInput($('rate').value) / 100;
+        const D = parseInt($('days').value) || 0;
+
+        if (P <= 0 || R <= 0 || D <= 0 || R > 1) {
+            alert(isAr
+                ? 'يرجى إدخال القيمة الاسمية ومعدل العائد والمدة بصورة صحيحة.'
+                : 'Please enter valid nominal value, yield rate and tenor.');
+            return;
+        }
+
+        // القيمة الحالية للجنيه
+        const pvFactor = getPVFactor();
+
+        // سعر الشراء
+        const price = P * pvFactor;
+
+        // الربح الإجمالي
+        const profit = P - price;
+
+        // الضريبة
+        const tax = profit * 0.20;
+
+        // صافي الربح
+        const netProfit = profit - tax;
+
+        // المبلغ المسترد
+        const finalAmount = price + netProfit;
+
+        // العائد السنوي الصافي
+        const annualYield = (netProfit / price) * (365 / D) * 100;
+
+        $('resPV').innerText =
+            formatNumber(pvFactor, 4) + (isAr ? ' جنيه' : ' EGP');
+
+        $('resPrice').innerText = formatNumber(price);
+        $('resReturn').innerText = formatNumber(profit);
+        $('resTax').innerText = formatNumber(tax);
+        $('resNet').innerText = formatNumber(netProfit);
+        $('resTotal').innerText = formatNumber(finalAmount);
+        $('resAnnualYield').innerText = annualYield.toFixed(2);
+    }
+
+    function newEntry() {
+        $('nominal').value = '';
+        $('rate').value = '';
+
+        $('resPrice').innerText = '0';
+        $('resReturn').innerText = '0';
+        $('resTax').innerText = '0';
+        $('resNet').innerText = '0';
+        $('resTotal').innerText = '0';
+        $('resAnnualYield').innerText = '0';
+
+        updatePresentValue();
+
+        $('nominal').focus();
+    }
+
+    $('nominal').addEventListener('input', function() {
+        let value = normalizeInput(this.value);
+
+        if (value > 0) {
+            this.value = Math.floor(value).toLocaleString('en-US');
+        }
+    });
+
+    $('rate').addEventListener('input', updatePresentValue);
+    $('days').addEventListener('change', updatePresentValue);
+
+    window.onload = () => setMarket('primary');
+</script>
+
+</body>
+</html>

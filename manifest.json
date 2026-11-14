@@ -1,0 +1,28 @@
+
+{
+  "name": "حاسبة أذون الخزانة - جروب عملاء البنوك المصرية",
+  "short_name": "حاسبة الأذون",
+  "description": "حاسبة أذون الخزانة المصرية لحساب سعر الشراء والضريبة وصافي الربح والعائد السنوي.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#ffd700",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

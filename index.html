@@ -210,13 +210,45 @@
             font-size: 13px;
         }
 
+        /* روابط الصفحات */
+        .page-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 7px;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .page-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .page-link:hover {
+            color: #ffd700;
+        }
+
+        .green-dot {
+            width: 7px;
+            height: 7px;
+            flex: 0 0 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+        }
+
         .footer {
             text-align: center;
-            margin-top: 8px;
+            margin-top: 7px;
             font-size: 11px;
             color: #ffd700;
-            border-top: 1px solid #ffd700;
-            padding-top: 6px;
         }
     </style>
 </head>
@@ -299,8 +331,19 @@
 
     <button class="new-btn" id="newBtn" onclick="newEntry()">إدخال جديد</button>
 
+    <div class="page-links">
+        <a class="page-link" id="privacyLink" href="privacy.html">
+            <span id="privacyLinkText">سياسة الخصوصية</span>
+            <span class="green-dot" aria-hidden="true"></span>
+        </a>
+
+        <a class="page-link" id="guideLink" href="guide.html">
+            <span id="guideLinkText">دليل أذون الخزانة</span>
+            <span class="green-dot" aria-hidden="true"></span>
+        </a>
+    </div>
+
     <div class="footer">
-        🛡️ جروب عملاء البنوك المصرية<br>
         Developed by Tarek Metwally
     </div>
 
@@ -385,6 +428,14 @@
 
         $('nominal').placeholder = isAr ? 'القيمة' : 'Nominal Value';
         $('rate').placeholder = isAr ? 'سعر العائد السنوي' : 'Annual Yield Rate';
+
+        $('privacyLinkText').innerText = isAr
+            ? 'سياسة الخصوصية'
+            : 'Privacy Policy';
+
+        $('guideLinkText').innerText = isAr
+            ? 'دليل أذون الخزانة'
+            : 'Treasury Bills Guide';
 
         setMarket(currentType);
         updatePresentValue();
@@ -487,3 +538,4 @@
 
 </body>
 </html>
+

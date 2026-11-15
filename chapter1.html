@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffd700">
+    <title>الباب الأول - التعريف بأذون الخزانة</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: #1e293b;
+            padding: 14px;
+            border: 2px solid #ffd700;
+            border-radius: 14px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .lang-btn {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .sub-title {
+            text-align: center;
+            font-size: 13px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            text-align: center;
+            color: #ffd700;
+            font-size: 19px;
+            font-weight: bold;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            background: #0f172a;
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 11px;
+        }
+
+        .section h3 {
+            color: #ffd700;
+            font-size: 15px;
+            margin: 0 0 8px;
+        }
+
+        .section p {
+            color: #e2e8f0;
+            font-size: 13px;
+            line-height: 1.9;
+            margin: 0 0 8px;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tenors {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tenor {
+            background: #1e293b;
+            border: 1px solid #64748b;
+            border-radius: 7px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .tenor strong {
+            display: block;
+            color: #ffd700;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .tenor span {
+            color: #cbd5e1;
+            font-size: 12px;
+        }
+
+        .note {
+            border-right: 3px solid #ffd700;
+            padding: 8px 10px;
+            background: #1e293b;
+            border-radius: 5px;
+            color: #e2e8f0;
+            font-size: 12px;
+            line-height: 1.8;
+            margin-top: 10px;
+        }
+
+        .navigation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 11px 7px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .home-btn {
+            background: #ffd700;
+            color: #000;
+            grid-column: 1 / -1;
+        }
+
+        .index-btn {
+            background: #334155;
+            color: white;
+            border: 1px solid #ffd700;
+        }
+
+        .footer {
+            text-align: center;
+            color: #ffd700;
+            font-size: 11px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-row">
+        <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+        <img src="logo.png" class="logo" alt="Logo">
+    </div>
+
+    <div class="sub-title" id="subTitle">
+        جروب عملاء البنوك المصرية
+    </div>
+
+    <div class="title" id="pageTitle">
+        الباب الأول: التعريف بأذون الخزانة المصرية
+    </div>
+
+    <div class="section">
+        <h3 id="heading1">ما هي أذون الخزانة؟</h3>
+
+        <p id="text1">
+            أذون الخزانة هي أوراق مالية حكومية قصيرة الأجل،
+            تصدر بخصم من قيمتها الاسمية، ويحصل حاملها عند
+            تاريخ الاستحقاق على قيمتها الاسمية كاملة.
+        </p>
+
+        <p id="text2">
+            بمعنى أبسط: يشتري المستثمر الإذن بسعر أقل من
+            قيمته الاسمية، ويكون الفرق بين سعر الشراء والقيمة
+            الاسمية هو العائد الإجمالي قبل الضرائب والمصروفات
+            التي قد تنطبق على العملية.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading2">لماذا تسمى أوراقًا صفرية العائد؟</h3>
+
+        <p id="text3">
+            توصف أذون الخزانة بأنها أوراق صفرية العائد
+            (Zero-Coupon Securities)، لأنها لا تصرف
+            كوبونًا أو فائدة دورية خلال مدة الاحتفاظ بها.
+        </p>
+
+        <p id="text4">
+            يتحقق العائد من الفرق بين القيمة الاسمية التي
+            يستردها المستثمر عند الاستحقاق وسعر الشراء
+            الذي دفعه عند اقتناء الإذن.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading3">القيمة الاسمية وسعر الشراء والاستحقاق</h3>
+
+        <p id="text5">
+            <strong style="color:#ffd700">القيمة الاسمية (Face Value):</strong>
+            هي القيمة التي يستردها حامل الإذن عند تاريخ الاستحقاق.
+        </p>
+
+        <p id="text6">
+            <strong style="color:#ffd700">سعر الشراء (Purchase Price):</strong>
+            هو المبلغ الذي يدفعه المستثمر لشراء الإذن،
+            ويكون أقل من قيمته الاسمية في الإصدار بالخصم.
+        </p>
+
+        <p id="text7">
+            <strong style="color:#ffd700">تاريخ الاستحقاق (Maturity Date):</strong>
+            هو التاريخ المحدد لانتهاء مدة الإذن واسترداد
+            قيمته الاسمية.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading4">مدد أذون الخزانة المصرية</h3>
+
+        <p id="text8">
+            يطرح البنك المركزي المصري أذون الخزانة بآجال
+            استحقاق رئيسية محددة بالأيام، وهي:
+        </p>
+
+        <div class="tenors">
+            <div class="tenor">
+                <strong>91</strong>
+                <span id="tenor1">يومًا - ثلاثة أشهر تقريبًا</span>
+            </div>
+
+            <div class="tenor">
+                <strong>182</strong>
+                <span id="tenor2">يومًا - ستة أشهر تقريبًا</span>
+            </div>
+
+            <div class="tenor">
+                <strong>273</strong>
+                <span id="tenor3">يومًا - تسعة أشهر تقريبًا</span>
+            </div>
+
+            <div class="tenor">
+                <strong>364</strong>
+                <span id="tenor4">يومًا - سنة تقريبًا</span>
+            </div>
+        </div>
+
+        <div class="note" id="tenorNote">
+            المدد محددة بعدد الأيام وليست بعدد الشهور
+            التقويمية بالضرورة. وقد تختلف تواريخ الإصدار
+            والاستحقاق الفعلية وفق جدول الطرح والعطلات.
+        </div>
+    </div>
+
+    <div class="section">
+        <h3 id="heading5">كيف يتحقق العائد؟</h3>
+
+        <p id="text9">
+            يتحقق العائد الإجمالي من الفرق بين القيمة
+            الاسمية وسعر الشراء. ويعتمد سعر الشراء على
+            معدل العائد ومدة الإذن وسعر الخصم المعتمد
+            في عملية الشراء.
+        </p>
+
+        <p id="text10">
+            بعد ذلك تتم مراعاة الضرائب والمصروفات
+            المطبقة للوصول إلى صافي العائد الفعلي.
+        </p>
+
+        <div class="note" id="calculatorNote">
+            ستتعرف في الباب الثالث على طريقة حساب الأرباح
+            خطوة بخطوة، وكيف تستخدم حاسبة أذون الخزانة
+            للوصول إلى النتائج.
+        </div>
+    </div>
+
+    <div class="section">
+        <h3 id="heading6">من يطرح أذون الخزانة؟</h3>
+
+        <p id="text11">
+            تُطرح أذون الخزانة الحكومية من خلال عطاءات
+            ينظمها البنك المركزي المصري، وتُنشر إعلانات
+            العطاءات ونتائجها عبر القنوات الرسمية.
+        </p>
+
+        <p id="text12">
+            ويمكن الرجوع إلى بيانات الأذون ومواعيد طرحها
+            ونتائج العطاءات من خلال الموقع الرسمي للبنك
+            المركزي المصري.
+        </p>
+    </div>
+
+    <div class="navigation">
+        <a href="index.html" class="nav-btn home-btn" id="homeBtn">
+            العودة للحاسبة
+        </a>
+
+        <a href="guide.html" class="nav-btn index-btn" id="indexBtn">
+            العودة للفهرس
+        </a>
+    </div>
+
+    <div class="footer">
+        Developed by Tarek Metwally
+    </div>
+
+</div>
+
+<script>
+    let isAr = true;
+
+    const $ = id => document.getElementById(id);
+
+    function toggleLang() {
+        isAr = !isAr;
+
+        document.documentElement.lang = isAr ? 'ar' : 'en';
+        document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+
+        $('langBtn').innerText = isAr ? 'English' : 'العربية';
+
+        const translations = {
+            subTitle: [
+                'جروب عملاء البنوك المصرية',
+                'Egyptian Bank Clients Group'
+            ],
+            pageTitle: [
+                'الباب الأول: التعريف بأذون الخزانة المصرية',
+                'Chapter One: Introduction to Egyptian Treasury Bills'
+            ],
+            heading1: ['ما هي أذون الخزانة؟', 'What Are Treasury Bills?'],
+            text1: [
+                'أذون الخزانة هي أوراق مالية حكومية قصيرة الأجل، تصدر بخصم من قيمتها الاسمية، ويحصل حاملها عند تاريخ الاستحقاق على قيمتها الاسمية كاملة.',
+                'Treasury bills are short-term government securities issued at a discount to their face value. At maturity, the holder receives the full face value.'
+            ],
+            text2: [
+                'بمعنى أبسط: يشتري المستثمر الإذن بسعر أقل من قيمته الاسمية، ويكون الفرق بين سعر الشراء والقيمة الاسمية هو العائد الإجمالي قبل الضرائب والمصروفات التي قد تنطبق على العملية.',
+                'In simple terms, an investor buys the bill for less than its face value. The difference between the purchase price and face value represents the gross return before any applicable taxes or fees.'
+            ],
+            heading2: [
+                'لماذا تسمى أوراقًا صفرية العائد؟',
+                'Why Are They Called Zero-Coupon Securities?'
+            ],
+            text3: [
+                'توصف أذون الخزانة بأنها أوراق صفرية العائد (Zero-Coupon Securities)، لأنها لا تصرف كوبونًا أو فائدة دورية خلال مدة الاحتفاظ بها.',
+                'Treasury bills are described as Zero-Coupon Securities because they do not pay periodic coupons or interest during the holding period.'
+            ],
+            text4: [
+                'يتحقق العائد من الفرق بين القيمة الاسمية التي يستردها المستثمر عند الاستحقاق وسعر الشراء الذي دفعه عند اقتناء الإذن.',
+                'The return is generated by the difference between the face value received at maturity and the purchase price paid by the investor.'
+            ],
+            heading3: [
+                'القيمة الاسمية وسعر الشراء والاستحقاق',
+                'Face Value, Purchase Price and Maturity'
+            ],
+            text5: [
+                'القيمة الاسمية (Face Value): هي القيمة التي يستردها حامل الإذن عند تاريخ الاستحقاق.',
+                'Face Value: The amount received by the holder when the bill reaches maturity.'
+            ],
+            text6: [
+                'سعر الشراء (Purchase Price): هو المبلغ الذي يدفعه المستثمر لشراء الإذن، ويكون أقل من قيمته الاسمية في الإصدار بالخصم.',
+                'Purchase Price: The amount paid by the investor to buy the bill. For a discounted issue, it is lower than the face value.'
+            ],
+            text7: [
+                'تاريخ الاستحقاق (Maturity Date): هو التاريخ المحدد لانتهاء مدة الإذن واسترداد قيمته الاسمية.',
+                'Maturity Date: The specified date on which the bill matures and its face value is repaid.'
+            ],
+            heading4: [
+                'مدد أذون الخزانة المصرية',
+                'Egyptian Treasury Bill Tenors'
+            ],
+            text8: [
+                'يطرح البنك المركزي المصري أذون الخزانة بآجال استحقاق رئيسية محددة بالأيام، وهي:',
+                'The Central Bank of Egypt offers Treasury bills with the following main maturities, measured in days:'
+            ],
+            tenor1: ['يومًا - ثلاثة أشهر تقريبًا', 'Days - approximately 3 months'],
+            tenor2: ['يومًا - ستة أشهر تقريبًا', 'Days - approximately 6 months'],
+            tenor3: ['يومًا - تسعة أشهر تقريبًا', 'Days - approximately 9 months'],
+            tenor4: ['يومًا - سنة تقريبًا', 'Days - approximately 1 year'],
+            tenorNote: [
+                'المدد محددة بعدد الأيام وليست بعدد الشهور التقويمية بالضرورة. وقد تختلف تواريخ الإصدار والاستحقاق الفعلية وفق جدول الطرح والعطلات.',
+                'Tenors are specified in days, not necessarily calendar months. Actual issue and maturity dates may vary according to the issuance schedule and holidays.'
+            ],
+            heading5: ['كيف يتحقق العائد؟', 'How Is the Return Generated?'],
+            text9: [
+                'يتحقق العائد الإجمالي من الفرق بين القيمة الاسمية وسعر الشراء. ويعتمد سعر الشراء على معدل العائد ومدة الإذن وسعر الخصم المعتمد في عملية الشراء.',
+                'The gross return is the difference between the face value and the purchase price. The purchase price depends on the yield rate, the bill tenor and the discount rate applied to the transaction.'
+            ],
+            text10: [
+                'بعد ذلك تتم مراعاة الضرائب والمصروفات المطبقة للوصول إلى صافي العائد الفعلي.',
+                'Applicable taxes and fees are then taken into account to determine the actual net return.'
+            ],
+            calculatorNote: [
+                'ستتعرف في الباب الثالث على طريقة حساب الأرباح خطوة بخطوة، وكيف تستخدم حاسبة أذون الخزانة للوصول إلى النتائج.',
+                'Chapter Three explains how to calculate returns step by step and how to use the Treasury Bills Calculator.'
+            ],
+            heading6: [
+                'من يطرح أذون الخزانة؟',
+                'Who Issues Treasury Bills?'
+            ],
+            text11: [
+                'تُطرح أذون الخزانة الحكومية من خلال عطاءات ينظمها البنك المركزي المصري، وتُنشر إعلانات العطاءات ونتائجها عبر القنوات الرسمية.',
+                'Government Treasury bills are offered through auctions organized by the Central Bank of Egypt. Auction announcements and results are published through official channels.'
+            ],
+            text12: [
+                'ويمكن الرجوع إلى بيانات الأذون ومواعيد طرحها ونتائج العطاءات من خلال الموقع الرسمي للبنك المركزي المصري.',
+                'Bill information, issuance dates and auction results can be checked through the official Central Bank of Egypt website.'
+            ],
+            homeBtn: ['العودة للحاسبة', 'Back to Calculator'],
+            indexBtn: ['العودة للفهرس', 'Back to Index']
+        };
+
+        Object.keys(translations).forEach(id => {
+            $(id).innerText = isAr
+                ? translations[id][0]
+                : translations[id][1];
+        });
+    }
+</script>
+
+</body>
+</html>

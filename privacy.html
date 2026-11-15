@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffd700">
+
+    <title>سياسة الخصوصية - جروب عملاء البنوك المصرية</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: #1e293b;
+            padding: 14px;
+            border: 2px solid #ffd700;
+            border-radius: 14px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .lang-btn {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .sub-title {
+            text-align: center;
+            font-size: 13px;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            text-align: center;
+            color: #ffd700;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .group-name {
+            text-align: center;
+            color: #cbd5e1;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            background: #0f172a;
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #ffd700;
+            font-size: 15px;
+            margin: 0 0 8px;
+        }
+
+        .section p {
+            color: #e2e8f0;
+            font-size: 13px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        .back-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            background: #ffd700;
+            color: #000;
+            padding: 11px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #ffd700;
+            font-size: 11px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-row">
+        <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+        <img src="logo.png" class="logo" alt="Logo">
+    </div>
+
+    <div class="sub-title" id="subTitle">
+        جروب عملاء البنوك المصرية
+    </div>
+
+    <div class="title" id="pageTitle">
+        سياسة الخصوصية
+    </div>
+
+    <div class="group-name" id="groupName">
+        حاسبة أذون الخزانة المصرية
+    </div>
+
+    <div class="section">
+        <h3 id="heading1">1. البيانات الشخصية</h3>
+        <p id="text1">
+            لا تطلب الحاسبة من المستخدم إنشاء حساب أو تسجيل الدخول،
+            ولا تطلب إدخال الاسم أو رقم الهاتف أو البريد الإلكتروني
+            أو أي بيانات شخصية لاستخدام العمليات الحسابية.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading2">2. العمليات الحسابية والتخزين</h3>
+        <p id="text2">
+            تعمل الحاسبة على إجراء العمليات الحسابية بناءً على
+            القيم التي يدخلها المستخدم. ولا تتضمن النسخة الحالية
+            خاصية حفظ العمليات أو إنشاء سجل للعمليات السابقة.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading3">3. الإعلانات</h3>
+        <p id="text3">
+            الحاسبة لا تعرض إعلانات، ولا تتضمن النسخة الحالية
+            خدمات إعلانية أو أكوادًا لعرض الإعلانات.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading4">4. حماية المعلومات</h3>
+        <p id="text4">
+            لا تطلب الحاسبة بيانات شخصية من المستخدم،
+            ولا تعتمد العمليات الحسابية على إرسال بياناته
+            إلى مصدر خارجي. ويقتصر استخدامها على إجراء
+            الحسابات وفق المدخلات التي يحددها المستخدم.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading5">5. طبيعة النتائج وإخلاء المسؤولية</h3>
+        <p id="text5">
+            النتائج التي تقدمها الحاسبة استرشادية وتعتمد على
+            البيانات التي يدخلها المستخدم والمعادلات الحسابية
+            المستخدمة. ولا تمثل توصية استثمارية أو ضمانًا
+            لتحقيق عائد معين. ويجب مراجعة شروط البنك والجهات
+            الرسمية قبل اتخاذ أي قرار مالي.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3 id="heading6">6. تحديث سياسة الخصوصية والتواصل</h3>
+        <p id="text6">
+            قد يتم تحديث هذه السياسة عند إجراء تغييرات على
+            الحاسبة أو طريقة عملها. ويُنصح بمراجعة هذه الصفحة
+            للاطلاع على أي تحديثات. ويمكن التواصل مع إدارة
+            جروب عملاء البنوك المصرية عبر قنوات الجروب الرسمية.
+        </p>
+    </div>
+
+    <a href="index.html" class="back-btn" id="backBtn">
+        العودة للحاسبة
+    </a>
+
+    <div class="footer">
+        Developed by Tarek Metwally
+    </div>
+
+</div>
+
+<script>
+    let isAr = true;
+
+    const $ = id => document.getElementById(id);
+
+    function toggleLang() {
+        isAr = !isAr;
+
+        document.documentElement.lang = isAr ? 'ar' : 'en';
+        document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+
+        $('langBtn').innerText = isAr ? 'English' : 'العربية';
+
+        $('subTitle').innerText = isAr
+            ? 'جروب عملاء البنوك المصرية'
+            : 'Egyptian Bank Clients Group';
+
+        $('pageTitle').innerText = isAr
+            ? 'سياسة الخصوصية'
+            : 'Privacy Policy';
+
+        $('groupName').innerText = isAr
+            ? 'حاسبة أذون الخزانة المصرية'
+            : 'Egyptian Treasury Bills Calculator';
+
+        const translations = [
+            [
+                '1. البيانات الشخصية',
+                '1. Personal Information',
+                'لا تطلب الحاسبة من المستخدم إنشاء حساب أو تسجيل الدخول، ولا تطلب إدخال الاسم أو رقم الهاتف أو البريد الإلكتروني أو أي بيانات شخصية لاستخدام العمليات الحسابية.',
+                'The calculator does not require users to create an account or sign in. It does not ask for a name, phone number, email address, or other personal information to perform calculations.'
+            ],
+            [
+                '2. العمليات الحسابية والتخزين',
+                '2. Calculations and Storage',
+                'تعمل الحاسبة على إجراء العمليات الحسابية بناءً على القيم التي يدخلها المستخدم. ولا تتضمن النسخة الحالية خاصية حفظ العمليات أو إنشاء سجل للعمليات السابقة.',
+                'The calculator performs calculations based on the values entered by the user. The current version does not include a feature for saving calculations or creating a history of previous operations.'
+            ],
+            [
+                '3. الإعلانات',
+                '3. Advertisements',
+                'الحاسبة لا تعرض إعلانات، ولا تتضمن النسخة الحالية خدمات إعلانية أو أكوادًا لعرض الإعلانات.',
+                'The calculator does not display advertisements. The current version does not include advertising services or advertising display code.'
+            ],
+            [
+                '4. حماية المعلومات',
+                '4. Information Protection',
+                'لا تطلب الحاسبة بيانات شخصية من المستخدم، ولا تعتمد العمليات الحسابية على إرسال بياناته إلى مصدر خارجي. ويقتصر استخدامها على إجراء الحسابات وفق المدخلات التي يحددها المستخدم.',
+                'The calculator does not request personal information. Its calculations do not depend on sending user inputs to an external source. It is used to perform calculations based on the values entered by the user.'
+            ],
+            [
+                '5. طبيعة النتائج وإخلاء المسؤولية',
+                '5. Results and Disclaimer',
+                'النتائج التي تقدمها الحاسبة استرشادية وتعتمد على البيانات التي يدخلها المستخدم والمعادلات الحسابية المستخدمة. ولا تمثل توصية استثمارية أو ضمانًا لتحقيق عائد معين. ويجب مراجعة شروط البنك والجهات الرسمية قبل اتخاذ أي قرار مالي.',
+                'The calculator provides indicative results based on user inputs and the calculation formulas used. These results are not investment advice or a guarantee of any particular return. Users should review the bank terms and official information before making financial decisions.'
+            ],
+            [
+                '6. تحديث سياسة الخصوصية والتواصل',
+                '6. Policy Updates and Contact',
+                'قد يتم تحديث هذه السياسة عند إجراء تغييرات على الحاسبة أو طريقة عملها. ويُنصح بمراجعة هذه الصفحة للاطلاع على أي تحديثات. ويمكن التواصل مع إدارة جروب عملاء البنوك المصرية عبر قنوات الجروب الرسمية.',
+                'This policy may be updated when changes are made to the calculator or how it works. Users are encouraged to review this page for updates. The Egyptian Bank Clients Group administration can be contacted through the group’s official channels.'
+            ]
+        ];
+
+        translations.forEach((item, index) => {
+            $('heading' + (index + 1)).innerText =
+                isAr ? item[0] : item[1];
+
+            $('text' + (index + 1)).innerText =
+                isAr ? item[2] : item[3];
+        });
+
+        $('backBtn').innerText = isAr
+            ? 'العودة للحاسبة'
+            : 'Back to Calculator';
+    }
+</script>
+
+</body>
+</html>

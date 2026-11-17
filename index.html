@@ -24,6 +24,11 @@
     </script>
 
     <style>
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             background: #0f172a;
             color: white;
@@ -31,7 +36,11 @@
             margin: 0;
             padding: 8px;
             user-select: none;
-            touch-action: pan-y;
+            height: 100dvh;
+            box-sizing: border-box;
+            overflow: hidden;
+            overscroll-behavior: none;
+            touch-action: none;
         }
 
         .container {

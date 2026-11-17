@@ -24,11 +24,6 @@
     </script>
 
     <style>
-        html {
-            height: 100%;
-            overflow: hidden;
-        }
-
         body {
             background: #0f172a;
             color: white;
@@ -36,31 +31,17 @@
             margin: 0;
             padding: 8px;
             user-select: none;
-            height: 100vh;
-            height: 100dvh;
-            box-sizing: border-box;
-            overflow: hidden;
-            overscroll-behavior: none;
+            touch-action: pan-y;
         }
 
         .container {
             max-width: 420px;
-            height: calc(100% - 0px);
             margin: auto;
             background: #1e293b;
             padding: 12px;
             border-radius: 14px;
             border: 2px solid #ffd700;
             box-sizing: border-box;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            touch-action: pan-y;
-        }
-
-        .container::-webkit-scrollbar {
-            display: none;
         }
 
         .top-row {
@@ -599,4 +580,3 @@
 
 </body>
 </html>
-

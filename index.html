@@ -24,6 +24,10 @@
     </script>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         html, body {
             width: 100%;
             height: 100%;
@@ -35,15 +39,14 @@
 
         body {
             position: fixed;
-            inset: 0;
+            top: var(--viewport-top, 0px);
+            left: 0;
             width: 100%;
-            height: 100vh;
-            height: 100dvh;
+            height: var(--visible-height, 100dvh);
             background: #0f172a;
             color: white;
             font-family: sans-serif;
-            padding: 8px;
-            box-sizing: border-box;
+            padding: 4px;
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
@@ -54,13 +57,12 @@
 
         .container {
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             margin: auto;
             background: #1e293b;
             padding: 12px;
             border-radius: 14px;
             border: 2px solid #ffd700;
-            box-sizing: border-box;
             flex-shrink: 0;
             transform: scale(var(--fit-scale, 1));
             transform-origin: center center;
@@ -189,7 +191,6 @@
             word-break: break-all;
         }
 
-        /* القيمة الحالية للجنيه */
         .pv-card {
             background: #0f172a;
             height: 42px;
@@ -385,7 +386,6 @@
     <button class="calc-btn" id="calcBtn" onclick="calc()">احسب الآن</button>
 
     <div class="results">
-
         <div class="card">
             <span id="lblPrice">سعر الشراء</span>
             <h4 id="resPrice">0</h4>
@@ -405,7 +405,6 @@
             <span id="lblNet">الربح الصافي</span>
             <h4 id="resNet">0</h4>
         </div>
-
     </div>
 
     <div class="total-box">
@@ -455,15 +454,39 @@
 
     const $ = id => document.getElementById(id);
 
-    /* ضبط حجم الحاسبة لتظهر بالكامل داخل الشاشة */
+    /* ضبط الحاسبة حسب مساحة Safari المرئية */
     function fitCalculator() {
         const calculator = $('calculator');
         if (!calculator) return;
 
+        const viewport = window.visualViewport;
+
+        const visibleHeight = viewport
+            ? viewport.height
+            : window.innerHeight;
+
+        const visibleWidth = viewport
+            ? viewport.width
+            : window.innerWidth;
+
+        const viewportTop = viewport
+            ? viewport.offsetTop
+            : 0;
+
+        document.documentElement.style.setProperty(
+            '--visible-height',
+            visibleHeight + 'px'
+        );
+
+        document.documentElement.style.setProperty(
+            '--viewport-top',
+            viewportTop + 'px'
+        );
+
         calculator.style.setProperty('--fit-scale', '1');
 
-        const availableHeight = document.documentElement.clientHeight - 16;
-        const availableWidth = document.documentElement.clientWidth - 16;
+        const availableHeight = visibleHeight - 16;
+        const availableWidth = visibleWidth - 8;
 
         const naturalHeight = calculator.offsetHeight;
         const naturalWidth = calculator.offsetWidth;
@@ -479,19 +502,24 @@
         );
     }
 
-    window.addEventListener('load', () => {
-        fitCalculator();
-        setMarket('primary');
+    function scheduleFit() {
         requestAnimationFrame(fitCalculator);
+    }
+
+    window.addEventListener('load', () => {
+        setMarket('primary');
+        scheduleFit();
     });
 
-    window.addEventListener('resize', fitCalculator);
+    window.addEventListener('resize', scheduleFit);
+
     window.addEventListener('orientationchange', () => {
-        setTimeout(fitCalculator, 250);
+        setTimeout(scheduleFit, 300);
     });
 
     if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', fitCalculator);
+        window.visualViewport.addEventListener('resize', scheduleFit);
+        window.visualViewport.addEventListener('scroll', scheduleFit);
     }
 
     function formatNumber(value, decimals = 2) {
@@ -582,7 +610,7 @@
 
         setMarket(currentType);
         updatePresentValue();
-        requestAnimationFrame(fitCalculator);
+        scheduleFit();
     }
 
     function setMarket(type) {

@@ -24,47 +24,24 @@
     </script>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            overscroll-behavior: none;
-        }
-
         body {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
             background: #0f172a;
             color: white;
             font-family: sans-serif;
-            padding: 4px;
+            margin: 0;
+            padding: 8px;
             user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            touch-action: pan-y;
         }
 
         .container {
-            width: 100%;
-            max-width: 450px;
+            max-width: 420px;
             margin: auto;
             background: #1e293b;
             padding: 12px;
             border-radius: 14px;
             border: 2px solid #ffd700;
-            flex-shrink: 0;
-            transform: scale(var(--fit-scale, 1));
-            transform-origin: center center;
+            box-sizing: border-box;
         }
 
         .top-row {
@@ -190,9 +167,11 @@
             word-break: break-all;
         }
 
+        /* القيمة الحالية للجنيه */
         .pv-card {
             background: #0f172a;
             height: 42px;
+            box-sizing: border-box;
             padding: 0 8px;
             border-radius: 6px;
             border: 1px solid #ffd700;
@@ -220,12 +199,14 @@
             white-space: nowrap;
         }
 
+        /* صندوق المبلغ المسترد - نفس المساحة دون تكبير */
         .total-box {
             border: 2px solid #ff4d4d;
             padding: 8px;
             border-radius: 6px;
             text-align: center;
             margin-top: 8px;
+            box-sizing: border-box;
         }
 
         .total-title {
@@ -265,6 +246,7 @@
             font-size: 15px;
         }
 
+        /* زرا إدخال جديد ومؤشرات الأذون */
         .bottom-buttons {
             display: flex;
             gap: 7px;
@@ -287,6 +269,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         .new-btn {
@@ -343,7 +326,7 @@
 
 <body>
 
-<div class="container" id="calculator">
+<div class="container">
 
     <div class="top-row">
         <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
@@ -381,6 +364,7 @@
     <button class="calc-btn" id="calcBtn" onclick="calc()">احسب الآن</button>
 
     <div class="results">
+
         <div class="card">
             <span id="lblPrice">سعر الشراء</span>
             <h4 id="resPrice">0</h4>
@@ -400,6 +384,7 @@
             <span id="lblNet">الربح الصافي</span>
             <h4 id="resNet">0</h4>
         </div>
+
     </div>
 
     <div class="total-box">
@@ -448,94 +433,6 @@
     let currentType = 'primary';
 
     const $ = id => document.getElementById(id);
-
-    let originalScale = 1;
-    let keyboardOpen = false;
-
-    /* حساب الحجم عند فتح الصفحة أو تغيير الاتجاه فقط */
-    function fitCalculator() {
-        const calculator = $('calculator');
-        if (!calculator) return;
-
-        const viewport = window.visualViewport;
-
-        const visibleHeight = viewport
-            ? viewport.height
-            : window.innerHeight;
-
-        const visibleWidth = viewport
-            ? viewport.width
-            : window.innerWidth;
-
-        const viewportTop = viewport
-            ? viewport.offsetTop
-            : 0;
-
-        document.documentElement.style.setProperty(
-            '--visible-height',
-            visibleHeight + 'px'
-        );
-
-        document.documentElement.style.setProperty(
-            '--viewport-top',
-            viewportTop + 'px'
-        );
-
-        calculator.style.setProperty('--fit-scale', '1');
-
-        const availableHeight = visibleHeight - 75;
-        const availableWidth = visibleWidth - 8;
-
-        const naturalHeight = calculator.offsetHeight;
-        const naturalWidth = calculator.offsetWidth;
-
-        const heightScale = availableHeight / naturalHeight;
-        const widthScale = availableWidth / naturalWidth;
-
-        originalScale = Math.min(1, heightScale, widthScale);
-
-        calculator.style.setProperty(
-            '--fit-scale',
-            Math.max(0.1, originalScale).toString()
-        );
-    }
-
-    /* عند ظهور لوحة المفاتيح لا نعيد حساب حجم الحاسبة */
-    function detectKeyboard() {
-        if (!window.visualViewport) return;
-
-        const keyboardThreshold = window.innerHeight * 0.75;
-
-        keyboardOpen =
-            window.visualViewport.height < keyboardThreshold;
-    }
-
-    window.addEventListener('load', () => {
-        setMarket('primary');
-        setTimeout(fitCalculator, 100);
-    });
-
-    window.addEventListener('orientationchange', () => {
-        setTimeout(fitCalculator, 400);
-    });
-
-    window.addEventListener('resize', () => {
-        detectKeyboard();
-
-        if (!keyboardOpen) {
-            fitCalculator();
-        }
-    });
-
-    if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', () => {
-            detectKeyboard();
-
-            if (!keyboardOpen) {
-                fitCalculator();
-            }
-        });
-    }
 
     function formatNumber(value, decimals = 2) {
         return value.toLocaleString('en-US', {
@@ -718,7 +615,10 @@
 
     $('rate').addEventListener('input', updatePresentValue);
     $('days').addEventListener('change', updatePresentValue);
+
+    window.onload = () => setMarket('primary');
 </script>
 
 </body>
 </html>
+

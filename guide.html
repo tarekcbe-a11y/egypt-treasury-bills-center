@@ -2,138 +2,72 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ffd700">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffd700">
+<title>دليل أذون الخزانة المصرية</title>
 
-    <title>دليل أذون الخزانة المصرية</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #0f172a;
-            color: white;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 12px;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: auto;
-            background: #1e293b;
-            padding: 14px;
-            border: 2px solid #ffd700;
-            border-radius: 14px;
-        }
-
-        .top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .lang-btn {
-            background: #ffd700;
-            color: #000;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .sub-title {
-            text-align: center;
-            font-size: 13px;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .title {
-            text-align: center;
-            color: #ffd700;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .description {
-            text-align: center;
-            color: #cbd5e1;
-            font-size: 13px;
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-
-        .chapter {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            background: #0f172a;
-            border: 1px solid #ffd700;
-            border-radius: 8px;
-            padding: 13px 12px;
-            margin-bottom: 10px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 1.6;
-        }
-
-        .chapter:hover {
-            background: #26364e;
-            color: #ffd700;
-        }
-
-        .chapter-number {
-            color: #ffd700;
-            white-space: nowrap;
-        }
-
-        .arrow {
-            color: #ffd700;
-            font-size: 18px;
-        }
-
-        .back-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            background: #ffd700;
-            color: #000;
-            padding: 11px;
-            border-radius: 7px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        .footer {
-            text-align: center;
-            color: #ffd700;
-            font-size: 11px;
-            margin-top: 12px;
-        }
-    </style>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;padding:0}
+body{
+    background:#0f172a;color:white;font-family:sans-serif;
+    padding:8px;overflow:hidden
+}
+.container{
+    width:100%;max-width:420px;height:calc(100dvh - 16px);
+    margin:auto;background:#1e293b;padding:12px;
+    border:2px solid #ffd700;border-radius:14px;
+    display:flex;flex-direction:column;overflow:hidden
+}
+.top-row{
+    display:flex;justify-content:space-between;
+    align-items:center;margin-bottom:8px;flex-shrink:0
+}
+.logo{width:46px;height:46px;object-fit:contain}
+.lang-btn{
+    background:#ffd700;color:#000;border:none;
+    padding:6px 10px;border-radius:6px;
+    font-size:12px;font-weight:bold;cursor:pointer
+}
+.sub-title{text-align:center;font-size:12px;color:white;margin-bottom:3px;flex-shrink:0}
+.title{
+    text-align:center;color:#ffd700;font-size:18px;
+    font-weight:bold;margin-bottom:5px;flex-shrink:0
+}
+.description{
+    text-align:center;color:#cbd5e1;font-size:12px;
+    line-height:1.7;margin-bottom:10px;flex-shrink:0
+}
+.chapters-scroll{
+    flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    touch-action:pan-y;padding:1px
+}
+.chapter{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:10px;background:#0f172a;border:1px solid #ffd700;
+    border-radius:8px;padding:11px 10px;margin-bottom:8px;
+    color:white;text-decoration:none;font-size:13px;
+    font-weight:bold;line-height:1.6
+}
+.chapter:hover{background:#26364e;color:#ffd700}
+.chapter-number{color:#ffd700;white-space:nowrap}
+.arrow{color:#ffd700;font-size:18px}
+.back-btn{
+    display:block;width:100%;flex-shrink:0;
+    text-align:center;text-decoration:none;background:#ffd700;
+    color:#000;padding:10px;border-radius:7px;
+    font-size:13px;font-weight:bold;margin-top:9px
+}
+.footer{
+    text-align:center;color:#ffd700;font-size:10px;
+    margin-top:8px;flex-shrink:0
+}
+</style>
 </head>
 
 <body>
-
 <div class="container">
 
     <div class="top-row">
@@ -141,155 +75,159 @@
         <img src="logo.png" class="logo" alt="Logo">
     </div>
 
-    <div class="sub-title" id="subTitle">
-        جروب عملاء البنوك المصرية
-    </div>
+    <div class="sub-title" id="subTitle">جروب عملاء البنوك المصرية</div>
 
-    <div class="title" id="pageTitle">
-        دليل أذون الخزانة المصرية
-    </div>
+    <div class="title" id="pageTitle">دليل أذون الخزانة المصرية</div>
 
     <div class="description" id="description">
-        دليلك للتعرف على أذون الخزانة المصرية
-        وكيفية شرائها وحساب عوائدها.
+        دليلك للتعرف على أذون الخزانة المصرية وكيفية شرائها وحساب عوائدها.
     </div>
 
-    <a href="chapters.html?chapter=1" class="chapter">
-        <span>
-            <span class="chapter-number" id="number1">الباب الأول:</span>
-            <span id="title1"> التعريف بأذون الخزانة المصرية</span>
-        </span>
-        <span class="arrow">‹</span>
-    </a>
+    <div class="chapters-scroll">
 
-    <a href="chapters.html?chapter=2" class="chapter">
-        <span>
-            <span class="chapter-number" id="number2">الباب الثاني:</span>
-            <span id="title2"> كيف تشتري أذون الخزانة؟</span>
-        </span>
-        <span class="arrow">‹</span>
-    </a>
+        <a href="chapters.html?chapter=1" class="chapter">
+            <span>
+                <span class="chapter-number" id="number1">الباب الأول:</span>
+                <span id="title1"> التعريف بأذون الخزانة المصرية</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
 
-    <a href="chapters.html?chapter=3" class="chapter">
-        <span>
-            <span class="chapter-number" id="number3">الباب الثالث:</span>
-            <span id="title3"> كيف تُحسب أرباح أذون الخزانة؟</span>
-        </span>
-        <span class="arrow">‹</span>
-    </a>
+        <a href="chapters.html?chapter=2" class="chapter">
+            <span>
+                <span class="chapter-number" id="number2">الباب الثاني:</span>
+                <span id="title2"> كيف تشتري أذون الخزانة؟</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
 
-    <a href="chapters.html?chapter=4" class="chapter">
-        <span>
-            <span class="chapter-number" id="number4">الباب الرابع:</span>
-            <span id="title4"> السوق الأولي والسوق الثانوي</span>
-        </span>
-        <span class="arrow">‹</span>
-    </a>
+        <a href="chapters.html?chapter=3" class="chapter">
+            <span>
+                <span class="chapter-number" id="number3">الباب الثالث:</span>
+                <span id="title3"> كيف تُحسب أرباح أذون الخزانة؟</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
 
-    <a href="chapters.html?chapter=5" class="chapter">
-        <span>
-            <span class="chapter-number" id="number5">الباب الخامس:</span>
-            <span id="title5"> الضرائب على أذون الخزانة</span>
-        </span>
-        <span class="arrow">‹</span>
-    </a>
+        <a href="chapters.html?chapter=4" class="chapter">
+            <span>
+                <span class="chapter-number" id="number4">الباب الرابع:</span>
+                <span id="title4"> السوق الأولي والسوق الثانوي</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
 
-    <a href="chapters.html?chapter=6" class="chapter">
-        <span>
-            <span class="chapter-number" id="number6">الباب السادس:</span>
-            <span id="title6"> الأسئلة الشائعة</span>
-        </span>
-        <span class="arrow">‹</span>
-    </a>
+        <a href="chapters.html?chapter=5" class="chapter">
+            <span>
+                <span class="chapter-number" id="number5">الباب الخامس:</span>
+                <span id="title5"> الضرائب على أذون الخزانة</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
+
+        <a href="chapters.html?chapter=6" class="chapter">
+            <span>
+                <span class="chapter-number" id="number6">الباب السادس:</span>
+                <span id="title6"> الأسئلة الشائعة</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
+
+        <a href="chapters.html?chapter=7" class="chapter">
+            <span>
+                <span class="chapter-number" id="number7">الباب السابع:</span>
+                <span id="title7"> مؤشرات أذون الخزانة</span>
+            </span>
+            <span class="arrow">‹</span>
+        </a>
+
+    </div>
 
     <a href="index.html" class="back-btn" id="backBtn">
         العودة للحاسبة
     </a>
 
-    <div class="footer">
-        Developed by Tarek Metwally
-    </div>
+    <div class="footer">Developed by Tarek Metwally</div>
 
 </div>
 
 <script>
-    let isAr = true;
+let isAr = true;
 
-    const $ = id => document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-    function toggleLang() {
-        isAr = !isAr;
+function toggleLang() {
+    isAr = !isAr;
 
-        document.documentElement.lang = isAr ? 'ar' : 'en';
-        document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+    document.documentElement.lang = isAr ? 'ar' : 'en';
+    document.documentElement.dir = isAr ? 'rtl' : 'ltr';
 
-        $('langBtn').innerText = isAr ? 'English' : 'العربية';
+    $('langBtn').innerText = isAr ? 'English' : 'العربية';
 
-        $('subTitle').innerText = isAr
-            ? 'جروب عملاء البنوك المصرية'
-            : 'Egyptian Bank Clients Group';
+    $('subTitle').innerText = isAr
+        ? 'جروب عملاء البنوك المصرية'
+        : 'Egyptian Bank Clients Group';
 
-        $('pageTitle').innerText = isAr
-            ? 'دليل أذون الخزانة المصرية'
-            : 'Egyptian Treasury Bills Guide';
+    $('pageTitle').innerText = isAr
+        ? 'دليل أذون الخزانة المصرية'
+        : 'Egyptian Treasury Bills Guide';
 
-        $('description').innerText = isAr
-            ? 'دليلك للتعرف على أذون الخزانة المصرية وكيفية شرائها وحساب عوائدها.'
-            : 'Your guide to understanding Egyptian Treasury Bills, how to purchase them and calculate their returns.';
+    $('description').innerText = isAr
+        ? 'دليلك للتعرف على أذون الخزانة المصرية وكيفية شرائها وحساب عوائدها.'
+        : 'Your guide to understanding Egyptian Treasury Bills, how to purchase them and calculate their returns.';
 
-        const chapters = [
-            [
-                'الباب الأول:',
-                'Chapter One:',
-                'التعريف بأذون الخزانة المصرية',
-                'Introduction to Egyptian Treasury Bills'
-            ],
-            [
-                'الباب الثاني:',
-                'Chapter Two:',
-                'كيف تشتري أذون الخزانة؟',
-                'How to Buy Treasury Bills'
-            ],
-            [
-                'الباب الثالث:',
-                'Chapter Three:',
-                'كيف تُحسب أرباح أذون الخزانة؟',
-                'How Are Treasury Bills Returns Calculated?'
-            ],
-            [
-                'الباب الرابع:',
-                'Chapter Four:',
-                'السوق الأولي والسوق الثانوي',
-                'Primary and Secondary Markets'
-            ],
-            [
-                'الباب الخامس:',
-                'Chapter Five:',
-                'الضرائب على أذون الخزانة',
-                'Taxes on Treasury Bills'
-            ],
-            [
-                'الباب السادس:',
-                'Chapter Six:',
-                'الأسئلة الشائعة',
-                'Frequently Asked Questions'
-            ]
-        ];
+    const chapters = [
+        [
+            'الباب الأول:', 'Chapter One:',
+            'التعريف بأذون الخزانة المصرية',
+            'Introduction to Egyptian Treasury Bills'
+        ],
+        [
+            'الباب الثاني:', 'Chapter Two:',
+            'كيف تشتري أذون الخزانة؟',
+            'How to Buy Treasury Bills'
+        ],
+        [
+            'الباب الثالث:', 'Chapter Three:',
+            'كيف تُحسب أرباح أذون الخزانة؟',
+            'How Are Treasury Bills Returns Calculated?'
+        ],
+        [
+            'الباب الرابع:', 'Chapter Four:',
+            'السوق الأولي والسوق الثانوي',
+            'Primary and Secondary Markets'
+        ],
+        [
+            'الباب الخامس:', 'Chapter Five:',
+            'الضرائب على أذون الخزانة',
+            'Taxes on Treasury Bills'
+        ],
+        [
+            'الباب السادس:', 'Chapter Six:',
+            'الأسئلة الشائعة',
+            'Frequently Asked Questions'
+        ],
+        [
+            'الباب السابع:', 'Chapter Seven:',
+            'مؤشرات أذون الخزانة',
+            'Treasury Bills Indicators'
+        ]
+    ];
 
-        chapters.forEach((chapter, index) => {
-            const n = index + 1;
+    chapters.forEach((chapter, index) => {
+        const n = index + 1;
 
-            $('number' + n).innerText =
-                isAr ? chapter[0] : chapter[1];
+        $('number' + n).innerText =
+            isAr ? chapter[0] : chapter[1];
 
-            $('title' + n).innerText =
-                ' ' + (isAr ? chapter[2] : chapter[3]);
-        });
+        $('title' + n).innerText =
+            ' ' + (isAr ? chapter[2] : chapter[3]);
+    });
 
-        $('backBtn').innerText = isAr
-            ? 'العودة للحاسبة'
-            : 'Back to Calculator';
-    }
+    $('backBtn').innerText = isAr
+        ? 'العودة للحاسبة'
+        : 'Back to Calculator';
+}
 </script>
 
 </body>

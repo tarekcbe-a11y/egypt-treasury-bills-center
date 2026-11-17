@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ffd700">
 
     <title>سياسة الخصوصية - جروب عملاء البنوك المصرية</title>
@@ -13,33 +13,47 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
         body {
             background: #0f172a;
             color: white;
             font-family: sans-serif;
-            margin: 0;
-            padding: 12px;
+            padding: 8px;
+            user-select: none;
         }
 
         .container {
-            max-width: 650px;
+            width: 100%;
+            max-width: 420px;
+            height: calc(100dvh - 16px);
             margin: auto;
             background: #1e293b;
-            padding: 14px;
+            padding: 12px;
             border: 2px solid #ffd700;
             border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .top-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            flex-shrink: 0;
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
         }
 
@@ -47,33 +61,47 @@
             background: #ffd700;
             color: #000;
             border: none;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
         }
 
         .sub-title {
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: white;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
+            flex-shrink: 0;
         }
 
         .title {
             text-align: center;
             color: #ffd700;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+            flex-shrink: 0;
         }
 
         .group-name {
             text-align: center;
             color: #cbd5e1;
-            font-size: 12px;
-            margin-bottom: 15px;
+            font-size: 11px;
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+
+        .content-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            touch-action: pan-y;
+            padding: 2px 1px 8px;
         }
 
         .section {
@@ -100,22 +128,24 @@
         .back-btn {
             display: block;
             width: 100%;
+            flex-shrink: 0;
             text-align: center;
             text-decoration: none;
             background: #ffd700;
             color: #000;
-            padding: 11px;
+            padding: 9px;
             border-radius: 7px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            margin-top: 14px;
+            margin-top: 8px;
         }
 
         .footer {
             text-align: center;
             color: #ffd700;
-            font-size: 11px;
-            margin-top: 12px;
+            font-size: 10px;
+            margin-top: 7px;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -141,61 +171,76 @@
         حاسبة أذون الخزانة المصرية
     </div>
 
-    <div class="section">
-        <h3 id="heading1">1. البيانات الشخصية</h3>
-        <p id="text1">
-            لا تطلب الحاسبة من المستخدم إنشاء حساب أو تسجيل الدخول،
-            ولا تطلب إدخال الاسم أو رقم الهاتف أو البريد الإلكتروني
-            أو أي بيانات شخصية لاستخدام العمليات الحسابية.
-        </p>
-    </div>
+    <div class="content-scroll">
 
-    <div class="section">
-        <h3 id="heading2">2. العمليات الحسابية والتخزين</h3>
-        <p id="text2">
-            تعمل الحاسبة على إجراء العمليات الحسابية بناءً على
-            القيم التي يدخلها المستخدم. ولا تتضمن النسخة الحالية
-            خاصية حفظ العمليات أو إنشاء سجل للعمليات السابقة.
-        </p>
-    </div>
+        <div class="section">
+            <h3 id="heading1">1. البيانات الشخصية</h3>
+            <p id="text1">
+                لا تطلب الحاسبة من المستخدم إنشاء حساب أو تسجيل الدخول،
+                ولا تطلب إدخال الاسم أو رقم الهاتف أو البريد الإلكتروني
+                أو أي بيانات شخصية لاستخدام العمليات الحسابية.
+            </p>
+        </div>
 
-    <div class="section">
-        <h3 id="heading3">3. الإعلانات</h3>
-        <p id="text3">
-            الحاسبة لا تعرض إعلانات، ولا تتضمن النسخة الحالية
-            خدمات إعلانية أو أكوادًا لعرض الإعلانات.
-        </p>
-    </div>
+        <div class="section">
+            <h3 id="heading2">2. العمليات الحسابية والتخزين</h3>
+            <p id="text2">
+                تعمل الحاسبة على إجراء العمليات الحسابية بناءً على
+                القيم التي يدخلها المستخدم. ولا تتضمن النسخة الحالية
+                خاصية حفظ العمليات أو إنشاء سجل للعمليات السابقة.
+            </p>
+        </div>
 
-    <div class="section">
-        <h3 id="heading4">4. حماية المعلومات</h3>
-        <p id="text4">
-            لا تطلب الحاسبة بيانات شخصية من المستخدم،
-            ولا تعتمد العمليات الحسابية على إرسال بياناته
-            إلى مصدر خارجي. ويقتصر استخدامها على إجراء
-            الحسابات وفق المدخلات التي يحددها المستخدم.
-        </p>
-    </div>
+        <div class="section">
+            <h3 id="heading3">3. الإعلانات</h3>
+            <p id="text3">
+                الحاسبة لا تعرض إعلانات، ولا تتضمن النسخة الحالية
+                خدمات إعلانية أو أكوادًا لعرض الإعلانات.
+            </p>
+        </div>
 
-    <div class="section">
-        <h3 id="heading5">5. طبيعة النتائج وإخلاء المسؤولية</h3>
-        <p id="text5">
-            النتائج التي تقدمها الحاسبة استرشادية وتعتمد على
-            البيانات التي يدخلها المستخدم والمعادلات الحسابية
-            المستخدمة. ولا تمثل توصية استثمارية أو ضمانًا
-            لتحقيق عائد معين. ويجب مراجعة شروط البنك والجهات
-            الرسمية قبل اتخاذ أي قرار مالي.
-        </p>
-    </div>
+        <div class="section">
+            <h3 id="heading4">4. حماية المعلومات</h3>
+            <p id="text4">
+                لا تطلب الحاسبة بيانات شخصية من المستخدم.
+                وتُجرى العمليات الحسابية اعتمادًا على المدخلات
+                التي يحددها المستخدم، ولا يتم إرسال هذه المدخلات
+                إلى جداول Google Sheets أو استخدامها لجلب بيانات السوق.
+            </p>
+        </div>
 
-    <div class="section">
-        <h3 id="heading6">6. تحديث سياسة الخصوصية والتواصل</h3>
-        <p id="text6">
-            قد يتم تحديث هذه السياسة عند إجراء تغييرات على
-            الحاسبة أو طريقة عملها. ويُنصح بمراجعة هذه الصفحة
-            للاطلاع على أي تحديثات. ويمكن التواصل مع إدارة
-            جروب عملاء البنوك المصرية عبر قنوات الجروب الرسمية.
-        </p>
+        <div class="section">
+            <h3 id="heading5">5. بيانات صفحة المؤشرات</h3>
+            <p id="text5">
+                تعرض صفحة مؤشرات أذون الخزانة بيانات السوق من خلال
+                جداول Google Sheets المنشورة والمتاحة للقراءة.
+                ويقتصر اتصال الصفحة بهذه الجداول على جلب بيانات
+                المؤشرات وعرضها للمستخدم. ولا يتم إرسال مدخلات
+                الحاسبة أو العمليات الحسابية إليها.
+            </p>
+        </div>
+
+        <div class="section">
+            <h3 id="heading6">6. طبيعة النتائج وإخلاء المسؤولية</h3>
+            <p id="text6">
+                النتائج التي تقدمها الحاسبة استرشادية وتعتمد على
+                البيانات التي يدخلها المستخدم والمعادلات الحسابية
+                المستخدمة. ولا تمثل توصية استثمارية أو ضمانًا
+                لتحقيق عائد معين. ويجب مراجعة شروط البنك والجهات
+                الرسمية قبل اتخاذ أي قرار مالي.
+            </p>
+        </div>
+
+        <div class="section">
+            <h3 id="heading7">7. تحديث سياسة الخصوصية والتواصل</h3>
+            <p id="text7">
+                قد يتم تحديث هذه السياسة عند إجراء تغييرات على
+                الحاسبة أو طريقة عملها. ويُنصح بمراجعة هذه الصفحة
+                للاطلاع على أي تحديثات. ويمكن التواصل مع إدارة
+                جروب عملاء البنوك المصرية عبر قنوات الجروب الرسمية.
+            </p>
+        </div>
+
     </div>
 
     <a href="index.html" class="back-btn" id="backBtn">
@@ -255,18 +300,24 @@
             [
                 '4. حماية المعلومات',
                 '4. Information Protection',
-                'لا تطلب الحاسبة بيانات شخصية من المستخدم، ولا تعتمد العمليات الحسابية على إرسال بياناته إلى مصدر خارجي. ويقتصر استخدامها على إجراء الحسابات وفق المدخلات التي يحددها المستخدم.',
-                'The calculator does not request personal information. Its calculations do not depend on sending user inputs to an external source. It is used to perform calculations based on the values entered by the user.'
+                'لا تطلب الحاسبة بيانات شخصية من المستخدم. وتُجرى العمليات الحسابية اعتمادًا على المدخلات التي يحددها المستخدم، ولا يتم إرسال هذه المدخلات إلى جداول Google Sheets أو استخدامها لجلب بيانات السوق.',
+                'The calculator does not request personal information. Calculations are performed using the values entered by the user. These inputs are not sent to Google Sheets or used to retrieve market data.'
             ],
             [
-                '5. طبيعة النتائج وإخلاء المسؤولية',
-                '5. Results and Disclaimer',
+                '5. بيانات صفحة المؤشرات',
+                '5. Indicators Page Data',
+                'تعرض صفحة مؤشرات أذون الخزانة بيانات السوق من خلال جداول Google Sheets المنشورة والمتاحة للقراءة. ويقتصر اتصال الصفحة بهذه الجداول على جلب بيانات المؤشرات وعرضها للمستخدم. ولا يتم إرسال مدخلات الحاسبة أو العمليات الحسابية إليها.',
+                'The Treasury Bills Indicators page retrieves market data from published Google Sheets available for reading. Its connection to these sheets is limited to retrieving and displaying indicator data. Calculator inputs and calculations are not sent to these sheets.'
+            ],
+            [
+                '6. طبيعة النتائج وإخلاء المسؤولية',
+                '6. Results and Disclaimer',
                 'النتائج التي تقدمها الحاسبة استرشادية وتعتمد على البيانات التي يدخلها المستخدم والمعادلات الحسابية المستخدمة. ولا تمثل توصية استثمارية أو ضمانًا لتحقيق عائد معين. ويجب مراجعة شروط البنك والجهات الرسمية قبل اتخاذ أي قرار مالي.',
                 'The calculator provides indicative results based on user inputs and the calculation formulas used. These results are not investment advice or a guarantee of any particular return. Users should review the bank terms and official information before making financial decisions.'
             ],
             [
-                '6. تحديث سياسة الخصوصية والتواصل',
-                '6. Policy Updates and Contact',
+                '7. تحديث سياسة الخصوصية والتواصل',
+                '7. Policy Updates and Contact',
                 'قد يتم تحديث هذه السياسة عند إجراء تغييرات على الحاسبة أو طريقة عملها. ويُنصح بمراجعة هذه الصفحة للاطلاع على أي تحديثات. ويمكن التواصل مع إدارة جروب عملاء البنوك المصرية عبر قنوات الجروب الرسمية.',
                 'This policy may be updated when changes are made to the calculator or how it works. Users are encouraged to review this page for updates. The Egyptian Bank Clients Group administration can be contacted through the group’s official channels.'
             ]
@@ -288,3 +339,4 @@
 
 </body>
 </html>
+

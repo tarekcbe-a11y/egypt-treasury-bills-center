@@ -9,17 +9,24 @@
 
 <style>
 *{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
 body{
     background:#0f172a;color:white;font-family:sans-serif;
-    margin:0;padding:12px
+    padding:8px;overflow:hidden
 }
 .container{
-    max-width:650px;margin:auto;background:#1e293b;
-    padding:14px;border:2px solid #ffd700;border-radius:14px
+    width:100%;max-width:420px;
+    height:calc(100dvh - 16px);
+    margin:0 auto;background:#1e293b;
+    padding:12px;border:2px solid #ffd700;
+    border-radius:14px;
+    display:flex;flex-direction:column;
+    overflow:hidden;min-height:0
 }
 .top-row{
-    display:flex;justify-content:space-between;
-    align-items:center;margin-bottom:12px
+    flex:0 0 auto;display:flex;
+    justify-content:space-between;
+    align-items:center;margin-bottom:8px
 }
 .logo{width:50px;height:50px;object-fit:contain}
 .lang-btn{
@@ -27,139 +34,191 @@ body{
     padding:6px 10px;border-radius:6px;
     font-size:12px;font-weight:bold;cursor:pointer
 }
-.sub-title{text-align:center;font-size:13px;margin-bottom:5px}
+.sub-title{
+    text-align:center;font-size:12px;
+    margin-bottom:3px;flex:0 0 auto
+}
 .title{
-    text-align:center;color:#ffd700;font-size:19px;
-    font-weight:bold;line-height:1.6;margin-bottom:15px
+    flex:0 0 auto;text-align:center;
+    color:#ffd700;font-size:17px;
+    font-weight:bold;line-height:1.5;
+    margin:0 0 10px
+}
+.content{
+    flex:1 1 auto;min-height:0;
+    overflow-y:auto;overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    touch-action:pan-y;
+    padding:1px 2px 8px
 }
 .section{
-    background:#0f172a;border:1px solid #ffd700;
-    border-radius:8px;padding:12px;margin-bottom:11px
+    background:#0f172a;
+    border:1px solid #ffd700;
+    border-radius:8px;padding:10px;
+    margin-bottom:9px
 }
-.section h3{color:#ffd700;font-size:15px;margin:0 0 8px}
+.section h3{
+    color:#ffd700;font-size:14px;
+    line-height:1.6;margin:0 0 7px
+}
 .section p{
-    color:#e2e8f0;font-size:13px;line-height:1.9;
-    margin:0 0 9px
+    color:#e2e8f0;font-size:12px;
+    line-height:1.85;margin:0 0 8px;
+    overflow-wrap:anywhere
 }
 .section p:last-child{margin-bottom:0}
-.section ul{padding-inline-start:22px;color:#e2e8f0}
-.section li{font-size:13px;line-height:1.9;margin-bottom:5px}
-.tenors,.comparison{
-    display:grid;grid-template-columns:1fr 1fr;
-    gap:8px;margin-top:10px
-}
-.info-card{
-    background:#1e293b;border:1px solid #64748b;
-    border-radius:7px;padding:10px;text-align:center
-}
-.info-card strong{display:block;color:#ffd700;font-size:18px;margin-bottom:5px}
-.info-card span{font-size:12px;color:#cbd5e1}
-.note{
-    border-right:3px solid #ffd700;padding:9px 10px;
-    background:#1e293b;border-radius:5px;
-    color:#e2e8f0;font-size:12px;line-height:1.9;margin-top:10px
-}
 .navigation{
+    flex:0 0 auto;
     display:grid;grid-template-columns:1fr 1fr;
-    gap:8px;margin-top:15px
+    gap:7px;margin-top:8px;padding-top:3px
 }
 .nav-btn{
-    display:block;text-align:center;text-decoration:none;
-    padding:11px 7px;border-radius:7px;
-    font-size:13px;font-weight:bold
+    display:block;text-align:center;
+    text-decoration:none;padding:10px 6px;
+    border-radius:7px;font-size:12px;
+    font-weight:bold
 }
-.home-btn{background:#ffd700;color:#000;grid-column:1/-1}
-.index-btn{background:#334155;color:white;border:1px solid #ffd700}
-.footer{text-align:center;color:#ffd700;font-size:11px;margin-top:12px}
+.home-btn{
+    background:#ffd700;color:#000;
+    grid-column:1/-1
+}
+.index-btn{
+    background:#334155;color:white;
+    border:1px solid #ffd700
+}
+.footer{
+    flex:0 0 auto;text-align:center;
+    color:#ffd700;font-size:10px;margin-top:7px
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<div class="top-row">
-    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
-    <img src="logo.png" class="logo" alt="Logo">
-</div>
+    <div class="top-row">
+        <button class="lang-btn" id="langBtn"
+                onclick="toggleLang()">English</button>
+        <img src="logo.png" class="logo" alt="Logo">
+    </div>
 
-<div class="sub-title" id="subTitle">جروب عملاء البنوك المصرية</div>
-<div class="title" id="pageTitle"></div>
+    <div class="sub-title" id="subTitle">
+        جروب عملاء البنوك المصرية
+    </div>
 
-<div id="content"></div>
+    <div class="title" id="pageTitle"></div>
 
-<div class="navigation">
-    <a href="index.html" class="nav-btn home-btn" id="homeBtn">العودة للحاسبة</a>
-    <a href="guide.html" class="nav-btn index-btn" id="indexBtn">العودة للفهرس</a>
-</div>
+    <div id="content" class="content"></div>
 
-<div class="footer">Developed by Tarek Metwally</div>
+    <div class="navigation">
+        <a href="index.html" class="nav-btn home-btn" id="homeBtn">
+            العودة للحاسبة
+        </a>
+        <a href="guide.html" class="nav-btn index-btn" id="indexBtn">
+            العودة للفهرس
+        </a>
+    </div>
+
+    <div class="footer">Developed by Tarek Metwally</div>
+
 </div>
 
 <script>
 let isAr=true;
 
 const chapters=[
+
+/* =========================
+   الباب الأول
+========================= */
 {
-title:["الباب الأول: التعريف بأذون الخزانة المصرية",
-"Chapter One: Introduction to Egyptian Treasury Bills"],
+title:[
+"الباب الأول: التعريف بأذون الخزانة المصرية",
+"Chapter One: Introduction to Egyptian Treasury Bills"
+],
 sections:[
-["ما هي أذون الخزانة؟",
+
+[
+"ما هي أذون الخزانة؟",
 "أذون الخزانة هي أوراق مالية حكومية قصيرة الأجل، تصدر بخصم من قيمتها الاسمية، ويحصل حاملها عند تاريخ الاستحقاق على قيمتها الاسمية كاملة.",
 "بمعنى أبسط: يشتري المستثمر الإذن بسعر أقل من قيمته الاسمية، ويكون الفرق بين سعر الشراء والقيمة الاسمية هو العائد الإجمالي قبل الضرائب والمصروفات التي قد تنطبق على العملية.",
 "What Are Treasury Bills?",
 "Treasury bills are short-term government securities issued at a discount to their face value. At maturity, the holder receives the full face value.",
-"In simple terms, an investor buys the bill for less than its face value. The difference between the purchase price and face value represents the gross return before applicable taxes and fees."],
+"In simple terms, an investor buys the bill for less than its face value. The difference between the purchase price and face value represents the gross return before applicable taxes and fees."
+],
 
-["لماذا تسمى أوراقًا صفرية العائد؟",
+[
+"لماذا تسمى أوراقًا صفرية العائد؟",
 "توصف أذون الخزانة بأنها أوراق صفرية العائد (Zero-Coupon Securities)، لأنها لا تصرف كوبونًا أو فائدة دورية خلال مدة الاحتفاظ بها.",
 "يتحقق العائد من الفرق بين القيمة الاسمية التي يستردها المستثمر عند الاستحقاق وسعر الشراء الذي دفعه عند اقتناء الإذن.",
 "Why Are They Called Zero-Coupon Securities?",
 "Treasury bills are described as Zero-Coupon Securities because they do not pay periodic coupons or interest during the holding period.",
-"The return is generated by the difference between the face value received at maturity and the purchase price paid by the investor."],
+"The return is generated by the difference between the face value received at maturity and the purchase price paid by the investor."
+],
 
-["مصطلحات أساسية",
+[
+"مصطلحات أساسية",
 "القيمة الاسمية (Face Value): القيمة التي يستردها حامل الإذن عند تاريخ الاستحقاق.",
 "سعر الشراء (Purchase Price): المبلغ الذي يدفعه المستثمر لشراء الإذن، ويكون أقل من قيمته الاسمية في الإصدار بالخصم.",
 "تاريخ الاستحقاق (Maturity Date): التاريخ المحدد لانتهاء مدة الإذن واسترداد قيمته الاسمية.",
 "Key Terms",
 "Face Value: The amount received by the holder when the bill reaches maturity.",
 "Purchase Price: The amount paid by the investor to buy the bill. For a discounted issue, it is lower than the face value.",
-"Maturity Date: The specified date on which the bill matures and its face value is repaid."],
+"Maturity Date: The specified date on which the bill matures and its face value is repaid."
+],
 
-["مدد أذون الخزانة المصرية",
+[
+"مدد أذون الخزانة المصرية",
 "تُطرح أذون الخزانة بآجال استحقاق رئيسية محددة بالأيام:",
 "91 يومًا - ثلاثة أشهر تقريبًا | 182 يومًا - ستة أشهر تقريبًا | 273 يومًا - تسعة أشهر تقريبًا | 364 يومًا - سنة تقريبًا.",
 "Egyptian Treasury Bill Tenors",
 "The main Treasury bill maturities are measured in days:",
-"91 days - approximately 3 months | 182 days - approximately 6 months | 273 days - approximately 9 months | 364 days - approximately 1 year."],
+"91 days - approximately 3 months | 182 days - approximately 6 months | 273 days - approximately 9 months | 364 days - approximately 1 year."
+],
 
-["كيف يتحقق العائد؟",
+[
+"كيف يتحقق العائد؟",
 "يتحقق العائد الإجمالي من الفرق بين القيمة الاسمية وسعر الشراء. ويعتمد سعر الشراء على معدل العائد ومدة الإذن وطريقة التسعير المعتمدة في عملية الشراء.",
 "بعد ذلك تتم مراعاة الضرائب والمصروفات المطبقة للوصول إلى صافي العائد الفعلي.",
 "How Is the Return Generated?",
 "The gross return is the difference between the face value and the purchase price. The purchase price depends on the yield rate, the bill tenor and the pricing method applied to the transaction.",
-"Applicable taxes and fees are then taken into account to determine the actual net return."],
+"Applicable taxes and fees are then taken into account to determine the actual net return."
+],
 
-["من يطرح أذون الخزانة؟",
+[
+"من يطرح أذون الخزانة؟",
 "تُطرح أذون الخزانة الحكومية من خلال عطاءات ينظمها البنك المركزي المصري نيابة عن وزارة المالية.",
 "يمكن متابعة إعلانات العطاءات ونتائجها من خلال القنوات الرسمية للبنك المركزي المصري.",
 "Who Issues Treasury Bills?",
 "Government Treasury bills are offered through auctions organized by the Central Bank of Egypt on behalf of the Ministry of Finance.",
-"Auction announcements and results can be followed through the official channels of the Central Bank of Egypt."]
+"Auction announcements and results can be followed through the official channels of the Central Bank of Egypt."
+]
+
 ]
 },
+
+/* =========================
+   الباب الثاني
+========================= */
 {
-title:["الباب الثاني: كيف تشتري أذون الخزانة؟",
-"Chapter Two: How to Buy Treasury Bills"],
+title:[
+"الباب الثاني: كيف تشتري أذون الخزانة؟",
+"Chapter Two: How to Buy Treasury Bills"
+],
 sections:[
-["من أين يمكن شراء أذون الخزانة؟",
+
+[
+"من أين يمكن شراء أذون الخزانة؟",
 "يمكن للأفراد شراء أذون الخزانة من خلال البنوك التي تقدم خدمة التعامل في الأوراق المالية الحكومية، وفقًا لشروط كل بنك وإجراءاته.",
 "يجب التواصل مع البنك لمعرفة الحد الأدنى للاشتراك والعمولات والمواعيد والمستندات المطلوبة.",
 "Where Can You Buy Treasury Bills?",
 "Individuals can purchase Treasury bills through banks that provide government securities services, subject to each bank's terms and procedures.",
-"Contact the bank to confirm minimum subscription amounts, fees, deadlines and required documents."],
+"Contact the bank to confirm minimum subscription amounts, fees, deadlines and required documents."
+],
 
-["خطوات الشراء",
+[
+"خطوات الشراء",
 "1. التواصل مع البنك والاستفسار عن خدمة شراء أذون الخزانة.",
 "2. تحديد المبلغ المراد استثماره ومدة الإذن.",
 "3. معرفة معدل العائد المتوقع وشروط العملية والرسوم.",
@@ -170,9 +229,11 @@ sections:[
 "2. Determine the amount and tenor.",
 "3. Confirm the expected yield, transaction terms and fees.",
 "4. Submit the purchase request according to the bank's procedures.",
-"5. Obtain transaction confirmation and check the bill details and maturity date."],
+"5. Obtain transaction confirmation and check the bill details and maturity date."
+],
 
-["ما الذي يجب التأكد منه قبل الشراء؟",
+[
+"ما الذي يجب التأكد منه قبل الشراء؟",
 "• القيمة الاسمية المطلوبة والحد الأدنى للشراء.",
 "• سعر الشراء الفعلي ومعدل العائد.",
 "• الضريبة والعمولات والمصروفات.",
@@ -183,159 +244,338 @@ sections:[
 "• Actual purchase price and yield rate.",
 "• Tax, commissions and other fees.",
 "• Issue date and maturity date.",
-"• Procedures for selling before maturity."],
+"• Procedures for selling before maturity."
+],
 
-["اختيار مدة الإذن",
+[
+"اختيار مدة الإذن",
 "تختلف مدد الأذون بين 91 و182 و273 و364 يومًا. اختيار المدة يتوقف على توقيت احتياجك للأموال ومدى ملاءمة تاريخ الاستحقاق لخطتك المالية.",
 "لا تختَر المدة اعتمادًا على معدل العائد وحده؛ راجع موعد احتياجك للسيولة وشروط البنك.",
 "Choosing the Tenor",
 "Treasury bills are commonly offered for 91, 182, 273 and 364 days. Your choice should reflect when you may need the funds and whether the maturity date fits your financial plan.",
-"Do not choose a tenor based only on the yield rate. Consider your liquidity needs and the bank's terms."]
+"Do not choose a tenor based only on the yield rate. Consider your liquidity needs and the bank's terms."
+]
+
 ]
 },
+
+/* =========================
+   الباب الثالث
+========================= */
 {
-title:["الباب الثالث: كيف تُحسب أرباح أذون الخزانة؟",
-"Chapter Three: How Are Treasury Bills Returns Calculated?"],
+title:[
+"الباب الثالث: كيف تُحسب أرباح أذون الخزانة؟",
+"Chapter Three: How Are Treasury Bills Returns Calculated?"
+],
 sections:[
-["فكرة حساب العائد",
+
+[
+"فكرة حساب العائد",
 "يُشترى الإذن بسعر أقل من قيمته الاسمية، ويُسترد بقيمته الاسمية عند الاستحقاق. الفرق بين القيمتين هو العائد الإجمالي قبل الضرائب والمصروفات.",
 "Understanding the Return",
-"A bill is purchased for less than its face value and redeemed at face value at maturity. The difference is the gross return before taxes and fees."],
+"A bill is purchased for less than its face value and redeemed at face value at maturity. The difference is the gross return before taxes and fees."
+],
 
-["مثال توضيحي",
+[
+"مثال توضيحي",
 "إذا كانت القيمة الاسمية 100,000 جنيه، وسعر الشراء 94,000 جنيه، فإن العائد الإجمالي يساوي 6,000 جنيه قبل الضرائب والمصروفات.",
 "هذا مثال تعليمي مبسط، وليس سعرًا أو عائدًا فعليًا صادرًا عن بنك.",
 "Illustrative Example",
 "If the face value is EGP 100,000 and the purchase price is EGP 94,000, the gross return is EGP 6,000 before taxes and fees.",
-"This is a simplified educational example, not an actual bank quote or market yield."],
+"This is a simplified educational example, not an actual bank quote or market yield."
+],
 
-["الفرق بين العائد الإجمالي والصافي",
+[
+"الفرق بين العائد الإجمالي والصافي",
 "العائد الإجمالي هو الفرق بين القيمة الاسمية وسعر الشراء.",
 "العائد الصافي هو العائد المتبقي بعد خصم الضرائب والمصروفات التي تنطبق على العملية.",
 "Gross Return vs. Net Return",
 "The gross return is the difference between face value and purchase price.",
-"The net return is what remains after applicable taxes and fees are deducted."],
+"The net return is what remains after applicable taxes and fees are deducted."
+],
 
-["العائد السنوي",
+[
+"العائد السنوي",
 "يساعد العائد السنوي على مقارنة عوائد مدد مختلفة على أساس سنوي موحد. ويجب التمييز بين معدل العائد المعلن والعائد الفعلي بعد الضرائب والمصروفات.",
 "Annualized Yield",
-"Annualized yield helps compare returns across different tenors on a common annual basis. Distinguish between the quoted yield and the effective return after taxes and fees."],
+"Annualized yield helps compare returns across different tenors on a common annual basis. Distinguish between the quoted yield and the effective return after taxes and fees."
+],
 
-["استخدام الحاسبة",
+[
+"استخدام الحاسبة",
 "أدخل القيمة الاسمية ومعدل العائد ومدة الإذن، ثم اضغط احسب الآن. تعرض الحاسبة سعر الشراء والربح الإجمالي والضريبة والربح الصافي والمبلغ المسترد والعائد السنوي وفق معادلاتها ومدخلاتك.",
 "Using the Calculator",
-"Enter the face value, yield rate and tenor, then select Calculate. The calculator displays the purchase price, gross return, tax, net return, maturity amount and annual yield based on its formulas and your inputs."]
+"Enter the face value, yield rate and tenor, then select Calculate. The calculator displays the purchase price, gross return, tax, net return, maturity amount and annual yield based on its formulas and your inputs."
+]
+
 ]
 },
+
+/* =========================
+   الباب الرابع
+========================= */
 {
-title:["الباب الرابع: السوق الأولي والسوق الثانوي",
-"Chapter Four: Primary and Secondary Markets"],
+title:[
+"الباب الرابع: السوق الأولي والسوق الثانوي",
+"Chapter Four: Primary and Secondary Markets"
+],
 sections:[
-["السوق الأولي",
+
+[
+"السوق الأولي",
 "هو السوق الذي يتم فيه شراء أذون الخزانة عند طرحها من خلال العطاءات. يتقدم المشاركون بعروض الشراء وفق إجراءات الطرح، وتُحدد نتائج العطاء وفق آلية القبول والتسعير.",
 "Primary Market",
-"The primary market is where Treasury bills are purchased when they are first offered through auctions. Participants submit bids under the issuance procedures, and auction results determine accepted bids and pricing."],
+"The primary market is where Treasury bills are purchased when they are first offered through auctions. Participants submit bids under the issuance procedures, and auction results determine accepted bids and pricing."
+],
 
-["السوق الثانوي",
+[
+"السوق الثانوي",
 "هو السوق الذي يتم فيه تداول أذون سبق إصدارها بين المستثمرين وفق القواعد والإجراءات المعمول بها.",
 "Secondary Market",
-"The secondary market is where previously issued Treasury bills are traded between investors under the applicable rules and procedures."],
+"The secondary market is where previously issued Treasury bills are traded between investors under the applicable rules and procedures."
+],
 
-["أهم الفروق",
+[
+"أهم الفروق",
 "السوق الأولي: شراء عند الإصدار من خلال الطرح والعطاءات.",
 "السوق الثانوي: شراء أو بيع أذون سبق إصدارها قبل تاريخ استحقاقها.",
 "قد يختلف سعر الشراء والعائد والرسوم بين السوقين.",
 "Key Differences",
 "Primary market: Purchasing at issuance through an offering and auction.",
 "Secondary market: Buying or selling bills that have already been issued before maturity.",
-"Purchase prices, yields and fees may differ between the two markets."],
+"Purchase prices, yields and fees may differ between the two markets."
+],
 
-["البيع قبل الاستحقاق",
+[
+"البيع قبل الاستحقاق",
 "قد يتيح السوق الثانوي للمستثمر بيع الإذن قبل تاريخ استحقاقه، لكن سعر البيع قد يكون أعلى أو أقل من سعر الشراء، ويتوقف ذلك على ظروف السوق والمدة المتبقية ومعدلات العائد.",
 "Selling Before Maturity",
-"The secondary market may allow an investor to sell a bill before maturity. The sale price may be higher or lower than the purchase price depending on market conditions, remaining tenor and yield rates."],
+"The secondary market may allow an investor to sell a bill before maturity. The sale price may be higher or lower than the purchase price depending on market conditions, remaining tenor and yield rates."
+],
 
-["نقطة مهمة",
+[
+"نقطة مهمة",
 "الاحتفاظ بالإذن حتى الاستحقاق يختلف عن بيعه قبل الاستحقاق. لذلك ينبغي معرفة سعر البيع المتوقع والرسوم والضرائب المطبقة قبل اتخاذ قرار البيع.",
 "Important Note",
-"Holding a bill to maturity differs from selling it early. Check the expected sale price, fees and applicable taxes before deciding to sell."]
+"Holding a bill to maturity differs from selling it early. Check the expected sale price, fees and applicable taxes before deciding to sell."
+]
+
 ]
 },
+
+/* =========================
+   الباب الخامس
+========================= */
 {
-title:["الباب الخامس: الضرائب على أذون الخزانة",
-"Chapter Five: Taxes on Treasury Bills"],
+title:[
+"الباب الخامس: الضرائب على أذون الخزانة",
+"Chapter Five: Taxes on Treasury Bills"
+],
 sections:[
-["ضريبة عائد أذون الخزانة",
+
+[
+"ضريبة عائد أذون الخزانة",
 "تنص المادة 58 من قانون الضريبة على الدخل رقم 91 لسنة 2005 على خضوع عوائد أذون الخزانة لضريبة بسعر 20%، مع خصم الضريبة وتوريدها وفق الإجراءات القانونية.",
 "Treasury Bill Return Tax",
-"Article 58 of Income Tax Law No. 91 of 2005 provides for a 20% tax on Treasury bill yields, with withholding and remittance under the applicable procedures."],
+"Article 58 of Income Tax Law No. 91 of 2005 provides for a 20% tax on Treasury bill yields, with withholding and remittance under the applicable procedures."
+],
 
-["كيف تؤثر الضريبة على صافي العائد؟",
+[
+"كيف تؤثر الضريبة على صافي العائد؟",
 "عند احتساب صافي العائد، تُخصم الضريبة المطبقة من العائد الخاضع لها. لذلك يكون صافي العائد أقل من العائد الإجمالي.",
 "How Does Tax Affect Net Return?",
-"When calculating net return, the applicable tax is deducted from the taxable yield. Therefore, net return is lower than gross return."],
+"When calculating net return, the applicable tax is deducted from the taxable yield. Therefore, net return is lower than gross return."
+],
 
-["مثال حسابي مبسط",
+[
+"مثال حسابي مبسط",
 "إذا كان العائد الخاضع للضريبة 6,000 جنيه، وكانت الضريبة 20%، فإن قيمة الضريبة في هذا المثال تساوي 1,200 جنيه، ويتبقى 4,800 جنيه قبل أي مصروفات أخرى.",
 "هذا المثال للتوضيح الحسابي فقط، ولا يمثل كشف تسوية ضريبية لعملية فعلية.",
 "Simplified Tax Example",
 "If the taxable return is EGP 6,000 and the tax rate is 20%, the tax in this example is EGP 1,200, leaving EGP 4,800 before any other fees.",
-"This is an arithmetic illustration only, not an actual tax settlement statement."],
+"This is an arithmetic illustration only, not an actual tax settlement statement."
+],
 
-["الضرائب في السوق الثانوي",
+[
+"الضرائب في السوق الثانوي",
 "قد تختلف المعالجة الضريبية للصفقات في السوق الثانوي عن ضريبة العائد عند الاستحقاق. وتشير قواعد التعامل في الأوراق الحكومية إلى وجود ضريبة خصم على العائد، ومعالجة مستقلة لأرباح التداول وفق طبيعة العملية وصفة المستثمر.",
 "يجب الرجوع إلى البنك أو أمين الحفظ والجهة المختصة لتحديد المعاملة المطبقة على كل صفقة.",
 "Secondary Market Tax",
 "The tax treatment of secondary-market trades may differ from the tax on yield at redemption. Government securities rules distinguish withholding tax on yield from the separate treatment of trading gains, depending on the transaction and investor status.",
-"Check with the bank or custodian and the competent authority to determine the treatment applicable to each trade."],
+"Check with the bank or custodian and the competent authority to determine the treatment applicable to each trade."
+],
 
-["تنبيه ضريبي",
+[
+"تنبيه ضريبي",
 "المعلومات الواردة للتوعية العامة، ولا تغني عن مراجعة القوانين والقرارات والتعليمات الضريبية السارية أو الحصول على إفادة من البنك والجهات المختصة. وقد تختلف المعاملة بحسب نوع العملية وصفة المستثمر والاتفاقيات الضريبية ذات الصلة.",
 "Tax Notice",
-"This information is for general education and does not replace reviewing current tax laws, decrees and instructions or obtaining confirmation from the bank and competent authorities. Treatment may vary by transaction type, investor status and relevant tax treaties."]
+"This information is for general education and does not replace reviewing current tax laws, decrees and instructions or obtaining confirmation from the bank and competent authorities. Treatment may vary by transaction type, investor status and relevant tax treaties."
+]
+
 ]
 },
+
+/* =========================
+   الباب السادس
+========================= */
 {
-title:["الباب السادس: الأسئلة الشائعة",
-"Chapter Six: Frequently Asked Questions"],
+title:[
+"الباب السادس: الأسئلة الشائعة",
+"Chapter Six: Frequently Asked Questions"
+],
 sections:[
-["هل أذون الخزانة شهادة ادخار؟",
+
+[
+"هل أذون الخزانة شهادة ادخار؟",
 "لا. أذون الخزانة أوراق مالية حكومية قصيرة الأجل، بينما الشهادة منتج ادخاري يصدره البنك وفق شروطه. تختلف طبيعة كل منهما وطريقة احتساب العائد والتعامل معها.",
 "Are Treasury Bills Bank Certificates?",
-"No. Treasury bills are short-term government securities, while a certificate is a savings product issued by a bank under its own terms. Their structure, return calculation and handling differ."],
+"No. Treasury bills are short-term government securities, while a certificate is a savings product issued by a bank under its own terms. Their structure, return calculation and handling differ."
+],
 
-["هل أحصل على العائد شهريًا؟",
+[
+"هل أحصل على العائد شهريًا؟",
 "أذون الخزانة لا تصرف عادةً كوبونًا دوريًا؛ يتحقق العائد من الفرق بين سعر الشراء والقيمة الاسمية المستردة عند الاستحقاق.",
 "Is the Return Paid Monthly?",
-"Treasury bills generally do not pay periodic coupons. The return is generated by the difference between the purchase price and the face value received at maturity."],
+"Treasury bills generally do not pay periodic coupons. The return is generated by the difference between the purchase price and the face value received at maturity."
+],
 
-["هل يمكن بيع الإذن قبل الاستحقاق؟",
+[
+"هل يمكن بيع الإذن قبل الاستحقاق؟",
 "قد يكون ذلك ممكنًا من خلال السوق الثانوي، وفق شروط البنك وتوافر التداول والسعر المتاح وقت البيع.",
 "Can I Sell Before Maturity?",
-"This may be possible through the secondary market, subject to the bank's terms, market availability and the price offered at the time of sale."],
+"This may be possible through the secondary market, subject to the bank's terms, market availability and the price offered at the time of sale."
+],
 
-["هل العائد مضمون بنفس النسبة المعلنة؟",
+[
+"هل العائد مضمون بنفس النسبة المعلنة؟",
 "العائد الفعلي يتوقف على سعر الشراء والمدة والضرائب والمصروفات. كما أن البيع قبل الاستحقاق قد يؤدي إلى نتيجة مختلفة عن الاحتفاظ بالإذن حتى نهايته.",
 "Is the Advertised Yield Guaranteed?",
-"The effective return depends on the purchase price, tenor, taxes and fees. Selling before maturity may produce a different result from holding the bill until maturity."],
+"The effective return depends on the purchase price, tenor, taxes and fees. Selling before maturity may produce a different result from holding the bill until maturity."
+],
 
-["كيف أعرف مواعيد العطاءات والنتائج؟",
+[
+"كيف أعرف مواعيد العطاءات والنتائج؟",
 "يمكن متابعة إعلانات ونتائج عطاءات أذون الخزانة من خلال الموقع الرسمي للبنك المركزي المصري، أو الاستفسار من البنك الذي تتعامل معه.",
 "How Can I Find Auction Dates and Results?",
-"You can follow Treasury bill auction announcements and results on the official Central Bank of Egypt website or ask your bank."],
+"You can follow Treasury bill auction announcements and results on the official Central Bank of Egypt website or ask your bank."
+],
 
-["هل الحاسبة تعطي سعرًا ملزمًا للشراء؟",
+[
+"هل الحاسبة تعطي سعرًا ملزمًا للشراء؟",
 "لا. الحاسبة أداة استرشادية تعتمد على المدخلات التي يحددها المستخدم. السعر النهائي وشروط العملية يتم تأكيدهما من البنك وقت تنفيذ الشراء.",
 "Does the Calculator Provide a Binding Purchase Price?",
-"No. The calculator is an indicative tool based on user inputs. The final price and transaction terms must be confirmed by the bank at the time of purchase."]
+"No. The calculator is an indicative tool based on user inputs. The final price and transaction terms must be confirmed by the bank at the time of purchase."
+]
+
+]
+},
+
+/* =========================
+   الباب السابع الجديد
+========================= */
+{
+title:[
+"الباب السابع: مؤشرات أذون الخزانة المصرية",
+"Chapter Seven: Egyptian Treasury Bills Indicators"
+],
+sections:[
+
+[
+"ما المقصود بمؤشرات أذون الخزانة؟",
+"مؤشرات أذون الخزانة هي بيانات منظمة تساعد على متابعة نتائج عطاءات الأذون ومعدلات العائد عبر مدد الاستحقاق المختلفة. وتتيح قراءة حركة العائد ومقارنة النتائج بين جلسات الطرح.",
+"Treasury Bills Indicators",
+"Treasury bills indicators are organized data that help track auction results and yield rates across different maturities. They make it easier to review yield movements and compare results across auction sessions."
+],
+
+[
+"تاريخ الجلسة وتاريخ الإصدار والاستحقاق",
+"تاريخ الجلسة هو تاريخ انعقاد جلسة العطاء أو تسجيل نتيجتها.",
+"تاريخ الإصدار هو التاريخ الذي يبدأ فيه أجل الإذن وفق بيانات الإصدار.",
+"تاريخ الاستحقاق هو التاريخ المحدد لانتهاء أجل الإذن واسترداد قيمته الاسمية.",
+"Session, Issue and Maturity Dates",
+"The session date is the date on which the auction session takes place or its result is recorded.",
+"The issue date is the date on which the bill's tenor begins, according to the issuance data.",
+"The maturity date is the specified date on which the bill reaches maturity and its face value is repaid."
+],
+
+[
+"متوسط العائد",
+"متوسط العائد هو النسبة المئوية التي تلخص مستويات العائد المسجلة في نتائج الطرح وفق البيانات المعروضة. وهو مؤشر للمقارنة والمتابعة، وليس بالضرورة السعر الذي سيحصل عليه كل مستثمر.",
+"Average Yield",
+"The average yield is the percentage summarizing the yield levels recorded in the offering results according to the displayed data. It is a tracking and comparison indicator, not necessarily the rate offered to every investor."
+],
+
+[
+"مدد أذون الخزانة في المؤشرات",
+"تعرض المؤشرات مددًا مختلفة بحسب البيانات المسجلة، ومن بينها 91 و182 و273 و364 يومًا، وقد تظهر مدد أخرى مثل 357 يومًا وفق نتيجة الطرح الفعلية.",
+"Tenors Shown in the Indicators",
+"The indicators display different tenors according to the recorded data, including 91, 182, 273 and 364 days. Other tenors, such as 357 days, may also appear depending on the actual auction result."
+],
+
+[
+"المؤشرات التاريخية ومقارنة العوائد",
+"تساعد البيانات التاريخية على متابعة تغير متوسطات العائد من جلسة إلى أخرى، ومقارنة العوائد بين مدد الاستحقاق المختلفة.",
+"عند المقارنة، تأكد من اختيار المدة المناسبة ومراجعة تاريخ الجلسة؛ لأن اختلاف التوقيت أو مدة الإذن قد يغير دلالة المقارنة.",
+"Historical Indicators and Yield Comparison",
+"Historical data helps track changes in average yields from one session to another and compare yields across different maturities.",
+"When comparing results, make sure to select the relevant tenor and review the session date, as timing and maturity differences can affect the comparison."
+],
+
+[
+"تحديث البيانات ومصدرها",
+"تعتمد صفحة المؤشرات على بيانات منشورة في جداول Google Sheets، ويتم عرض البيانات المتاحة عند تحديث الصفحة أو طلب تحديث البيانات.",
+"قد يتوقف ظهور أحدث النتائج على توقيت إدخالها ونشرها في مصدر البيانات؛ لذلك لا يعني عدم ظهور نتيجة أن عطاءً لم يُعقد.",
+"Data Updates and Source",
+"The indicators page uses data published in Google Sheets and displays the available data when the page is refreshed or an update is requested.",
+"The appearance of the latest results depends on when they are entered and published in the data source. Therefore, the absence of a displayed result does not mean that no auction took place."
+],
+
+[
+"كيف تقرأ صفحة المؤشرات؟",
+"راجع تاريخ الجلسة أولًا، ثم تاريخ الإصدار وتاريخ الاستحقاق لتحديد الإذن المقصود.",
+"بعد ذلك راجع مدة الإذن ومتوسط العائد، واستخدم العرض التاريخي لمقارنة النتائج السابقة بالنتائج الأحدث.",
+"How to Read the Indicators Page",
+"First, review the session date, then the issue date and maturity date to identify the relevant bill.",
+"Next, review the tenor and average yield, and use the historical view to compare previous results with the latest results."
+],
+
+[
+"تنبيه مهم",
+"المؤشرات أداة معلوماتية واسترشادية لمتابعة البيانات المنشورة، ولا تمثل عرضًا ملزمًا للبيع أو الشراء، ولا تضمن تحقيق عائد محدد. تختلف الأسعار والعوائد الفعلية بحسب توقيت العملية وشروط البنك وظروف السوق والضرائب والمصروفات المطبقة.",
+"Important Notice",
+"The indicators are an informational and indicative tool for tracking published data. They are not a binding offer to buy or sell and do not guarantee a specific return. Actual prices and yields vary according to transaction timing, bank terms, market conditions and applicable taxes and fees."
+]
+
 ]
 }
 ];
 
+/* =========================
+   عرض الأبواب واللغة
+========================= */
+
 let selectedChapter=1;
 
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g,function(char){
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+        }[char];
+    });
+}
+
+function hasArabic(value){
+    return /[\u0600-\u06FF]/.test(value);
+}
+
 function renderChapter(){
+
     const chapter=chapters[selectedChapter-1];
+
     document.title=chapter.title[isAr?0:1];
 
     $("pageTitle").innerText=chapter.title[isAr?0:1];
@@ -343,48 +583,94 @@ function renderChapter(){
     let html="";
 
     chapter.sections.forEach(section=>{
-        const heading=section[isAr?0:3];
-        html+=`<div class="section"><h3>${heading}</h3>`;
 
-        for(let i=1;i<=2;i++){
-            const paragraph=section[isAr?i:i+3];
-            if(paragraph) html+=`<p>${paragraph}</p>`;
+        let englishHeadingIndex=-1;
+
+        for(let i=1;i<section.length;i++){
+
+            if(!hasArabic(section[i])){
+                englishHeadingIndex=i;
+                break;
+            }
+
         }
 
+        if(englishHeadingIndex<0){
+            englishHeadingIndex=section.length;
+        }
+
+        const heading=section[isAr?0:englishHeadingIndex];
+
+        const paragraphs=isAr
+            ?section.slice(1,englishHeadingIndex)
+            :section.slice(englishHeadingIndex+1);
+
+        html+=`<div class="section"><h3>${escapeHTML(heading||"")}</h3>`;
+
+        paragraphs.forEach(paragraph=>{
+
+            if(paragraph){
+                html+=`<p>${escapeHTML(paragraph)}</p>`;
+            }
+
+        });
+
         html+="</div>";
+
     });
 
     $("content").innerHTML=html;
+
+    // يبدأ كل باب من أعلى المحتوى
+    $("content").scrollTop=0;
 
     $("subTitle").innerText=isAr
         ?"جروب عملاء البنوك المصرية"
         :"Egyptian Bank Clients Group";
 
     $("homeBtn").innerText=isAr
-        ?"العودة للحاسبة":"Back to Calculator";
+        ?"العودة للحاسبة"
+        :"Back to Calculator";
 
     $("indexBtn").innerText=isAr
-        ?"العودة للفهرس":"Back to Index";
+        ?"العودة للفهرس"
+        :"Back to Index";
+
+    $("langBtn").innerText=isAr
+        ?"English"
+        :"العربية";
 }
 
 function toggleLang(){
+
     isAr=!isAr;
+
     document.documentElement.lang=isAr?"ar":"en";
+
     document.documentElement.dir=isAr?"rtl":"ltr";
-    $("langBtn").innerText=isAr?"English":"العربية";
+
     renderChapter();
 }
 
+/* =========================
+   تحديد الباب من الرابط
+========================= */
+
 const params=new URLSearchParams(window.location.search);
+
 const requested=parseInt(params.get("chapter"),10);
 
-if(Number.isInteger(requested)&&requested>=1&&requested<=6){
+if(Number.isInteger(requested)&&requested>=1&&requested<=7){
     selectedChapter=requested;
 }
 
-function $(id){return document.getElementById(id);}
+function $(id){
+    return document.getElementById(id);
+}
 
 window.onload=renderChapter;
+
 </script>
 </body>
 </html>
+

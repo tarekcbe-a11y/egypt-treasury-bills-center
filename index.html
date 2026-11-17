@@ -199,12 +199,51 @@
             white-space: nowrap;
         }
 
+        /* صندوق المبلغ المسترد - نفس المساحة دون تكبير */
         .total-box {
             border: 2px solid #ff4d4d;
             padding: 8px;
             border-radius: 6px;
             text-align: center;
             margin-top: 8px;
+            box-sizing: border-box;
+        }
+
+        .total-title {
+            display: block;
+            font-size: 12px;
+            line-height: 1.2;
+            color: white;
+            margin: 0;
+        }
+
+        .total-amount {
+            display: block;
+            margin: 3px 0;
+            color: #ffd700;
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .total-divider {
+            height: 1px;
+            background: #ff4d4d;
+            margin: 5px 0;
+            border: 0;
+        }
+
+        .annual-yield {
+            display: block;
+            font-size: 12px;
+            line-height: 1.2;
+            margin: 0;
+            color: #ffd700;
+        }
+
+        .annual-yield b {
+            font-size: 15px;
         }
 
         /* زرا إدخال جديد ومؤشرات الأذون */
@@ -349,15 +388,17 @@
     </div>
 
     <div class="total-box">
-        <span id="lblTotal" style="font-size:12px">
-            المبلغ المسترد نهاية المدة:
+        <span id="lblTotal" class="total-title">
+            المبلغ المسترد نهاية المدة
         </span>
 
-        <h4 id="resTotal" style="margin:3px 0 0 0; font-size:17px;">0</h4>
+        <h4 id="resTotal" class="total-amount">0</h4>
 
-        <span id="lblAnnualYield" style="font-size:12px; margin-top:4px; color:#ffd700; display:block;">
+        <hr class="total-divider">
+
+        <span id="lblAnnualYield" class="annual-yield">
             نسبة العائد السنوي:
-            <b id="resAnnualYield" style="font-size:15px;">0</b>%
+            <b id="resAnnualYield">0</b>%
         </span>
     </div>
 
@@ -461,12 +502,12 @@
         $('lblNet').innerText = isAr ? 'الربح الصافي' : 'Net Profit';
 
         $('lblTotal').innerText = isAr
-            ? 'المبلغ المسترد نهاية المدة:'
-            : 'Amount at Maturity:';
+            ? 'المبلغ المسترد نهاية المدة'
+            : 'Amount at Maturity';
 
         $('lblAnnualYield').innerHTML = isAr
-            ? 'نسبة العائد السنوي: <b id="resAnnualYield" style="font-size:15px;">0</b>%'
-            : 'Net Annual Yield: <b id="resAnnualYield" style="font-size:15px;">0</b>%';
+            ? 'نسبة العائد السنوي: <b id="resAnnualYield">0</b>%'
+            : 'Net Annual Yield: <b id="resAnnualYield">0</b>%';
 
         $('nominal').placeholder = isAr ? 'القيمة' : 'Nominal Value';
         $('rate').placeholder = isAr ? 'سعر العائد السنوي' : 'Annual Yield Rate';
@@ -545,7 +586,7 @@
         $('resTax').innerText = formatNumber(tax);
         $('resNet').innerText = formatNumber(netProfit);
         $('resTotal').innerText = formatNumber(finalAmount);
-        $('resAnnualYield').innerText = annualYield.toFixed(2);
+        $('resAnnualYield').innerText = annualYield.toFixed(3);
     }
 
     function newEntry() {
@@ -580,3 +621,4 @@
 
 </body>
 </html>
+

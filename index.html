@@ -39,10 +39,9 @@
 
         body {
             position: fixed;
-            top: var(--viewport-top, 0px);
-            left: 0;
+            inset: 0;
             width: 100%;
-            height: var(--visible-height, 100dvh);
+            height: 100%;
             background: #0f172a;
             color: white;
             font-family: sans-serif;
@@ -194,7 +193,6 @@
         .pv-card {
             background: #0f172a;
             height: 42px;
-            box-sizing: border-box;
             padding: 0 8px;
             border-radius: 6px;
             border: 1px solid #ffd700;
@@ -222,14 +220,12 @@
             white-space: nowrap;
         }
 
-        /* صندوق المبلغ المسترد */
         .total-box {
             border: 2px solid #ff4d4d;
             padding: 8px;
             border-radius: 6px;
             text-align: center;
             margin-top: 8px;
-            box-sizing: border-box;
         }
 
         .total-title {
@@ -291,7 +287,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-sizing: border-box;
         }
 
         .new-btn {
@@ -454,7 +449,10 @@
 
     const $ = id => document.getElementById(id);
 
-    /* ضبط الحاسبة حسب مساحة Safari المرئية */
+    let originalScale = 1;
+    let keyboardOpen = false;
+
+    /* حساب الحجم عند فتح الصفحة أو تغيير الاتجاه فقط */
     function fitCalculator() {
         const calculator = $('calculator');
         if (!calculator) return;
@@ -485,7 +483,7 @@
 
         calculator.style.setProperty('--fit-scale', '1');
 
-        const availableHeight = visibleHeight - 16;
+        const availableHeight = visibleHeight - 75;
         const availableWidth = visibleWidth - 8;
 
         const naturalHeight = calculator.offsetHeight;
@@ -494,32 +492,49 @@
         const heightScale = availableHeight / naturalHeight;
         const widthScale = availableWidth / naturalWidth;
 
-        const scale = Math.min(1, heightScale, widthScale);
+        originalScale = Math.min(1, heightScale, widthScale);
 
         calculator.style.setProperty(
             '--fit-scale',
-            Math.max(0.1, scale).toString()
+            Math.max(0.1, originalScale).toString()
         );
     }
 
-    function scheduleFit() {
-        requestAnimationFrame(fitCalculator);
+    /* عند ظهور لوحة المفاتيح لا نعيد حساب حجم الحاسبة */
+    function detectKeyboard() {
+        if (!window.visualViewport) return;
+
+        const keyboardThreshold = window.innerHeight * 0.75;
+
+        keyboardOpen =
+            window.visualViewport.height < keyboardThreshold;
     }
 
     window.addEventListener('load', () => {
         setMarket('primary');
-        scheduleFit();
+        setTimeout(fitCalculator, 100);
     });
 
-    window.addEventListener('resize', scheduleFit);
-
     window.addEventListener('orientationchange', () => {
-        setTimeout(scheduleFit, 300);
+        setTimeout(fitCalculator, 400);
+    });
+
+    window.addEventListener('resize', () => {
+        detectKeyboard();
+
+        if (!keyboardOpen) {
+            fitCalculator();
+        }
     });
 
     if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', scheduleFit);
-        window.visualViewport.addEventListener('scroll', scheduleFit);
+        window.visualViewport.addEventListener('resize', () => {
+            detectKeyboard();
+
+            if (!keyboardOpen) {
+                fitCalculator();
+            }
+        });
     }
 
     function formatNumber(value, decimals = 2) {
@@ -610,7 +625,6 @@
 
         setMarket(currentType);
         updatePresentValue();
-        scheduleFit();
     }
 
     function setMarket(type) {
@@ -708,4 +722,3 @@
 
 </body>
 </html>
-

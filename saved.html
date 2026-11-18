@@ -9,55 +9,140 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
-    margin:0;padding:8px;background:#0f172a;color:white;
-    font-family:Arial,sans-serif;touch-action:pan-y
+    margin:0;
+    padding:8px;
+    background:#0f172a;
+    color:white;
+    font-family:Arial,sans-serif;
+    touch-action:pan-y
 }
+
 .container{
-    max-width:420px;margin:auto;background:#1e293b;
-    padding:12px;border:2px solid #ffd700;border-radius:14px;
+    max-width:420px;
+    margin:auto;
+    background:#1e293b;
+    padding:12px;
+    border:2px solid #ffd700;
+    border-radius:14px;
 }
-.header{display:flex;justify-content:space-between;align-items:center}
-.logo{width:48px;height:auto}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+
+.logo{
+    width:48px;
+    height:auto
+}
+
 .lang{
-    background:#ffd700;color:#111;border:0;border-radius:7px;
-    padding:9px 15px;font-weight:bold
+    background:#ffd700;
+    color:#111;
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    font-weight:bold
 }
-h1{text-align:center;color:#ffd700;font-size:23px;margin:16px 0 10px}
-.group{text-align:center;font-size:16px;margin-bottom:18px}
-.tabs{display:flex;gap:8px;margin-bottom:12px}
+
+h1{
+    text-align:center;
+    color:#ffd700;
+    font-size:23px;
+    margin:12px 0 14px
+}
+
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:12px
+}
+
 .tab{
-    flex:1;min-width:0;padding:13px 4px;border-radius:13px;
-    border:2px solid #ffd700;background:#0f172a;color:#ffd700;
-    font-weight:bold;font-size:15px;cursor:pointer
+    flex:1;
+    min-width:0;
+    padding:13px 4px;
+    border-radius:13px;
+    border:2px solid #ffd700;
+    background:#0f172a;
+    color:#ffd700;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer
 }
-.tab.active{background:#ffd700;color:#263044}
+
+.tab.active{
+    background:#ffd700;
+    color:#263044
+}
+
 .details{
     background:linear-gradient(145deg,#172554,#0f1d43);
-    border:2px solid #e6c84c;border-radius:15px;
-    padding:8px 12px;min-height:100px
+    border:2px solid #e6c84c;
+    border-radius:15px;
+    padding:8px 12px;
+    min-height:100px
 }
+
 .item{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:12px;padding:13px 2px;border-bottom:1px solid #64748b;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:13px 2px;
+    border-bottom:1px solid #64748b
 }
-.item:last-child{border-bottom:0}
-.label{color:#e2e8f0;font-size:14px;font-weight:bold}
+
+.item:last-child{
+    border-bottom:0
+}
+
+.label{
+    color:#e2e8f0;
+    font-size:14px;
+    font-weight:bold
+}
+
 .value{
-    color:#ffd84d;font-size:16px;font-weight:bold;
-    text-align:left;direction:ltr;overflow-wrap:anywhere
+    color:#ffd84d;
+    font-size:16px;
+    font-weight:bold;
+    text-align:left;
+    direction:ltr;
+    overflow-wrap:anywhere
 }
+
 .empty{
-    text-align:center;color:#cbd5e1;padding:35px 10px;
+    text-align:center;
+    color:#cbd5e1;
+    padding:35px 10px;
     line-height:1.9
 }
+
 .back{
-    display:block;width:100%;margin-top:14px;padding:12px;
-    border:0;border-radius:8px;background:#ffd700;
-    color:#172033;font-size:15px;font-weight:bold;
-    text-decoration:none;text-align:center
+    display:block;
+    width:100%;
+    margin-top:14px;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    background:#ffd700;
+    color:#172033;
+    font-size:15px;
+    font-weight:bold;
+    text-decoration:none;
+    text-align:center
 }
-.footer{text-align:center;color:#ffd700;font-size:11px;margin-top:12px}
+
+.footer{
+    text-align:center;
+    color:#ffd700;
+    font-size:11px;
+    margin-top:12px
+}
 </style>
 </head>
 
@@ -70,7 +155,6 @@ h1{text-align:center;color:#ffd700;font-size:23px;margin:16px 0 10px}
     </div>
 
     <h1 id="pageTitle">العمليات المحفوظة</h1>
-    <div class="group" id="groupName">جروب عملاء البنوك المصرية</div>
 
     <div class="tabs">
         <button class="tab active" id="tab1" onclick="showOperation(0)">العملية الأولى</button>
@@ -79,9 +163,14 @@ h1{text-align:center;color:#ffd700;font-size:23px;margin:16px 0 10px}
 
     <div class="details" id="details"></div>
 
-    <a href="index.html" class="back" id="backBtn">العودة إلى الحاسبة الرئيسية</a>
+    <a href="index.html" class="back" id="backBtn">
+        العودة إلى الحاسبة الرئيسية
+    </a>
 
-    <div class="footer">Developed by Tarek Metwally</div>
+    <div class="footer">
+        Developed by Tarek Metwally
+    </div>
+
 </div>
 
 <script>
@@ -107,13 +196,21 @@ function readOperations(){
     try{
         const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
         return Array.isArray(data)?data.slice(0,2):[];
-    }catch(e){return []}
+    }catch(e){
+        return [];
+    }
 }
 
 function numberText(value){
     if(value===undefined||value===null||value==='')return '—';
-    if(typeof value==='number')
-        return value.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+    if(typeof value==='number'){
+        return value.toLocaleString('en-US',{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+    }
+
     return String(value);
 }
 
@@ -130,9 +227,11 @@ function getValue(op,key){
         maturity:['finalAmount','maturity','total'],
         annual:['annualYield','yield']
     };
+
     for(const k of aliases[key]){
         if(op[k]!==undefined&&op[k]!==null)return op[k];
     }
+
     return null;
 }
 
@@ -147,12 +246,17 @@ function render(){
 
     if(!op){
         details.innerHTML=`<div class="empty">${
-            isAr?'لا توجد عملية محفوظة في هذا الموضع بعد':'No saved operation in this position yet'
+            isAr
+            ?'لا توجد عملية محفوظة في هذا الموضع بعد'
+            :'No saved operation in this position yet'
         }</div>`;
         return;
     }
 
-    const keys=['nominal','rate','days','market','price','discount','tax','net','maturity','annual'];
+    const keys=[
+        'nominal','rate','days','market','price',
+        'discount','tax','net','maturity','annual'
+    ];
 
     details.innerHTML=keys.map(key=>{
         let value=getValue(op,key);
@@ -161,12 +265,19 @@ function render(){
         if(key==='rate'||key==='annual'){
             if(value!==null)display=numberText(value)+'%';
         }
+
         if(key==='days'&&value!==null){
             display=value+(isAr?' يوم':' Days');
         }
+
         if(key==='market'&&value!==null){
-            if(value==='primary')display=isAr?'السوق الأولي':'Primary Market';
-            if(value==='secondary')display=isAr?'السوق الثانوي':'Secondary Market';
+            if(value==='primary'){
+                display=isAr?'السوق الأولي':'Primary Market';
+            }
+
+            if(value==='secondary'){
+                display=isAr?'السوق الثانوي':'Secondary Market';
+            }
         }
 
         return `<div class="item">
@@ -183,6 +294,12 @@ function showOperation(index){
 
 function toggleLanguage(){
     isAr=!isAr;
+
+    localStorage.setItem(
+        'treasuryLanguage',
+        isAr?'ar':'en'
+    );
+
     applyLanguage();
 }
 
@@ -190,12 +307,22 @@ function applyLanguage(){
     document.documentElement.lang=isAr?'ar':'en';
     document.documentElement.dir=isAr?'rtl':'ltr';
 
-    document.getElementById('langBtn').textContent=isAr?'English':'العربية';
-    document.getElementById('pageTitle').textContent=isAr?'العمليات المحفوظة':'Saved Operations';
-    document.getElementById('groupName').textContent=isAr?'جروب عملاء البنوك المصرية':'Egyptian Bank Clients Group';
-    document.getElementById('tab1').textContent=isAr?'العملية الأولى':'Operation One';
-    document.getElementById('tab2').textContent=isAr?'العملية الثانية':'Operation Two';
-    document.getElementById('backBtn').textContent=isAr?'العودة إلى الحاسبة الرئيسية':'Back to Main Calculator';
+    document.getElementById('langBtn').textContent=
+        isAr?'English':'العربية';
+
+    document.getElementById('pageTitle').textContent=
+        isAr?'العمليات المحفوظة':'Saved Operations';
+
+    document.getElementById('tab1').textContent=
+        isAr?'العملية الأولى':'Operation One';
+
+    document.getElementById('tab2').textContent=
+        isAr?'العملية الثانية':'Operation Two';
+
+    document.getElementById('backBtn').textContent=
+        isAr
+        ?'العودة إلى الحاسبة الرئيسية'
+        :'Back to Main Calculator';
 
     render();
 }
@@ -208,5 +335,7 @@ function loadLanguage(){
 
 loadLanguage();
 </script>
+
 </body>
 </html>
+

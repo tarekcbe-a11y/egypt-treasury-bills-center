@@ -247,268 +247,391 @@ input,select {
 </div>
 
 <script>
-let isAr=true;
-let currentType='primary';
-const $=id=>document.getElementById(id);
+let isAr = true;
+let currentType = 'primary';
+let isRestoring = false;
 
-const STORAGE_KEYS={
-    operations:'treasurySavedOperations',
-    assistant:'treasuryLastAssistantCalculation',
-    pageState:'treasuryCalculatorState',
-    language:'treasuryLanguage'
+const $ = id => document.getElementById(id);
+
+const STORAGE_KEYS = {
+    operations: 'treasurySavedOperations',
+    assistant: 'treasuryLastAssistantCalculation',
+    pageState: 'treasuryCalculatorState',
+    language: 'treasuryLanguage'
 };
 
-function safeRead(key,fallback){
-    try{
-        const value=localStorage.getItem(key);
-        return value===null?fallback:JSON.parse(value);
-    }catch(error){return fallback}
+function safeRead(key, fallback) {
+    try {
+        const value = localStorage.getItem(key);
+        return value === null ? fallback : JSON.parse(value);
+    } catch (error) {
+        return fallback;
+    }
 }
 
-function formatNumber(value,decimals=2){
-    return value.toLocaleString('en-US',{
-        minimumFractionDigits:decimals,
-        maximumFractionDigits:decimals
+function formatNumber(value, decimals = 2) {
+    return value.toLocaleString('en-US', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
     });
 }
 
-function getPVFactor(){
-    const R=normalizeInput($('rate').value)/100;
-    const D=parseInt($('days').value)||0;
-    if(D<=0||R<0)return 0;
-    return 1/(1+(R*D/365));
+function getPVFactor() {
+    const R = normalizeInput($('rate').value) / 100;
+    const D = parseInt($('days').value) || 0;
+
+    if (D <= 0 || R < 0) return 0;
+
+    return 1 / (1 + (R * D / 365));
 }
 
-function updatePresentValue(){
-    const factor=getPVFactor();
-    $('resPV').innerText=factor>0
-        ?formatNumber(factor,4)+(isAr?' جنيه':' EGP')
-        :(isAr?'0.0000 جنيه':'0.0000 EGP');
+function updatePresentValue() {
+    const factor = getPVFactor();
+
+    $('resPV').innerText = factor > 0
+        ? formatNumber(factor, 4) + (isAr ? ' جنيه' : ' EGP')
+        : (isAr ? '0.0000 جنيه' : '0.0000 EGP');
 }
 
-function savePageState(){
-    const state={
-        nominal:$('nominal').value,
-        rate:$('rate').value,
-        days:$('days').value,
-        market:currentType,
-        pv:$('resPV').innerText,
-        price:$('resPrice').innerText,
-        discount:$('resReturn').innerText,
-        tax:$('resTax').innerText,
-        net:$('resNet').innerText,
-        maturity:$('resTotal').innerText,
-        annual:$('resAnnualYield').innerText,
-        calculated:window.calculationCompleted===true
-    };
-    localStorage.setItem(STORAGE_KEYS.pageState,JSON.stringify(state));
-}
+/* حفظ حالة الحاسبة */
+function savePageState() {
+    if (isRestoring) return;
 
-function saveSuccessfulCalculation(result){
-    const operations=safeRead(STORAGE_KEYS.operations,[]);
-    const operation={
-        nominal:result.nominal,
-        rate:result.rate,
-        days:result.days,
-        market:result.market,
-        price:result.price,
-        discount:result.discount,
-        tax:result.tax,
-        netProfit:result.netProfit,
-        finalAmount:result.finalAmount,
-        annualYield:result.annualYield
+    const state = {
+        nominal: $('nominal').value,
+        rate: $('rate').value,
+        days: $('days').value,
+        market: currentType,
+        pv: $('resPV').innerText,
+        price: $('resPrice').innerText,
+        discount: $('resReturn').innerText,
+        tax: $('resTax').innerText,
+        net: $('resNet').innerText,
+        maturity: $('resTotal').innerText,
+        annual: $('resAnnualYield').innerText,
+        calculated: window.calculationCompleted === true
     };
 
-    const updated=[
+    try {
+        localStorage.setItem(
+            STORAGE_KEYS.pageState,
+            JSON.stringify(state)
+        );
+    } catch (error) {
+        console.error('تعذر حفظ حالة الحاسبة', error);
+    }
+}
+
+/* حفظ العملية الناجحة في الحفظ والمساعد */
+function saveSuccessfulCalculation(result) {
+    const operations = safeRead(STORAGE_KEYS.operations, []);
+
+    const operation = {
+        nominal: result.nominal,
+        rate: result.rate,
+        days: result.days,
+        market: result.market,
+        price: result.price,
+        discount: result.discount,
+        tax: result.tax,
+        netProfit: result.netProfit,
+        finalAmount: result.finalAmount,
+        annualYield: result.annualYield
+    };
+
+    const updated = [
         operation,
-        ...(Array.isArray(operations)?operations:[])
-    ].slice(0,2);
+        ...(Array.isArray(operations) ? operations : [])
+    ].slice(0, 2);
 
-    localStorage.setItem(STORAGE_KEYS.operations,JSON.stringify(updated));
-    localStorage.setItem(STORAGE_KEYS.assistant,JSON.stringify(operation));
+    localStorage.setItem(
+        STORAGE_KEYS.operations,
+        JSON.stringify(updated)
+    );
+
+    localStorage.setItem(
+        STORAGE_KEYS.assistant,
+        JSON.stringify(operation)
+    );
 }
 
-function restorePageState(){
-    const state=safeRead(STORAGE_KEYS.pageState,null);
-    if(!state)return false;
+/* استعادة البيانات دون السماح بالكتابة فوقها */
+function restorePageState() {
+    const state = safeRead(STORAGE_KEYS.pageState, null);
 
-    currentType=state.market==='secondary'?'secondary':'primary';
+    if (!state) return false;
+
+    isRestoring = true;
+
+    currentType = state.market === 'secondary'
+        ? 'secondary'
+        : 'primary';
+
     setMarket(currentType);
 
-    $('nominal').value=state.nominal||'';
-    $('rate').value=state.rate||'';
+    $('nominal').value = state.nominal || '';
+    $('rate').value = state.rate || '';
 
-    if(state.days&&[...$('days').options].some(o=>o.value===String(state.days))){
-        $('days').value=String(state.days);
+    if (
+        state.days &&
+        [...$('days').options].some(
+            option => option.value === String(state.days)
+        )
+    ) {
+        $('days').value = String(state.days);
     }
 
-    $('resPV').innerText=state.pv||(isAr?'0.0000 جنيه':'0.0000 EGP');
-    $('resPrice').innerText=state.price||'0';
-    $('resReturn').innerText=state.discount||'0';
-    $('resTax').innerText=state.tax||'0';
-    $('resNet').innerText=state.net||'0';
-    $('resTotal').innerText=state.maturity||'0';
-    $('resAnnualYield').innerText=state.annual||'0';
-    window.calculationCompleted=state.calculated===true;
+    $('resPV').innerText = state.pv ||
+        (isAr ? '0.0000 جنيه' : '0.0000 EGP');
+
+    $('resPrice').innerText = state.price || '0';
+    $('resReturn').innerText = state.discount || '0';
+    $('resTax').innerText = state.tax || '0';
+    $('resNet').innerText = state.net || '0';
+    $('resTotal').innerText = state.maturity || '0';
+    $('resAnnualYield').innerText = state.annual || '0';
+
+    window.calculationCompleted = state.calculated === true;
+
+    isRestoring = false;
+
     return true;
 }
 
-window.calculationCompleted=false;
+window.calculationCompleted = false;
 
-function toggleLang(){
-    isAr=!isAr;
-    localStorage.setItem(STORAGE_KEYS.language,isAr?'ar':'en');
+/* تحديث النصوص حسب اللغة دون تغيير البيانات */
+function applyLanguage() {
+    document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+    document.documentElement.lang = isAr ? 'ar' : 'en';
 
-    document.documentElement.dir=isAr?'rtl':'ltr';
-    document.documentElement.lang=isAr?'ar':'en';
-    $('langBtn').innerText=isAr?'English':'العربية';
+    $('langBtn').innerText = isAr ? 'English' : 'العربية';
 
-    $('subTitle').innerText=isAr?'حاسبة ومؤشرات أذون الخزانة':'T-Bills Calculator & Indicators';
-    $('groupTitle').innerText=isAr?'جروب عملاء البنوك المصرية':'Egyptian Bank Clients Group';
-    $('btn1').innerText=isAr?'السوق الأولي':'Primary Market';
-    $('btn2').innerText=isAr?'السوق الثانوي':'Secondary Market';
-    $('lblNominal').innerText=isAr?'القيمة الاسمية':'Nominal Value';
-    $('lblRate').innerText=isAr?'سعر العائد (%)':'Yield Rate (%)';
-    $('lblDays').innerText=isAr?'مدة الأذن':'Tenor (Days)';
-    $('lblPV').innerText=isAr?'القيمة الحالية للجنيه':'Present Value of One Pound';
-    $('calcBtn').innerText=isAr?'احسب الآن':'Calculate Now';
-    $('newBtnText').innerText=isAr?'إدخال جديد':'New Entry';
-    $('savedBtnText').innerText=isAr?'حفظ (عمليتين)':'Saved (2)';
-    $('assistantBtnText').innerText=isAr?'المساعد الذكي':'Smart Assistant';
-    $('indicatorsBtnText').innerText=isAr?'مؤشرات الأذون':'T-Bills';
-    $('lblPrice').innerText=isAr?'سعر الشراء':'Purchase Price';
-    $('lblReturn').innerText=isAr?'مبلغ راجع يوم الإصدار':'Gross Profit';
-    $('lblTax').innerText=isAr?'الضريبة (20%)':'Tax (20%)';
-    $('lblNet').innerText=isAr?'الربح الصافي':'Net Profit';
-    $('lblTotal').innerText=isAr?'المبلغ المسترد نهاية المدة':'Amount at Maturity';
-    $('lblAnnualYield').innerHTML=isAr
-        ?'نسبة العائد السنوي: <b id="resAnnualYield">0</b>%'
-        :'Net Annual Yield: <b id="resAnnualYield">0</b>%';
-    $('nominal').placeholder=isAr?'القيمة':'Nominal Value';
-    $('rate').placeholder=isAr?'سعر العائد السنوي':'Annual Yield Rate';
-    $('privacyLinkText').innerText=isAr?'سياسة الخصوصية':'Privacy Policy';
-    $('guideLinkText').innerText=isAr?'دليل أذون الخزانة':'Treasury Bills Guide';
+    $('subTitle').innerText = isAr
+        ? 'حاسبة ومؤشرات أذون الخزانة'
+        : 'T-Bills Calculator & Indicators';
+
+    $('groupTitle').innerText = isAr
+        ? 'جروب عملاء البنوك المصرية'
+        : 'Egyptian Bank Clients Group';
+
+    $('btn1').innerText = isAr ? 'السوق الأولي' : 'Primary Market';
+    $('btn2').innerText = isAr ? 'السوق الثانوي' : 'Secondary Market';
+
+    $('lblNominal').innerText = isAr ? 'القيمة الاسمية' : 'Nominal Value';
+    $('lblRate').innerText = isAr ? 'سعر العائد (%)' : 'Yield Rate (%)';
+    $('lblDays').innerText = isAr ? 'مدة الأذن' : 'Tenor (Days)';
+    $('lblPV').innerText = isAr
+        ? 'القيمة الحالية للجنيه'
+        : 'Present Value of One Pound';
+
+    $('calcBtn').innerText = isAr ? 'احسب الآن' : 'Calculate Now';
+    $('newBtnText').innerText = isAr ? 'إدخال جديد' : 'New Entry';
+    $('savedBtnText').innerText = isAr ? 'حفظ (عمليتين)' : 'Saved (2)';
+    $('assistantBtnText').innerText = isAr ? 'المساعد الذكي' : 'Smart Assistant';
+    $('indicatorsBtnText').innerText = isAr ? 'مؤشرات الأذون' : 'T-Bills';
+
+    $('lblPrice').innerText = isAr ? 'سعر الشراء' : 'Purchase Price';
+    $('lblReturn').innerText = isAr
+        ? 'مبلغ راجع يوم الإصدار'
+        : 'Gross Profit';
+    $('lblTax').innerText = isAr ? 'الضريبة (20%)' : 'Tax (20%)';
+    $('lblNet').innerText = isAr ? 'الربح الصافي' : 'Net Profit';
+
+    $('lblTotal').innerText = isAr
+        ? 'المبلغ المسترد نهاية المدة'
+        : 'Amount at Maturity';
+
+    const annualValue = $('resAnnualYield').innerText;
+
+    $('lblAnnualYield').innerHTML = isAr
+        ? 'نسبة العائد السنوي: <b id="resAnnualYield"></b>%'
+        : 'Net Annual Yield: <b id="resAnnualYield"></b>%';
+
+    $('resAnnualYield').innerText = annualValue;
+
+    $('nominal').placeholder = isAr ? 'القيمة' : 'Nominal Value';
+    $('rate').placeholder = isAr
+        ? 'سعر العائد السنوي'
+        : 'Annual Yield Rate';
+
+    $('privacyLinkText').innerText = isAr
+        ? 'سياسة الخصوصية'
+        : 'Privacy Policy';
+
+    $('guideLinkText').innerText = isAr
+        ? 'دليل أذون الخزانة'
+        : 'Treasury Bills Guide';
 
     setMarket(currentType);
+}
+
+/* تغيير اللغة */
+function toggleLang() {
+    isAr = !isAr;
+
+    localStorage.setItem(
+        STORAGE_KEYS.language,
+        isAr ? 'ar' : 'en'
+    );
+
+    applyLanguage();
     updatePresentValue();
     savePageState();
 }
 
-function setMarket(type){
-    currentType=type;
-    $('btn1').className=type==='primary'?'market-btn active':'market-btn';
-    $('btn2').className=type==='secondary'?'market-btn active':'market-btn';
+/* اختيار السوق */
+function setMarket(type) {
+    currentType = type;
 
-    const select=$('days');
-    const previousValue=parseInt(select.value);
-    select.innerHTML='';
+    $('btn1').className =
+        type === 'primary' ? 'market-btn active' : 'market-btn';
 
-    const unit=isAr?' يوم':' Days';
-    const values=type==='primary'
-        ?[91,182,273,364]
-        :Array.from({length:364},(_,i)=>i+1);
+    $('btn2').className =
+        type === 'secondary' ? 'market-btn active' : 'market-btn';
 
-    values.forEach(d=>{
-        const opt=document.createElement('option');
-        opt.value=d;
-        opt.text=d+unit;
-        select.add(opt);
+    const select = $('days');
+    const previousValue = parseInt(select.value);
+
+    select.innerHTML = '';
+
+    const unit = isAr ? ' يوم' : ' Days';
+
+    const values = type === 'primary'
+        ? [91, 182, 273, 364]
+        : Array.from({ length: 364 }, (_, i) => i + 1);
+
+    values.forEach(day => {
+        const option = document.createElement('option');
+        option.value = day;
+        option.text = day + unit;
+        select.add(option);
     });
 
-    if(values.includes(previousValue))select.value=previousValue;
+    if (values.includes(previousValue)) {
+        select.value = previousValue;
+    }
+
     updatePresentValue();
 
-    if($('nominal'))savePageState();
+    if (!isRestoring && $('nominal')) {
+        savePageState();
+    }
 }
 
-function calc(){
-    const P=normalizeInput($('nominal').value);
-    const R=normalizeInput($('rate').value)/100;
-    const D=parseInt($('days').value)||0;
+/* الحساب الأصلي */
+function calc() {
+    const P = normalizeInput($('nominal').value);
+    const R = normalizeInput($('rate').value) / 100;
+    const D = parseInt($('days').value) || 0;
 
-    if(P<=0||R<=0||D<=0||R>1){
+    if (P <= 0 || R <= 0 || D <= 0 || R > 1) {
         alert(isAr
-            ?'يرجى إدخال القيمة الاسمية ومعدل العائد والمدة بصورة صحيحة.'
-            :'Please enter valid nominal value, yield rate and tenor.');
+            ? 'يرجى إدخال القيمة الاسمية ومعدل العائد والمدة بصورة صحيحة.'
+            : 'Please enter valid nominal value, yield rate and tenor.');
         return;
     }
 
-    const pvFactor=getPVFactor();
-    const price=P*pvFactor;
-    const profit=P-price;
-    const tax=profit*0.20;
-    const netProfit=profit-tax;
-    const finalAmount=price+netProfit;
-    const annualYield=(netProfit/price)*(365/D)*100;
+    const pvFactor = getPVFactor();
+    const price = P * pvFactor;
+    const profit = P - price;
+    const tax = profit * 0.20;
+    const netProfit = profit - tax;
+    const finalAmount = price + netProfit;
+    const annualYield = (netProfit / price) * (365 / D) * 100;
 
-    $('resPV').innerText=formatNumber(pvFactor,4)+(isAr?' جنيه':' EGP');
-    $('resPrice').innerText=formatNumber(price);
-    $('resReturn').innerText=formatNumber(profit);
-    $('resTax').innerText=formatNumber(tax);
-    $('resNet').innerText=formatNumber(netProfit);
-    $('resTotal').innerText=formatNumber(finalAmount);
-    $('resAnnualYield').innerText=annualYield.toFixed(3);
+    $('resPV').innerText =
+        formatNumber(pvFactor, 4) + (isAr ? ' جنيه' : ' EGP');
 
-    window.calculationCompleted=true;
+    $('resPrice').innerText = formatNumber(price);
+    $('resReturn').innerText = formatNumber(profit);
+    $('resTax').innerText = formatNumber(tax);
+    $('resNet').innerText = formatNumber(netProfit);
+    $('resTotal').innerText = formatNumber(finalAmount);
+    $('resAnnualYield').innerText = annualYield.toFixed(3);
 
-    const result={
-        nominal:P,
-        rate:R*100,
-        days:D,
-        market:currentType,
-        price:price,
-        discount:profit,
-        tax:tax,
-        netProfit:netProfit,
-        finalAmount:finalAmount,
-        annualYield:annualYield
+    window.calculationCompleted = true;
+
+    const result = {
+        nominal: P,
+        rate: R * 100,
+        days: D,
+        market: currentType,
+        price: price,
+        discount: profit,
+        tax: tax,
+        netProfit: netProfit,
+        finalAmount: finalAmount,
+        annualYield: annualYield
     };
 
     saveSuccessfulCalculation(result);
     savePageState();
 }
 
-function newEntry(){
-    $('nominal').value='';
-    $('rate').value='';
-    $('resPrice').innerText='0';
-    $('resReturn').innerText='0';
-    $('resTax').innerText='0';
-    $('resNet').innerText='0';
-    $('resTotal').innerText='0';
-    $('resAnnualYield').innerText='0';
+/* إدخال جديد */
+function newEntry() {
+    $('nominal').value = '';
+    $('rate').value = '';
 
-    window.calculationCompleted=false;
+    $('resPrice').innerText = '0';
+    $('resReturn').innerText = '0';
+    $('resTax').innerText = '0';
+    $('resNet').innerText = '0';
+    $('resTotal').innerText = '0';
+    $('resAnnualYield').innerText = '0';
+
+    window.calculationCompleted = false;
+
     updatePresentValue();
     savePageState();
+
     $('nominal').focus();
 }
 
-$('nominal').addEventListener('input',function(){
-    let value=normalizeInput(this.value);
-    if(value>0)this.value=Math.floor(value).toLocaleString('en-US');
+/* حفظ التغييرات أثناء الكتابة */
+$('nominal').addEventListener('input', function() {
+    const value = normalizeInput(this.value);
+
+    if (value > 0) {
+        this.value = Math.floor(value).toLocaleString('en-US');
+    }
+
     savePageState();
 });
 
-$('rate').addEventListener('input',()=>{
+$('rate').addEventListener('input', () => {
     updatePresentValue();
     savePageState();
 });
 
-$('days').addEventListener('change',()=>{
+$('days').addEventListener('change', () => {
     updatePresentValue();
     savePageState();
 });
 
-window.onload=()=>{
-    const savedLanguage=localStorage.getItem(STORAGE_KEYS.language);
-    if(savedLanguage==='en')toggleLang();
+/* حفظ الحالة عند مغادرة الصفحة */
+window.addEventListener('pagehide', () => {
+    savePageState();
+});
 
-    const restored=restorePageState();
-    if(!restored)setMarket('primary');
+/* بدء التشغيل: تحديد اللغة أولًا ثم استعادة البيانات */
+window.addEventListener('DOMContentLoaded', () => {
+    isRestoring = true;
+
+    const savedLanguage = localStorage.getItem(STORAGE_KEYS.language);
+    isAr = savedLanguage !== 'en';
+
+    applyLanguage();
+
+    restorePageState();
+
+    isRestoring = false;
+
     updatePresentValue();
-};
+});
 </script>
+
 </body>
 </html>
 

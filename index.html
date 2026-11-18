@@ -2,686 +2,513 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ffd700">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="حاسبة ومؤشرات أذون الخزانة المصرية لمتابعة نتائج العطاءات وحساب سعر الشراء والضريبة وصافي الربح.">
-    <title>حاسبة ومؤشرات أذون الخزانة - جروب عملاء البنوك المصرية</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ffd700">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="حاسبة ومؤشرات أذون الخزانة المصرية">
+<title>حاسبة ومؤشرات أذون الخزانة - جروب عملاء البنوك المصرية</title>
 
-    <script>
-        function normalizeInput(value) {
-            if (!value) return 0;
+<script>
+function normalizeInput(value) {
+    if (!value) return 0;
+    const arabicToEnglish = {
+        '٠':'0','١':'1','٢':'2','٣':'3','٤':'4',
+        '٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'
+    };
+    let str = value.toString().replace(/[٠-٩]/g, d => arabicToEnglish[d]);
+    return parseFloat(str.replace(/[^0-9.]/g, '')) || 0;
+}
+</script>
 
-            const arabicToEnglish = {
-                '٠':'0','١':'1','٢':'2','٣':'3','٤':'4',
-                '٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'
-            };
+<style>
+body {
+    background:#0f172a;color:white;font-family:sans-serif;
+    margin:0;padding:8px;user-select:none;touch-action:pan-y;
+}
+.container {
+    max-width:420px;margin:auto;background:#1e293b;
+    padding:12px;border-radius:14px;border:2px solid #ffd700;
+    box-sizing:border-box;
+}
+.top-row {
+    display:flex;justify-content:space-between;
+    align-items:center;margin-bottom:8px;
+}
+.lang-btn {
+    background:#ffd700;color:#000;border:none;
+    padding:4px 8px;border-radius:6px;font-weight:bold;
+    cursor:pointer;font-size:11px;
+}
+img{width:40px}
+.sub-title{text-align:center;color:#fff;font-size:12px;margin-bottom:2px}
+.title{text-align:center;color:#ffd700;margin-bottom:8px;font-weight:bold;font-size:16px}
+.market-btns{display:flex;gap:8px;margin-bottom:8px}
+.market-btn {
+    flex:1;padding:6px;border-radius:6px;border:1px solid #ffd700;
+    background:#0f172a;color:white;font-size:12px;cursor:pointer;
+}
+.market-btn.active{background:#ffd700;color:#000;font-weight:bold}
+.field{margin-bottom:6px}
+.field label{display:block;font-size:10px;color:#cbd5e1;margin-bottom:2px}
+input,select {
+    width:100%;padding:8px;margin:3px 0;border-radius:6px;
+    background:#0f172a;color:white;border:1px solid #ffd700;
+    text-align:right;box-sizing:border-box;cursor:pointer;font-size:16px;
+}
+.calc-btn {
+    width:100%;padding:10px;margin:6px 0;background:#ffd700;
+    color:#000;border:none;border-radius:6px;font-weight:bold;
+    cursor:pointer;font-size:14px;
+}
+.results {
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:6px;margin-top:8px;
+}
+.card {
+    background:#0f172a;padding:8px;border-radius:6px;
+    border:1px solid #ffd700;text-align:center;
+}
+.card span{display:block;font-size:12px;margin-bottom:4px;color:#cbd5e1}
+.card h4{margin:0;color:#ffd700;font-size:16px;word-break:break-all}
+.pv-card {
+    background:#0f172a;height:42px;box-sizing:border-box;
+    padding:0 8px;border-radius:6px;border:1px solid #ffd700;
+    margin-top:6px;display:flex;flex-direction:row;
+    align-items:center;justify-content:center;gap:5px;
+}
+.pv-card span{font-size:12px;margin:0;color:#cbd5e1;font-weight:normal}
+.pv-card h4 {
+    margin:0;color:#ffd700;font-family:sans-serif;
+    font-size:16px;font-weight:normal;white-space:nowrap;
+}
+.total-box {
+    border:2px solid #ff4d4d;padding:8px;border-radius:6px;
+    text-align:center;margin-top:8px;box-sizing:border-box;
+}
+.total-title{display:block;font-size:12px;line-height:1.2;color:white;margin:0}
+.total-amount {
+    display:block;margin:3px 0;color:#ffd700;font-size:20px;
+    line-height:1.2;font-weight:bold;word-break:break-word;
+}
+.total-divider{height:1px;background:#ff4d4d;margin:5px 0;border:0}
+.annual-yield{display:block;font-size:12px;line-height:1.2;margin:0;color:#ffd700}
+.annual-yield b{font-size:15px}
 
-            let str = value.toString().replace(/[٠-٩]/g, d => arabicToEnglish[d]);
-            return parseFloat(str.replace(/[^0-9.]/g, '')) || 0;
-        }
-    </script>
+/* الأزرار الأربعة */
+.bottom-buttons{display:flex;gap:5px;margin-top:7px;width:100%;box-sizing:border-box}
+.bottom-action-btn {
+    flex:1 1 0;width:25%;min-width:0;height:34px;padding:2px 1px;
+    border:none;border-radius:6px;font-weight:600;cursor:pointer;
+    font-size:8px;line-height:1;text-align:center;text-decoration:none;
+    display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:3px;box-sizing:border-box;
+    white-space:nowrap;overflow:hidden;
+}
+.bottom-action-btn svg{width:14px;height:14px;flex:0 0 14px;display:block}
+.bottom-action-btn .button-label {
+    display:block;white-space:nowrap;font-size:8px;
+    line-height:1;letter-spacing:-0.25px;
+}
+.new-btn{background:#dc2626;color:#fff}
+.saved-btn{background:#e58a25;color:#fff}
+.assistant-btn{background:#65c6df;color:#082f40}
+.indicators-btn{background:#86c995;color:#123c25}
 
-    <style>
-        body {
-            background: #0f172a;
-            color: white;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 8px;
-            user-select: none;
-            touch-action: pan-y;
-        }
-
-        .container {
-            max-width: 420px;
-            margin: auto;
-            background: #1e293b;
-            padding: 12px;
-            border-radius: 14px;
-            border: 2px solid #ffd700;
-            box-sizing: border-box;
-        }
-
-        .top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .lang-btn {
-            background: #ffd700;
-            color: #000;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        img { width: 40px; }
-
-        .sub-title {
-            text-align: center;
-            color: #fff;
-            font-size: 12px;
-            margin-bottom: 2px;
-        }
-
-        .title {
-            text-align: center;
-            color: #ffd700;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .market-btns {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .market-btn {
-            flex: 1;
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px solid #ffd700;
-            background: #0f172a;
-            color: white;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .market-btn.active {
-            background: #ffd700;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .field { margin-bottom: 6px; }
-
-        .field label {
-            display: block;
-            font-size: 10px;
-            color: #cbd5e1;
-            margin-bottom: 2px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin: 3px 0;
-            border-radius: 6px;
-            background: #0f172a;
-            color: white;
-            border: 1px solid #ffd700;
-            text-align: right;
-            box-sizing: border-box;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .calc-btn {
-            width: 100%;
-            padding: 10px;
-            margin: 6px 0;
-            background: #ffd700;
-            color: #000;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .results {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .card {
-            background: #0f172a;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ffd700;
-            text-align: center;
-        }
-
-        .card span {
-            display: block;
-            font-size: 12px;
-            margin-bottom: 4px;
-            color: #cbd5e1;
-        }
-
-        .card h4 {
-            margin: 0;
-            color: #ffd700;
-            font-size: 16px;
-            word-break: break-all;
-        }
-
-        /* القيمة الحالية للجنيه */
-        .pv-card {
-            background: #0f172a;
-            height: 42px;
-            box-sizing: border-box;
-            padding: 0 8px;
-            border-radius: 6px;
-            border: 1px solid #ffd700;
-            margin-top: 6px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .pv-card span {
-            font-size: 12px;
-            margin: 0;
-            color: #cbd5e1;
-            font-weight: normal;
-        }
-
-        .pv-card h4 {
-            margin: 0;
-            color: #ffd700;
-            font-family: sans-serif;
-            font-size: 16px;
-            font-weight: normal;
-            white-space: nowrap;
-        }
-
-        /* صندوق المبلغ المسترد - نفس المساحة دون تكبير */
-        .total-box {
-            border: 2px solid #ff4d4d;
-            padding: 8px;
-            border-radius: 6px;
-            text-align: center;
-            margin-top: 8px;
-            box-sizing: border-box;
-        }
-
-        .total-title {
-            display: block;
-            font-size: 12px;
-            line-height: 1.2;
-            color: white;
-            margin: 0;
-        }
-
-        .total-amount {
-            display: block;
-            margin: 3px 0;
-            color: #ffd700;
-            font-size: 20px;
-            line-height: 1.2;
-            font-weight: bold;
-            word-break: break-word;
-        }
-
-        .total-divider {
-            height: 1px;
-            background: #ff4d4d;
-            margin: 5px 0;
-            border: 0;
-        }
-
-        .annual-yield {
-            display: block;
-            font-size: 12px;
-            line-height: 1.2;
-            margin: 0;
-            color: #ffd700;
-        }
-
-        .annual-yield b {
-            font-size: 15px;
-        }
-
-        /* الأزرار الأربعة - داخل مساحة الصف الأصلي */
-        .bottom-buttons {
-            display: flex;
-            gap: 5px;
-            margin-top: 7px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .bottom-action-btn {
-            flex: 1 1 0;
-            width: 25%;
-            min-width: 0;
-            height: 34px;
-            padding: 2px 1px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 8px;
-            line-height: 1;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .bottom-action-btn svg {
-            width: 14px;
-            height: 14px;
-            flex: 0 0 14px;
-            display: block;
-        }
-
-        .bottom-action-btn .button-label {
-            display: block;
-            white-space: nowrap;
-            font-size: 8px;
-            line-height: 1;
-            letter-spacing: -0.25px;
-        }
-
-        .new-btn {
-            background: #dc2626;
-            color: #fff;
-        }
-
-        .saved-btn {
-            background: #e58a25;
-            color: #fff;
-        }
-
-        .assistant-btn {
-            background: #65c6df;
-            color: #082f40;
-        }
-
-        .indicators-btn {
-            background: #86c995;
-            color: #123c25;
-        }
-
-        .page-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 7px;
-            font-size: 11px;
-            line-height: 1.4;
-        }
-
-        .page-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: #fff;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .page-link:hover {
-            color: #ffd700;
-        }
-
-        .green-dot {
-            width: 7px;
-            height: 7px;
-            flex: 0 0 7px;
-            border-radius: 50%;
-            background: #22c55e;
-            display: inline-block;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 7px;
-            font-size: 11px;
-            color: #ffd700;
-        }
-    </style>
+.page-links {
+    display:flex;justify-content:center;align-items:center;
+    flex-wrap:wrap;gap:12px;margin-top:7px;font-size:11px;line-height:1.4;
+}
+.page-link {
+    display:inline-flex;align-items:center;gap:5px;
+    color:#fff;text-decoration:none;white-space:nowrap;
+}
+.page-link:hover{color:#ffd700}
+.green-dot {
+    width:7px;height:7px;flex:0 0 7px;border-radius:50%;
+    background:#22c55e;display:inline-block;
+}
+.footer{text-align:center;margin-top:7px;font-size:11px;color:#ffd700}
+</style>
 </head>
 
 <body>
-
 <div class="container">
 
-    <div class="top-row">
-        <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
-        <img src="logo.png" alt="Logo">
+<div class="top-row">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+    <img src="logo.png" alt="Logo">
+</div>
+
+<div class="sub-title" id="subTitle">حاسبة ومؤشرات أذون الخزانة</div>
+<div class="title" id="groupTitle">جروب عملاء البنوك المصرية</div>
+
+<div class="market-btns">
+    <button class="market-btn active" id="btn1" onclick="setMarket('primary')">السوق الأولي</button>
+    <button class="market-btn" id="btn2" onclick="setMarket('secondary')">السوق الثانوي</button>
+</div>
+
+<div class="field">
+    <label id="lblNominal">القيمة الاسمية</label>
+    <input type="text" id="nominal" placeholder="القيمة" inputmode="decimal">
+</div>
+
+<div class="field">
+    <label id="lblRate">سعر العائد (%)</label>
+    <input type="text" id="rate" placeholder="سعر العائد السنوي" inputmode="decimal">
+</div>
+
+<div class="field">
+    <label id="lblDays">مدة الأذن</label>
+    <select id="days"></select>
+</div>
+
+<div class="pv-card">
+    <span id="lblPV">القيمة الحالية للجنيه</span>
+    <h4 id="resPV">0.0000 جنيه</h4>
+</div>
+
+<button class="calc-btn" id="calcBtn" onclick="calc()">احسب الآن</button>
+
+<div class="results">
+    <div class="card">
+        <span id="lblPrice">سعر الشراء</span>
+        <h4 id="resPrice">0</h4>
     </div>
-
-    <div class="sub-title" id="subTitle">حاسبة ومؤشرات أذون الخزانة</div>
-    <div class="title" id="groupTitle">جروب عملاء البنوك المصرية</div>
-
-    <div class="market-btns">
-        <button class="market-btn active" id="btn1" onclick="setMarket('primary')">السوق الأولي</button>
-        <button class="market-btn" id="btn2" onclick="setMarket('secondary')">السوق الثانوي</button>
+    <div class="card">
+        <span id="lblReturn">مبلغ راجع يوم الإصدار</span>
+        <h4 id="resReturn">0</h4>
     </div>
-
-    <div class="field">
-        <label id="lblNominal">القيمة الاسمية</label>
-        <input type="text" id="nominal" placeholder="القيمة" inputmode="decimal">
+    <div class="card">
+        <span id="lblTax">الضريبة (20%)</span>
+        <h4 id="resTax">0</h4>
     </div>
-
-    <div class="field">
-        <label id="lblRate">سعر العائد (%)</label>
-        <input type="text" id="rate" placeholder="سعر العائد السنوي" inputmode="decimal">
+    <div class="card">
+        <span id="lblNet">الربح الصافي</span>
+        <h4 id="resNet">0</h4>
     </div>
+</div>
 
-    <div class="field">
-        <label id="lblDays">مدة الأذن</label>
-        <select id="days"></select>
-    </div>
+<div class="total-box">
+    <span id="lblTotal" class="total-title">المبلغ المسترد نهاية المدة</span>
+    <h4 id="resTotal" class="total-amount">0</h4>
+    <hr class="total-divider">
+    <span id="lblAnnualYield" class="annual-yield">
+        نسبة العائد السنوي: <b id="resAnnualYield">0</b>%
+    </span>
+</div>
 
-    <div class="pv-card">
-        <span id="lblPV">القيمة الحالية للجنيه</span>
-        <h4 id="resPV">0.0000 جنيه</h4>
-    </div>
+<div class="bottom-buttons">
 
-    <button class="calc-btn" id="calcBtn" onclick="calc()">احسب الآن</button>
+<button class="bottom-action-btn new-btn" id="newBtn" onclick="newEntry()">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/>
+<path d="M3 3v5h5"/>
+</svg>
+<span class="button-label" id="newBtnText">إدخال جديد</span>
+</button>
 
-    <div class="results">
+<a href="saved.html" class="bottom-action-btn saved-btn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 4h16v16H4z"/>
+<path d="M8 4v6h8V4M8 20v-6h8v6"/>
+</svg>
+<span class="button-label" id="savedBtnText">حفظ (عمليتين)</span>
+</a>
 
-        <div class="card">
-            <span id="lblPrice">سعر الشراء</span>
-            <h4 id="resPrice">0</h4>
-        </div>
+<a href="assistant.html" class="bottom-action-btn assistant-btn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 3a7 7 0 0 0-4 12.75V19h8v-3.25A7 7 0 0 0 12 3Z"/>
+<path d="M9 22h6M9 10h.01M15 10h.01M10 13a3 3 0 0 0 4 0"/>
+</svg>
+<span class="button-label" id="assistantBtnText">المساعد الذكي</span>
+</a>
 
-        <div class="card">
-            <span id="lblReturn">مبلغ راجع يوم الإصدار</span>
-            <h4 id="resReturn">0</h4>
-        </div>
+<a href="indicators.html" class="bottom-action-btn indicators-btn" id="indicatorsBtn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M3 3v18h18"/>
+<path d="m7 14 4-4 3 3 6-7"/>
+<path d="M16 6h4v4"/>
+</svg>
+<span class="button-label" id="indicatorsBtnText">مؤشرات الأذون</span>
+</a>
+</div>
 
-        <div class="card">
-            <span id="lblTax">الضريبة (20%)</span>
-            <h4 id="resTax">0</h4>
-        </div>
+<div class="page-links">
+<a class="page-link" id="privacyLink" href="privacy.html">
+<span id="privacyLinkText">سياسة الخصوصية</span><span class="green-dot"></span>
+</a>
+<a class="page-link" id="guideLink" href="guide.html">
+<span id="guideLinkText">دليل أذون الخزانة</span><span class="green-dot"></span>
+</a>
+</div>
 
-        <div class="card">
-            <span id="lblNet">الربح الصافي</span>
-            <h4 id="resNet">0</h4>
-        </div>
-
-    </div>
-
-    <div class="total-box">
-        <span id="lblTotal" class="total-title">
-            المبلغ المسترد نهاية المدة
-        </span>
-
-        <h4 id="resTotal" class="total-amount">0</h4>
-
-        <hr class="total-divider">
-
-        <span id="lblAnnualYield" class="annual-yield">
-            نسبة العائد السنوي:
-            <b id="resAnnualYield">0</b>%
-        </span>
-    </div>
-
-    <div class="bottom-buttons">
-
-        <button class="bottom-action-btn new-btn" id="newBtn" onclick="newEntry()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/>
-                <path d="M3 3v5h5"/>
-            </svg>
-            <span class="button-label" id="newBtnText">إدخال جديد</span>
-        </button>
-
-        <a href="saved.html" class="bottom-action-btn saved-btn" id="savedBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M4 4h16v16H4z"/>
-                <path d="M8 4v6h8V4M8 20v-6h8v6"/>
-            </svg>
-            <span class="button-label" id="savedBtnText">حفظ (عمليتين)</span>
-        </a>
-
-        <a href="assistant.html" class="bottom-action-btn assistant-btn" id="assistantBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3a7 7 0 0 0-4 12.75V19h8v-3.25A7 7 0 0 0 12 3Z"/>
-                <path d="M9 22h6M9 10h.01M15 10h.01M10 13a3 3 0 0 0 4 0"/>
-            </svg>
-            <span class="button-label" id="assistantBtnText">المساعد الذكي</span>
-        </a>
-
-        <a href="indicators.html" class="bottom-action-btn indicators-btn" id="indicatorsBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 3v18h18"/>
-                <path d="m7 14 4-4 3 3 6-7"/>
-                <path d="M16 6h4v4"/>
-            </svg>
-            <span class="button-label" id="indicatorsBtnText">مؤشرات الأذون</span>
-        </a>
-
-    </div>
-
-    <div class="page-links">
-        <a class="page-link" id="privacyLink" href="privacy.html">
-            <span id="privacyLinkText">سياسة الخصوصية</span>
-            <span class="green-dot" aria-hidden="true"></span>
-        </a>
-
-        <a class="page-link" id="guideLink" href="guide.html">
-            <span id="guideLinkText">دليل أذون الخزانة</span>
-            <span class="green-dot" aria-hidden="true"></span>
-        </a>
-    </div>
-
-    <div class="footer">
-        Developed by Tarek Metwally
-    </div>
-
+<div class="footer">Developed by Tarek Metwally</div>
 </div>
 
 <script>
-    let isAr = true;
-    let currentType = 'primary';
+let isAr=true;
+let currentType='primary';
+const $=id=>document.getElementById(id);
 
-    const $ = id => document.getElementById(id);
+const STORAGE_KEYS={
+    operations:'treasurySavedOperations',
+    assistant:'treasuryLastAssistantCalculation',
+    pageState:'treasuryCalculatorState',
+    language:'treasuryLanguage'
+};
 
-    function formatNumber(value, decimals = 2) {
-        return value.toLocaleString('en-US', {
-            minimumFractionDigits: decimals,
-            maximumFractionDigits: decimals
-        });
+function safeRead(key,fallback){
+    try{
+        const value=localStorage.getItem(key);
+        return value===null?fallback:JSON.parse(value);
+    }catch(error){return fallback}
+}
+
+function formatNumber(value,decimals=2){
+    return value.toLocaleString('en-US',{
+        minimumFractionDigits:decimals,
+        maximumFractionDigits:decimals
+    });
+}
+
+function getPVFactor(){
+    const R=normalizeInput($('rate').value)/100;
+    const D=parseInt($('days').value)||0;
+    if(D<=0||R<0)return 0;
+    return 1/(1+(R*D/365));
+}
+
+function updatePresentValue(){
+    const factor=getPVFactor();
+    $('resPV').innerText=factor>0
+        ?formatNumber(factor,4)+(isAr?' جنيه':' EGP')
+        :(isAr?'0.0000 جنيه':'0.0000 EGP');
+}
+
+function savePageState(){
+    const state={
+        nominal:$('nominal').value,
+        rate:$('rate').value,
+        days:$('days').value,
+        market:currentType,
+        pv:$('resPV').innerText,
+        price:$('resPrice').innerText,
+        discount:$('resReturn').innerText,
+        tax:$('resTax').innerText,
+        net:$('resNet').innerText,
+        maturity:$('resTotal').innerText,
+        annual:$('resAnnualYield').innerText,
+        calculated:window.calculationCompleted===true
+    };
+    localStorage.setItem(STORAGE_KEYS.pageState,JSON.stringify(state));
+}
+
+function saveSuccessfulCalculation(result){
+    const operations=safeRead(STORAGE_KEYS.operations,[]);
+    const operation={
+        nominal:result.nominal,
+        rate:result.rate,
+        days:result.days,
+        market:result.market,
+        price:result.price,
+        discount:result.discount,
+        tax:result.tax,
+        netProfit:result.netProfit,
+        finalAmount:result.finalAmount,
+        annualYield:result.annualYield
+    };
+
+    const updated=[
+        operation,
+        ...(Array.isArray(operations)?operations:[])
+    ].slice(0,2);
+
+    localStorage.setItem(STORAGE_KEYS.operations,JSON.stringify(updated));
+    localStorage.setItem(STORAGE_KEYS.assistant,JSON.stringify(operation));
+}
+
+function restorePageState(){
+    const state=safeRead(STORAGE_KEYS.pageState,null);
+    if(!state)return false;
+
+    currentType=state.market==='secondary'?'secondary':'primary';
+    setMarket(currentType);
+
+    $('nominal').value=state.nominal||'';
+    $('rate').value=state.rate||'';
+
+    if(state.days&&[...$('days').options].some(o=>o.value===String(state.days))){
+        $('days').value=String(state.days);
     }
 
-    function getPVFactor() {
-        const R = normalizeInput($('rate').value) / 100;
-        const D = parseInt($('days').value) || 0;
+    $('resPV').innerText=state.pv||(isAr?'0.0000 جنيه':'0.0000 EGP');
+    $('resPrice').innerText=state.price||'0';
+    $('resReturn').innerText=state.discount||'0';
+    $('resTax').innerText=state.tax||'0';
+    $('resNet').innerText=state.net||'0';
+    $('resTotal').innerText=state.maturity||'0';
+    $('resAnnualYield').innerText=state.annual||'0';
+    window.calculationCompleted=state.calculated===true;
+    return true;
+}
 
-        if (D <= 0 || R < 0) return 0;
+window.calculationCompleted=false;
 
-        return 1 / (1 + (R * D / 365));
-    }
+function toggleLang(){
+    isAr=!isAr;
+    localStorage.setItem(STORAGE_KEYS.language,isAr?'ar':'en');
 
-    function updatePresentValue() {
-        const factor = getPVFactor();
+    document.documentElement.dir=isAr?'rtl':'ltr';
+    document.documentElement.lang=isAr?'ar':'en';
+    $('langBtn').innerText=isAr?'English':'العربية';
 
-        $('resPV').innerText = factor > 0
-            ? formatNumber(factor, 4) + (isAr ? ' جنيه' : ' EGP')
-            : (isAr ? '0.0000 جنيه' : '0.0000 EGP');
-    }
+    $('subTitle').innerText=isAr?'حاسبة ومؤشرات أذون الخزانة':'T-Bills Calculator & Indicators';
+    $('groupTitle').innerText=isAr?'جروب عملاء البنوك المصرية':'Egyptian Bank Clients Group';
+    $('btn1').innerText=isAr?'السوق الأولي':'Primary Market';
+    $('btn2').innerText=isAr?'السوق الثانوي':'Secondary Market';
+    $('lblNominal').innerText=isAr?'القيمة الاسمية':'Nominal Value';
+    $('lblRate').innerText=isAr?'سعر العائد (%)':'Yield Rate (%)';
+    $('lblDays').innerText=isAr?'مدة الأذن':'Tenor (Days)';
+    $('lblPV').innerText=isAr?'القيمة الحالية للجنيه':'Present Value of One Pound';
+    $('calcBtn').innerText=isAr?'احسب الآن':'Calculate Now';
+    $('newBtnText').innerText=isAr?'إدخال جديد':'New Entry';
+    $('savedBtnText').innerText=isAr?'حفظ (عمليتين)':'Saved (2)';
+    $('assistantBtnText').innerText=isAr?'المساعد الذكي':'Smart Assistant';
+    $('indicatorsBtnText').innerText=isAr?'مؤشرات الأذون':'T-Bills';
+    $('lblPrice').innerText=isAr?'سعر الشراء':'Purchase Price';
+    $('lblReturn').innerText=isAr?'مبلغ راجع يوم الإصدار':'Gross Profit';
+    $('lblTax').innerText=isAr?'الضريبة (20%)':'Tax (20%)';
+    $('lblNet').innerText=isAr?'الربح الصافي':'Net Profit';
+    $('lblTotal').innerText=isAr?'المبلغ المسترد نهاية المدة':'Amount at Maturity';
+    $('lblAnnualYield').innerHTML=isAr
+        ?'نسبة العائد السنوي: <b id="resAnnualYield">0</b>%'
+        :'Net Annual Yield: <b id="resAnnualYield">0</b>%';
+    $('nominal').placeholder=isAr?'القيمة':'Nominal Value';
+    $('rate').placeholder=isAr?'سعر العائد السنوي':'Annual Yield Rate';
+    $('privacyLinkText').innerText=isAr?'سياسة الخصوصية':'Privacy Policy';
+    $('guideLinkText').innerText=isAr?'دليل أذون الخزانة':'Treasury Bills Guide';
 
-    function toggleLang() {
-        isAr = !isAr;
+    setMarket(currentType);
+    updatePresentValue();
+    savePageState();
+}
 
-        document.documentElement.dir = isAr ? 'rtl' : 'ltr';
-        document.documentElement.lang = isAr ? 'ar' : 'en';
+function setMarket(type){
+    currentType=type;
+    $('btn1').className=type==='primary'?'market-btn active':'market-btn';
+    $('btn2').className=type==='secondary'?'market-btn active':'market-btn';
 
-        $('langBtn').innerText = isAr ? 'English' : 'العربية';
+    const select=$('days');
+    const previousValue=parseInt(select.value);
+    select.innerHTML='';
 
-        $('subTitle').innerText = isAr
-            ? 'حاسبة ومؤشرات أذون الخزانة'
-            : 'T-Bills Calculator & Indicators';
+    const unit=isAr?' يوم':' Days';
+    const values=type==='primary'
+        ?[91,182,273,364]
+        :Array.from({length:364},(_,i)=>i+1);
 
-        $('groupTitle').innerText = isAr
-            ? 'جروب عملاء البنوك المصرية'
-            : 'Egyptian Bank Clients Group';
-
-        $('btn1').innerText = isAr ? 'السوق الأولي' : 'Primary Market';
-        $('btn2').innerText = isAr ? 'السوق الثانوي' : 'Secondary Market';
-
-        $('lblNominal').innerText = isAr ? 'القيمة الاسمية' : 'Nominal Value';
-        $('lblRate').innerText = isAr ? 'سعر العائد (%)' : 'Yield Rate (%)';
-        $('lblDays').innerText = isAr ? 'مدة الأذن' : 'Tenor (Days)';
-
-        $('lblPV').innerText = isAr
-            ? 'القيمة الحالية للجنيه'
-            : 'Present Value of One Pound';
-
-        $('calcBtn').innerText = isAr ? 'احسب الآن' : 'Calculate Now';
-        $('newBtnText').innerText = isAr ? 'إدخال جديد' : 'New Entry';
-        $('savedBtnText').innerText = isAr ? 'حفظ (عمليتين)' : 'Saved (2)';
-        $('assistantBtnText').innerText = isAr ? 'المساعد الذكي' : 'Smart Assistant';
-
-        $('indicatorsBtnText').innerText = isAr
-            ? 'مؤشرات الأذون'
-            : 'T-Bills';
-
-        $('lblPrice').innerText = isAr ? 'سعر الشراء' : 'Purchase Price';
-
-        $('lblReturn').innerText = isAr
-            ? 'مبلغ راجع يوم الإصدار'
-            : 'Gross Profit';
-
-        $('lblTax').innerText = isAr ? 'الضريبة (20%)' : 'Tax (20%)';
-        $('lblNet').innerText = isAr ? 'الربح الصافي' : 'Net Profit';
-
-        $('lblTotal').innerText = isAr
-            ? 'المبلغ المسترد نهاية المدة'
-            : 'Amount at Maturity';
-
-        $('lblAnnualYield').innerHTML = isAr
-            ? 'نسبة العائد السنوي: <b id="resAnnualYield">0</b>%'
-            : 'Net Annual Yield: <b id="resAnnualYield">0</b>%';
-
-        $('nominal').placeholder = isAr ? 'القيمة' : 'Nominal Value';
-        $('rate').placeholder = isAr ? 'سعر العائد السنوي' : 'Annual Yield Rate';
-
-        $('privacyLinkText').innerText = isAr
-            ? 'سياسة الخصوصية'
-            : 'Privacy Policy';
-
-        $('guideLinkText').innerText = isAr
-            ? 'دليل أذون الخزانة'
-            : 'Treasury Bills Guide';
-
-        setMarket(currentType);
-        updatePresentValue();
-    }
-
-    function setMarket(type) {
-        currentType = type;
-
-        $('btn1').className = type === 'primary'
-            ? 'market-btn active' : 'market-btn';
-
-        $('btn2').className = type === 'secondary'
-            ? 'market-btn active' : 'market-btn';
-
-        const select = $('days');
-        const previousValue = parseInt(select.value);
-
-        select.innerHTML = '';
-
-        const unit = isAr ? ' يوم' : ' Days';
-
-        const values = type === 'primary'
-            ? [91, 182, 273, 364]
-            : Array.from({length: 364}, (_, i) => i + 1);
-
-        values.forEach(d => {
-            const opt = document.createElement('option');
-            opt.value = d;
-            opt.text = d + unit;
-            select.add(opt);
-        });
-
-        if (values.includes(previousValue)) {
-            select.value = previousValue;
-        }
-
-        updatePresentValue();
-    }
-
-    function calc() {
-        const P = normalizeInput($('nominal').value);
-        const R = normalizeInput($('rate').value) / 100;
-        const D = parseInt($('days').value) || 0;
-
-        if (P <= 0 || R <= 0 || D <= 0 || R > 1) {
-            alert(isAr
-                ? 'يرجى إدخال القيمة الاسمية ومعدل العائد والمدة بصورة صحيحة.'
-                : 'Please enter valid nominal value, yield rate and tenor.');
-            return;
-        }
-
-        const pvFactor = getPVFactor();
-        const price = P * pvFactor;
-        const profit = P - price;
-        const tax = profit * 0.20;
-        const netProfit = profit - tax;
-        const finalAmount = price + netProfit;
-        const annualYield = (netProfit / price) * (365 / D) * 100;
-
-        $('resPV').innerText =
-            formatNumber(pvFactor, 4) + (isAr ? ' جنيه' : ' EGP');
-
-        $('resPrice').innerText = formatNumber(price);
-        $('resReturn').innerText = formatNumber(profit);
-        $('resTax').innerText = formatNumber(tax);
-        $('resNet').innerText = formatNumber(netProfit);
-        $('resTotal').innerText = formatNumber(finalAmount);
-        $('resAnnualYield').innerText = annualYield.toFixed(3);
-    }
-
-    function newEntry() {
-        $('nominal').value = '';
-        $('rate').value = '';
-
-        $('resPrice').innerText = '0';
-        $('resReturn').innerText = '0';
-        $('resTax').innerText = '0';
-        $('resNet').innerText = '0';
-        $('resTotal').innerText = '0';
-        $('resAnnualYield').innerText = '0';
-
-        updatePresentValue();
-
-        $('nominal').focus();
-    }
-
-    $('nominal').addEventListener('input', function() {
-        let value = normalizeInput(this.value);
-
-        if (value > 0) {
-            this.value = Math.floor(value).toLocaleString('en-US');
-        }
+    values.forEach(d=>{
+        const opt=document.createElement('option');
+        opt.value=d;
+        opt.text=d+unit;
+        select.add(opt);
     });
 
-    $('rate').addEventListener('input', updatePresentValue);
-    $('days').addEventListener('change', updatePresentValue);
+    if(values.includes(previousValue))select.value=previousValue;
+    updatePresentValue();
 
-    window.onload = () => setMarket('primary');
+    if($('nominal'))savePageState();
+}
+
+function calc(){
+    const P=normalizeInput($('nominal').value);
+    const R=normalizeInput($('rate').value)/100;
+    const D=parseInt($('days').value)||0;
+
+    if(P<=0||R<=0||D<=0||R>1){
+        alert(isAr
+            ?'يرجى إدخال القيمة الاسمية ومعدل العائد والمدة بصورة صحيحة.'
+            :'Please enter valid nominal value, yield rate and tenor.');
+        return;
+    }
+
+    const pvFactor=getPVFactor();
+    const price=P*pvFactor;
+    const profit=P-price;
+    const tax=profit*0.20;
+    const netProfit=profit-tax;
+    const finalAmount=price+netProfit;
+    const annualYield=(netProfit/price)*(365/D)*100;
+
+    $('resPV').innerText=formatNumber(pvFactor,4)+(isAr?' جنيه':' EGP');
+    $('resPrice').innerText=formatNumber(price);
+    $('resReturn').innerText=formatNumber(profit);
+    $('resTax').innerText=formatNumber(tax);
+    $('resNet').innerText=formatNumber(netProfit);
+    $('resTotal').innerText=formatNumber(finalAmount);
+    $('resAnnualYield').innerText=annualYield.toFixed(3);
+
+    window.calculationCompleted=true;
+
+    const result={
+        nominal:P,
+        rate:R*100,
+        days:D,
+        market:currentType,
+        price:price,
+        discount:profit,
+        tax:tax,
+        netProfit:netProfit,
+        finalAmount:finalAmount,
+        annualYield:annualYield
+    };
+
+    saveSuccessfulCalculation(result);
+    savePageState();
+}
+
+function newEntry(){
+    $('nominal').value='';
+    $('rate').value='';
+    $('resPrice').innerText='0';
+    $('resReturn').innerText='0';
+    $('resTax').innerText='0';
+    $('resNet').innerText='0';
+    $('resTotal').innerText='0';
+    $('resAnnualYield').innerText='0';
+
+    window.calculationCompleted=false;
+    updatePresentValue();
+    savePageState();
+    $('nominal').focus();
+}
+
+$('nominal').addEventListener('input',function(){
+    let value=normalizeInput(this.value);
+    if(value>0)this.value=Math.floor(value).toLocaleString('en-US');
+    savePageState();
+});
+
+$('rate').addEventListener('input',()=>{
+    updatePresentValue();
+    savePageState();
+});
+
+$('days').addEventListener('change',()=>{
+    updatePresentValue();
+    savePageState();
+});
+
+window.onload=()=>{
+    const savedLanguage=localStorage.getItem(STORAGE_KEYS.language);
+    if(savedLanguage==='en')toggleLang();
+
+    const restored=restorePageState();
+    if(!restored)setMarket('primary');
+    updatePresentValue();
+};
 </script>
-
 </body>
 </html>
 

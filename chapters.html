@@ -471,7 +471,7 @@ sections:[
 },
 
 /* =========================
-   الباب السابع الجديد
+   الباب السابع
 ========================= */
 {
 title:[
@@ -547,7 +547,84 @@ sections:[
 ]
 
 ]
+},
+
+/* =========================
+   الباب الثامن
+========================= */
+{
+title:[
+"الباب الثامن: حفظ العمليتين والمساعد الذكي",
+"Chapter Eight: Saved Operations and Smart Assistant"
+],
+sections:[
+
+[
+"ما وظيفة حفظ العمليتين؟",
+"تتيح الحاسبة الاحتفاظ بآخر عمليتين حسابيتين ناجحتين، حتى يستطيع المستخدم الرجوع إليهما في أي وقت من خلال زر حفظ (عمليتين) الموجود أسفل الحاسبة.",
+"تُحفظ العملية بعد الضغط على زر احسب الآن بنجاح، ولا تُضاف عملية جديدة عند مجرد إدخال الأرقام أو فتح صفحة العمليات المحفوظة.",
+"What Does Saved Operations Do?",
+"The calculator keeps the two most recent successful calculations so the user can access them at any time through the Saved (2 Operations) button below the calculator.",
+"An operation is saved after successfully selecting Calculate Now. A new operation is not added simply by entering numbers or opening the Saved Operations page."
+],
+
+[
+"كيف يتم ترتيب العمليات المحفوظة؟",
+"يتم حفظ أحدث عملية حسابية ناجحة باعتبارها العملية الأولى، وتصبح العملية السابقة هي العملية الثانية.",
+"عند إجراء عملية جديدة ناجحة، تتقدم إلى المركز الأول، وتنتقل العملية السابقة إلى المركز الثاني، ويتم الاحتفاظ بآخر عمليتين فقط.",
+"How Are Saved Operations Organized?",
+"The latest successful calculation is saved as Operation One, while the previous calculation becomes Operation Two.",
+"When a new calculation is completed successfully, it moves to the first position, the previous operation moves to the second position, and only the two latest operations are retained."
+],
+
+[
+"كيف تسترجع عملية محفوظة؟",
+"اضغط على زر حفظ (عمليتين) للانتقال إلى صفحة العمليات المحفوظة. ستجد زرين: العملية الأولى والعملية الثانية.",
+"اختر العملية المطلوبة، وستظهر تفاصيلها في منطقة عرض واحدة، وتشمل القيمة الاسمية وسعر العائد والمدة والسوق وسعر الشراء والخصم المسترد والضريبة والربح الصافي والمبلغ المسترد ونسبة العائد السنوي.",
+"How to Retrieve a Saved Operation",
+"Select the Saved (2 Operations) button to open the Saved Operations page. You will find two buttons: Operation One and Operation Two.",
+"Choose the required operation to display its details in one viewing area, including nominal value, yield rate, tenor, market, purchase price, returned discount, tax, net profit, maturity amount and annual yield."
+],
+
+[
+"ما وظيفة المساعد الذكي؟",
+"المساعد الذكي صفحة تعليمية تشرح آخر عملية حسابية ناجحة أجراها المستخدم، وتوضح مراحل الحساب والنتائج التي ظهرت في الحاسبة.",
+"وهو وسيلة لفهم تفاصيل العملية الحسابية، وليس خدمة لتقديم توصيات استثمارية أو تنفيذ عمليات شراء أو بيع.",
+"What Does the Smart Assistant Do?",
+"The Smart Assistant is an educational page that explains the user's latest successful calculation and describes the calculation stages and results displayed by the calculator.",
+"It helps users understand their calculation. It is not an investment advisory service and does not execute purchase or sale transactions."
+],
+
+[
+"كيف يحتفظ المساعد ببيانات العملية؟",
+"عند إتمام عملية حسابية بنجاح، تحتفظ الحاسبة ببيانات آخر عملية لاستخدامها في صفحة المساعد الذكي.",
+"يمكن للمستخدم الانتقال من الحاسبة إلى المساعد والعودة مرة أخرى دون أن يؤدي مجرد التنقل بين الصفحات إلى مسح بيانات العملية المحفوظة للمساعد.",
+"How Does the Assistant Retain Calculation Data?",
+"When a calculation is completed successfully, the calculator stores the latest operation data for use by the Smart Assistant page.",
+"The user can move from the calculator to the assistant and return without navigation alone clearing the calculation data stored for the assistant."
+],
+
+[
+"أين تُحفظ البيانات؟",
+"تُحفظ العمليات وبيانات المساعد الذكي محليًا على جهاز المستخدم من خلال مساحة التخزين المحلية للمتصفح (Local Storage).",
+"لا تُرسل هذه البيانات إلى جداول Google Sheets، ولا تُستخدم خدمة خارجية لتخزين العمليات المحفوظة أو بيانات المساعد الذكي.",
+"Where Is the Data Stored?",
+"Saved operations and Smart Assistant data are stored locally on the user's device through the browser's Local Storage.",
+"This information is not sent to Google Sheets, and no external service is used to store saved operations or Smart Assistant data."
+],
+
+[
+"متى يمكن أن تُفقد البيانات المحفوظة؟",
+"تعتمد إمكانية استرجاع العمليات وبيانات المساعد على بقاء بيانات الموقع محفوظة في المتصفح على الجهاز نفسه.",
+"قد يؤدي مسح بيانات الموقع أو بيانات المتصفح، أو حذف بيانات التطبيق، أو استخدام جهاز آخر إلى فقدان العمليات المحفوظة وبيانات المساعد.",
+"When Can Saved Data Be Lost?",
+"Retrieving operations and Smart Assistant data depends on the website data remaining stored in the browser on the same device.",
+"Clearing website or browser data, deleting application data, or using another device may result in losing saved operations and assistant data."
+]
+
+]
 }
+
 ];
 
 /* =========================
@@ -660,7 +737,7 @@ const params=new URLSearchParams(window.location.search);
 
 const requested=parseInt(params.get("chapter"),10);
 
-if(Number.isInteger(requested)&&requested>=1&&requested<=7){
+if(Number.isInteger(requested)&&requested>=1&&requested<=8){
     selectedChapter=requested;
 }
 

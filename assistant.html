@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#ffd700">
 <title>المساعد الذكي</title>
 
@@ -12,46 +12,48 @@
     box-sizing: border-box;
 }
 
-html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
+html, body {
     width: 100%;
     height: 100%;
     height: 100dvh;
     margin: 0;
-    padding: 8px;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
     background: #0f172a;
     color: white;
     font-family: Arial, sans-serif;
-    overflow: hidden;
 }
 
 .container {
-    width: 100%;
+    width: calc(100% - 16px);
     max-width: 420px;
-    height: calc(100vh - 16px);
-    height: calc(100dvh - 16px);
-    margin: 0 auto;
-    background: #1e293b;
+    height: calc(100% - 16px);
+    margin: 8px auto;
     padding: 12px;
+    background: #1e293b;
     border: 2px solid #ffd700;
     border-radius: 14px;
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows:
+        auto
+        auto
+        auto
+        minmax(0, 1fr)
+        auto
+        auto;
+
     overflow: hidden;
 }
 
-/* الجزء العلوي الثابت */
+/* الرأس الثابت */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
 }
 
 .logo {
@@ -66,7 +68,6 @@ body {
     border-radius: 7px;
     padding: 9px 15px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 h1 {
@@ -74,24 +75,22 @@ h1 {
     color: #ffd700;
     font-size: 23px;
     margin: 12px 0 6px;
-    flex-shrink: 0;
 }
 
 .group {
     text-align: center;
     font-size: 15px;
     margin-bottom: 12px;
-    flex-shrink: 0;
 }
 
-/* منطقة التمرير */
+/* منطقة التمرير الوحيدة */
 .content-scroll {
-    flex: 1;
     min-height: 0;
+    width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
+    overscroll-behavior: contain;
     scrollbar-width: thin;
 }
 
@@ -165,7 +164,6 @@ h1 {
     line-height: 2;
     border-top: 1px solid #52617d;
     padding-top: 10px;
-    white-space: normal;
     overflow-wrap: anywhere;
 }
 
@@ -179,11 +177,10 @@ h1 {
     border-radius: 10px;
 }
 
-/* الجزء السفلي الثابت */
+/* زر العودة ثابت */
 .back {
     display: block;
     width: 100%;
-    flex-shrink: 0;
     margin-top: 10px;
     padding: 12px;
     border: 0;
@@ -196,8 +193,8 @@ h1 {
     text-align: center;
 }
 
+/* اسم المطور ثابت */
 .footer {
-    flex-shrink: 0;
     text-align: center;
     color: #ffd700;
     font-size: 11px;
@@ -211,7 +208,6 @@ h1 {
 
 <div class="container">
 
-    <!-- الجزء العلوي الثابت -->
     <div class="header">
         <img src="logo.png" class="logo" alt="شعار الجروب">
         <button class="lang" id="langBtn" onclick="toggleLanguage()">English</button>
@@ -223,8 +219,7 @@ h1 {
         جروب عملاء البنوك المصرية
     </div>
 
-    <!-- منطقة التمرير فقط -->
-    <div class="content-scroll">
+    <div class="content-scroll" id="contentScroll">
 
         <div class="intro" id="intro">
             شرح تفصيلي لنتائج عملية حساب أذون الخزانة،
@@ -235,7 +230,6 @@ h1 {
 
     </div>
 
-    <!-- الجزء السفلي الثابت -->
     <a href="index.html" class="back" id="backBtn">
         العودة إلى الحاسبة الرئيسية
     </a>
@@ -329,9 +323,7 @@ const stepInfo = [
 
 function readCalculation() {
     try {
-        return JSON.parse(
-            localStorage.getItem(STORAGE_KEY) || 'null'
-        );
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
     } catch (e) {
         return null;
     }
@@ -407,43 +399,29 @@ function render() {
                 marketText = isAr ? 'السوق الثانوي' : 'Secondary Market';
             }
 
-            value =
-                (marketText || '—') +
-                ' • ' +
-                (days ?? '—') +
-                (isAr ? ' يوم' : ' Days');
+            value = (marketText || '—') + ' • ' +
+                    (days ?? '—') + (isAr ? ' يوم' : ' Days');
 
         } else {
             value = fmt(getValue(data, step.key));
 
-            if (
-                step.key === 'rate' ||
-                step.key === 'annual'
-            ) {
-                if (value !== '—') {
-                    value += '%';
-                }
+            if (step.key === 'rate' || step.key === 'annual') {
+                if (value !== '—') value += '%';
             }
         }
 
         return `
             <section class="step">
-
                 <div class="step-head">
                     <span class="number">${index + 1}</span>
-                    <span class="step-title">
-                        ${step.title[isAr ? 0 : 1]}
-                    </span>
+                    <span class="step-title">${step.title[isAr ? 0 : 1]}</span>
                 </div>
 
-                <div class="step-value">
-                    ${value}
-                </div>
+                <div class="step-value">${value}</div>
 
                 <div class="step-description">
                     ${step.description[isAr ? 0 : 1]}
                 </div>
-
             </section>
         `;
     }).join('');
@@ -499,4 +477,3 @@ loadLanguage();
 
 </body>
 </html>
-

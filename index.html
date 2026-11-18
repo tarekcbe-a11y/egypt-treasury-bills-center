@@ -167,7 +167,6 @@
             word-break: break-all;
         }
 
-        /* القيمة الحالية للجنيه */
         .pv-card {
             background: #0f172a;
             height: 42px;
@@ -199,7 +198,6 @@
             white-space: nowrap;
         }
 
-        /* صندوق المبلغ المسترد - نفس المساحة دون تكبير */
         .total-box {
             border: 2px solid #ff4d4d;
             padding: 8px;
@@ -246,35 +244,65 @@
             font-size: 15px;
         }
 
-        /* زرا إدخال جديد ومؤشرات الأذون */
+        /* الأزرار الأربعة - داخل مساحة الصف الأصلي */
         .bottom-buttons {
             display: flex;
-            gap: 7px;
+            gap: 5px;
             margin-top: 7px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .new-btn,
-        .indicators-btn {
-            flex: 1;
-            width: 50%;
+        .bottom-action-btn {
+            flex: 1 1 0;
+            width: 25%;
             min-width: 0;
-            padding: 9px 4px;
+            height: 32px;
+            padding: 3px 2px;
             border: none;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 9px;
+            line-height: 1.05;
             text-align: center;
             text-decoration: none;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 2px;
             box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .bottom-action-btn svg {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 15px;
+            display: block;
+        }
+
+        .bottom-action-btn .button-label {
+            display: block;
+            max-width: 100%;
+            white-space: normal;
+            overflow-wrap: anywhere;
         }
 
         .new-btn {
             background: #dc2626;
             color: white;
+        }
+
+        .saved-btn {
+            background: #e58a25;
+            color: #fff;
+        }
+
+        .assistant-btn {
+            background: #65c6df;
+            color: #082f40;
         }
 
         .indicators-btn {
@@ -403,11 +431,40 @@
     </div>
 
     <div class="bottom-buttons">
-        <button class="new-btn" id="newBtn" onclick="newEntry()">إدخال جديد</button>
 
-        <a href="indicators.html" class="indicators-btn" id="indicatorsBtn">
-            مؤشرات الأذون
+        <button class="bottom-action-btn new-btn" id="newBtn" onclick="newEntry()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/>
+                <path d="M3 3v5h5"/>
+            </svg>
+            <span class="button-label" id="newBtnText">إدخال جديد</span>
+        </button>
+
+        <a href="saved.html" class="bottom-action-btn saved-btn" id="savedBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 4h16v16H4z"/>
+                <path d="M8 4v6h8V4M8 20v-6h8v6"/>
+            </svg>
+            <span class="button-label" id="savedBtnText">حفظ<br>(عمليتين)</span>
         </a>
+
+        <a href="assistant.html" class="bottom-action-btn assistant-btn" id="assistantBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3a7 7 0 0 0-4 12.75V19h8v-3.25A7 7 0 0 0 12 3Z"/>
+                <path d="M9 22h6M9 10h.01M15 10h.01M10 13a3 3 0 0 0 4 0"/>
+            </svg>
+            <span class="button-label" id="assistantBtnText">المساعد<br>الذكي</span>
+        </a>
+
+        <a href="indicators.html" class="bottom-action-btn indicators-btn" id="indicatorsBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 3v18h18"/>
+                <path d="m7 14 4-4 3 3 6-7"/>
+                <path d="M16 6h4v4"/>
+            </svg>
+            <span class="button-label" id="indicatorsBtnText">مؤشرات الأذون</span>
+        </a>
+
     </div>
 
     <div class="page-links">
@@ -486,9 +543,20 @@
             : 'Present Value of One Pound';
 
         $('calcBtn').innerText = isAr ? 'احسب الآن' : 'Calculate Now';
-        $('newBtn').innerText = isAr ? 'إدخال جديد' : 'New Entry';
 
-        $('indicatorsBtn').innerText = isAr
+        $('newBtnText').innerText = isAr
+            ? 'إدخال جديد'
+            : 'New Entry';
+
+        $('savedBtnText').innerHTML = isAr
+            ? 'حفظ<br>(عمليتين)'
+            : 'Saved<br>(2)';
+
+        $('assistantBtnText').innerHTML = isAr
+            ? 'المساعد<br>الذكي'
+            : 'Smart<br>Assistant';
+
+        $('indicatorsBtnText').innerText = isAr
             ? 'مؤشرات الأذون'
             : 'T-Bills Indicators';
 

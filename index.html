@@ -167,6 +167,7 @@
             word-break: break-all;
         }
 
+        /* القيمة الحالية للجنيه */
         .pv-card {
             background: #0f172a;
             height: 42px;
@@ -198,6 +199,7 @@
             white-space: nowrap;
         }
 
+        /* صندوق المبلغ المسترد - نفس المساحة دون تكبير */
         .total-box {
             border: 2px solid #ff4d4d;
             padding: 8px;
@@ -257,42 +259,44 @@
             flex: 1 1 0;
             width: 25%;
             min-width: 0;
-            height: 32px;
-            padding: 3px 2px;
+            height: 34px;
+            padding: 2px 1px;
             border: none;
             border-radius: 6px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 9px;
-            line-height: 1.05;
+            font-size: 8px;
+            line-height: 1;
             text-align: center;
             text-decoration: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2px;
+            gap: 3px;
             box-sizing: border-box;
+            white-space: nowrap;
             overflow: hidden;
         }
 
         .bottom-action-btn svg {
-            width: 15px;
-            height: 15px;
-            flex: 0 0 15px;
+            width: 14px;
+            height: 14px;
+            flex: 0 0 14px;
             display: block;
         }
 
         .bottom-action-btn .button-label {
             display: block;
-            max-width: 100%;
-            white-space: normal;
-            overflow-wrap: anywhere;
+            white-space: nowrap;
+            font-size: 8px;
+            line-height: 1;
+            letter-spacing: -0.25px;
         }
 
         .new-btn {
             background: #dc2626;
-            color: white;
+            color: #fff;
         }
 
         .saved-btn {
@@ -445,7 +449,7 @@
                 <path d="M4 4h16v16H4z"/>
                 <path d="M8 4v6h8V4M8 20v-6h8v6"/>
             </svg>
-            <span class="button-label" id="savedBtnText">حفظ<br>(عمليتين)</span>
+            <span class="button-label" id="savedBtnText">حفظ (عمليتين)</span>
         </a>
 
         <a href="assistant.html" class="bottom-action-btn assistant-btn" id="assistantBtn">
@@ -453,7 +457,7 @@
                 <path d="M12 3a7 7 0 0 0-4 12.75V19h8v-3.25A7 7 0 0 0 12 3Z"/>
                 <path d="M9 22h6M9 10h.01M15 10h.01M10 13a3 3 0 0 0 4 0"/>
             </svg>
-            <span class="button-label" id="assistantBtnText">المساعد<br>الذكي</span>
+            <span class="button-label" id="assistantBtnText">المساعد الذكي</span>
         </a>
 
         <a href="indicators.html" class="bottom-action-btn indicators-btn" id="indicatorsBtn">
@@ -543,22 +547,13 @@
             : 'Present Value of One Pound';
 
         $('calcBtn').innerText = isAr ? 'احسب الآن' : 'Calculate Now';
-
-        $('newBtnText').innerText = isAr
-            ? 'إدخال جديد'
-            : 'New Entry';
-
-        $('savedBtnText').innerHTML = isAr
-            ? 'حفظ<br>(عمليتين)'
-            : 'Saved<br>(2)';
-
-        $('assistantBtnText').innerHTML = isAr
-            ? 'المساعد<br>الذكي'
-            : 'Smart<br>Assistant';
+        $('newBtnText').innerText = isAr ? 'إدخال جديد' : 'New Entry';
+        $('savedBtnText').innerText = isAr ? 'حفظ (عمليتين)' : 'Saved (2)';
+        $('assistantBtnText').innerText = isAr ? 'المساعد الذكي' : 'Smart Assistant';
 
         $('indicatorsBtnText').innerText = isAr
             ? 'مؤشرات الأذون'
-            : 'T-Bills Indicators';
+            : 'T-Bills';
 
         $('lblPrice').innerText = isAr ? 'سعر الشراء' : 'Purchase Price';
 

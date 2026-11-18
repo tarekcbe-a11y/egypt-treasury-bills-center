@@ -183,11 +183,15 @@
         </div>
 
         <div class="section">
-            <h3 id="heading2">2. العمليات الحسابية والتخزين</h3>
+            <h3 id="heading2">2. العمليات الحسابية والحفظ المحلي</h3>
             <p id="text2">
-                تعمل الحاسبة على إجراء العمليات الحسابية بناءً على
-                القيم التي يدخلها المستخدم. ولا تتضمن النسخة الحالية
-                خاصية حفظ العمليات أو إنشاء سجل للعمليات السابقة.
+                تتيح الحاسبة حفظ آخر عمليتين حسابيتين ليستطيع المستخدم
+                الرجوع إليهما من صفحة العمليات المحفوظة. كما تحتفظ
+                ببيانات آخر عملية حسابية لاستخدامها في صفحة المساعد الذكي
+                وعرض شرح تفصيلي لها. تُحفظ هذه البيانات محليًا على جهاز
+                المستخدم من خلال مساحة التخزين المحلية للمتصفح، ولا
+                تُرسل إلى خادم خارجي بغرض حفظها. وقد يؤدي مسح بيانات
+                المتصفح أو بيانات الموقع أو تغيير الجهاز إلى فقدانها.
             </p>
         </div>
 
@@ -200,23 +204,29 @@
         </div>
 
         <div class="section">
-            <h3 id="heading4">4. حماية المعلومات</h3>
+            <h3 id="heading4">4. حماية المعلومات وعدم إرسال البيانات</h3>
             <p id="text4">
-                لا تطلب الحاسبة بيانات شخصية من المستخدم.
-                وتُجرى العمليات الحسابية اعتمادًا على المدخلات
-                التي يحددها المستخدم، ولا يتم إرسال هذه المدخلات
-                إلى جداول Google Sheets أو استخدامها لجلب بيانات السوق.
+                لا تجمع الحاسبة مدخلات المستخدم الحسابية أو نتائج
+                العمليات أو البيانات المحفوظة بغرض إرسالها إلى جهة
+                خارجية. وتظل بيانات الحاسبة والعمليات المحفوظة
+                وبيانات المساعد الذكي في مساحة التخزين المحلية
+                على جهاز المستخدم. ولا يتضمن كود الحاسبة إرسال
+                هذه البيانات إلى Google Sheets أو إلى خدمة خارجية
+                بغرض التخزين أو المعالجة.
             </p>
         </div>
 
         <div class="section">
-            <h3 id="heading5">5. بيانات صفحة المؤشرات</h3>
+            <h3 id="heading5">5. الاتصال الخارجي وصفحة المؤشرات</h3>
             <p id="text5">
-                تعرض صفحة مؤشرات أذون الخزانة بيانات السوق من خلال
-                جداول Google Sheets المنشورة والمتاحة للقراءة.
-                ويقتصر اتصال الصفحة بهذه الجداول على جلب بيانات
-                المؤشرات وعرضها للمستخدم. ولا يتم إرسال مدخلات
-                الحاسبة أو العمليات الحسابية إليها.
+                تتصل صفحة مؤشرات أذون الخزانة بجداول Google Sheets
+                المنشورة للعامة، وذلك لقراءة بيانات السوق ونتائج
+                العطاءات وعرضها للمستخدم فقط. ولا ترسل الصفحة
+                مدخلات الحاسبة أو نتائجها أو العمليات المحفوظة
+                أو بيانات المساعد الذكي إلى هذه الجداول.
+                وكأي اتصال بخدمة خارجية، قد تتلقى الخدمة بيانات
+                تقنية اعتيادية مرتبطة بطلب الاتصال، مثل عنوان
+                بروتوكول الإنترنت (IP) ومعلومات المتصفح.
             </p>
         </div>
 
@@ -286,10 +296,10 @@
                 'The calculator does not require users to create an account or sign in. It does not ask for a name, phone number, email address, or other personal information to perform calculations.'
             ],
             [
-                '2. العمليات الحسابية والتخزين',
-                '2. Calculations and Storage',
-                'تعمل الحاسبة على إجراء العمليات الحسابية بناءً على القيم التي يدخلها المستخدم. ولا تتضمن النسخة الحالية خاصية حفظ العمليات أو إنشاء سجل للعمليات السابقة.',
-                'The calculator performs calculations based on the values entered by the user. The current version does not include a feature for saving calculations or creating a history of previous operations.'
+                '2. العمليات الحسابية والحفظ المحلي',
+                '2. Calculations and Local Storage',
+                'تتيح الحاسبة حفظ آخر عمليتين حسابيتين ليستطيع المستخدم الرجوع إليهما من صفحة العمليات المحفوظة. كما تحتفظ ببيانات آخر عملية حسابية لاستخدامها في صفحة المساعد الذكي وعرض شرح تفصيلي لها. تُحفظ هذه البيانات محليًا على جهاز المستخدم من خلال مساحة التخزين المحلية للمتصفح، ولا تُرسل إلى خادم خارجي بغرض حفظها. وقد يؤدي مسح بيانات المتصفح أو بيانات الموقع أو تغيير الجهاز إلى فقدانها.',
+                'The calculator allows users to save their two most recent calculations and access them through the Saved Operations page. It also stores the latest calculation data for the Smart Assistant page to display an explanation. This information is stored locally on the user’s device through the browser’s local storage and is not sent to an external server for storage. Clearing browser or site data, or changing devices, may result in losing this information.'
             ],
             [
                 '3. الإعلانات',
@@ -298,16 +308,16 @@
                 'The calculator does not display advertisements. The current version does not include advertising services or advertising display code.'
             ],
             [
-                '4. حماية المعلومات',
-                '4. Information Protection',
-                'لا تطلب الحاسبة بيانات شخصية من المستخدم. وتُجرى العمليات الحسابية اعتمادًا على المدخلات التي يحددها المستخدم، ولا يتم إرسال هذه المدخلات إلى جداول Google Sheets أو استخدامها لجلب بيانات السوق.',
-                'The calculator does not request personal information. Calculations are performed using the values entered by the user. These inputs are not sent to Google Sheets or used to retrieve market data.'
+                '4. حماية المعلومات وعدم إرسال البيانات',
+                '4. Information Protection and No Data Transmission',
+                'لا تجمع الحاسبة مدخلات المستخدم الحسابية أو نتائج العمليات أو البيانات المحفوظة بغرض إرسالها إلى جهة خارجية. وتظل بيانات الحاسبة والعمليات المحفوظة وبيانات المساعد الذكي في مساحة التخزين المحلية على جهاز المستخدم. ولا يتضمن كود الحاسبة إرسال هذه البيانات إلى Google Sheets أو إلى خدمة خارجية بغرض التخزين أو المعالجة.',
+                'The calculator does not collect users’ calculation inputs, results, or saved operation data for transmission to an external party. Calculator data, saved operations, and Smart Assistant data remain in local storage on the user’s device. The calculator code does not send this information to Google Sheets or another external service for storage or processing.'
             ],
             [
-                '5. بيانات صفحة المؤشرات',
-                '5. Indicators Page Data',
-                'تعرض صفحة مؤشرات أذون الخزانة بيانات السوق من خلال جداول Google Sheets المنشورة والمتاحة للقراءة. ويقتصر اتصال الصفحة بهذه الجداول على جلب بيانات المؤشرات وعرضها للمستخدم. ولا يتم إرسال مدخلات الحاسبة أو العمليات الحسابية إليها.',
-                'The Treasury Bills Indicators page retrieves market data from published Google Sheets available for reading. Its connection to these sheets is limited to retrieving and displaying indicator data. Calculator inputs and calculations are not sent to these sheets.'
+                '5. الاتصال الخارجي وصفحة المؤشرات',
+                '5. External Connection and Indicators Page',
+                'تتصل صفحة مؤشرات أذون الخزانة بجداول Google Sheets المنشورة للعامة، وذلك لقراءة بيانات السوق ونتائج العطاءات وعرضها للمستخدم فقط. ولا ترسل الصفحة مدخلات الحاسبة أو نتائجها أو العمليات المحفوظة أو بيانات المساعد الذكي إلى هذه الجداول. وكأي اتصال بخدمة خارجية، قد تتلقى الخدمة بيانات تقنية اعتيادية مرتبطة بطلب الاتصال، مثل عنوان بروتوكول الإنترنت (IP) ومعلومات المتصفح.',
+                'The Treasury Bills Indicators page connects to publicly published Google Sheets to retrieve and display market data and auction results only. It does not send calculator inputs, results, saved operations, or Smart Assistant data to these sheets. As with any connection to an external service, the service may receive routine technical information associated with the request, such as the Internet Protocol (IP) address and browser information.'
             ],
             [
                 '6. طبيعة النتائج وإخلاء المسؤولية',

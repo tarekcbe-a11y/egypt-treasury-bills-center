@@ -8,63 +8,188 @@
 <title>المساعد الذكي</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-    margin:0;padding:8px;background:#0f172a;color:white;
-    font-family:Arial,sans-serif;touch-action:pan-y
+* {
+    box-sizing: border-box;
 }
-.container{
-    max-width:420px;margin:auto;background:#1e293b;
-    padding:12px;border:2px solid #ffd700;border-radius:14px;
+
+html {
+    min-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
-.header{display:flex;justify-content:space-between;align-items:center}
-.logo{width:48px;height:auto}
-.lang{
-    background:#ffd700;color:#111;border:0;border-radius:7px;
-    padding:9px 15px;font-weight:bold
+
+body {
+    min-height: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0;
+    padding: 8px;
+    padding-bottom: 20px;
+    background: #0f172a;
+    color: white;
+    font-family: Arial, sans-serif;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
 }
-h1{text-align:center;color:#ffd700;font-size:23px;margin:16px 0 8px}
-.group{text-align:center;font-size:15px;margin-bottom:16px}
-.intro{
-    text-align:center;color:#cbd5e1;font-size:13px;
-    line-height:1.8;margin-bottom:14px
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    min-height: 0;
+    margin: 0 auto;
+    background: #1e293b;
+    padding: 12px;
+    border: 2px solid #ffd700;
+    border-radius: 14px;
 }
-.steps{display:flex;flex-direction:column;gap:10px}
-.step{
-    background:linear-gradient(145deg,#172554,#0f1d43);
-    border:1px solid #b99b39;border-radius:12px;
-    padding:13px 12px;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.step-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-.number{
-    width:27px;height:27px;flex:0 0 27px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    background:#ffd700;color:#172033;font-weight:bold;font-size:14px
+
+.logo {
+    width: 48px;
+    height: auto;
 }
-.step-title{color:#f8d94c;font-size:15px;font-weight:bold}
-.step-value{
-    color:white;font-size:19px;font-weight:bold;
-    margin:5px 0 8px;direction:ltr;text-align:right;
-    overflow-wrap:anywhere
+
+.lang {
+    background: #ffd700;
+    color: #111;
+    border: 0;
+    border-radius: 7px;
+    padding: 9px 15px;
+    font-weight: bold;
+    cursor: pointer;
 }
-.step-description{
-    color:#dbe4f0;font-size:13px;line-height:1.9;
-    border-top:1px solid #52617d;padding-top:8px
+
+h1 {
+    text-align: center;
+    color: #ffd700;
+    font-size: 23px;
+    margin: 16px 0 8px;
 }
-.empty{
-    text-align:center;color:#cbd5e1;padding:30px 12px;line-height:1.9
+
+.group {
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 16px;
 }
-.back{
-    display:block;width:100%;margin-top:15px;padding:12px;
-    border:0;border-radius:8px;background:#ffd700;
-    color:#172033;font-size:15px;font-weight:bold;
-    text-decoration:none;text-align:center
+
+.intro {
+    text-align: center;
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+    padding: 10px;
+    background: #0f172a;
+    border: 1px solid #64748b;
+    border-radius: 9px;
 }
-.footer{text-align:center;color:#ffd700;font-size:11px;margin-top:12px}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.step {
+    background: linear-gradient(145deg, #172554, #0f1d43);
+    border: 1px solid #b99b39;
+    border-radius: 12px;
+    padding: 15px 12px;
+    min-height: 110px;
+}
+
+.step-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.number {
+    width: 29px;
+    height: 29px;
+    flex: 0 0 29px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffd700;
+    color: #172033;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.step-title {
+    color: #f8d94c;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.step-value {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 8px 0 12px;
+    direction: ltr;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.step-description {
+    color: #dbe4f0;
+    font-size: 14px;
+    line-height: 2;
+    border-top: 1px solid #52617d;
+    padding-top: 10px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.empty {
+    text-align: center;
+    color: #cbd5e1;
+    padding: 30px 12px;
+    line-height: 2;
+    background: #0f172a;
+    border: 1px solid #64748b;
+    border-radius: 10px;
+}
+
+.back {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 13px;
+    border: 0;
+    border-radius: 8px;
+    background: #ffd700;
+    color: #172033;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+.footer {
+    text-align: center;
+    color: #ffd700;
+    font-size: 11px;
+    margin-top: 14px;
+    padding-bottom: 5px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
     <div class="header">
@@ -73,209 +198,288 @@ h1{text-align:center;color:#ffd700;font-size:23px;margin:16px 0 8px}
     </div>
 
     <h1 id="pageTitle">المساعد الذكي</h1>
-    <div class="group" id="groupName">جروب عملاء البنوك المصرية</div>
+
+    <div class="group" id="groupName">
+        جروب عملاء البنوك المصرية
+    </div>
 
     <div class="intro" id="intro">
-        شرح تفصيلي لنتائج عملية حساب أذون الخزانة، وفق البيانات المسجلة في الحاسبة الرئيسية.
+        شرح تفصيلي لنتائج عملية حساب أذون الخزانة،
+        وفق البيانات المسجلة في الحاسبة الرئيسية.
     </div>
 
     <div class="steps" id="steps"></div>
 
-    <a href="index.html" class="back" id="backBtn">العودة إلى الحاسبة الرئيسية</a>
+    <a href="index.html" class="back" id="backBtn">
+        العودة إلى الحاسبة الرئيسية
+    </a>
 
-    <div class="footer">Developed by Tarek Metwally</div>
+    <div class="footer">
+        Developed by Tarek Metwally
+    </div>
+
 </div>
 
 <script>
-const STORAGE_KEY='treasuryLastAssistantCalculation';
+const STORAGE_KEY = 'treasuryLastAssistantCalculation';
 
-let isAr=true;
+const LANGUAGE_KEY = 'treasuryLanguage';
 
-const stepInfo=[
+let isAr = true;
+
+const stepInfo = [
     {
-        key:'nominal',
-        title:['القيمة الاسمية','Nominal Value'],
-        description:[
+        key: 'nominal',
+        title: ['القيمة الاسمية', 'Nominal Value'],
+        description: [
             'هي القيمة الاسمية للأذون التي تم إدخالها في الحاسبة، والتي تُستخدم أساسًا لحساب قيمة الشراء والخصم والضريبة.',
             'The nominal face value entered into the calculator. It is the basis for calculating the purchase value, discount and tax.'
         ]
     },
     {
-        key:'marketDays',
-        title:['السوق والمدة','Market and Duration'],
-        description:[
+        key: 'marketDays',
+        title: ['السوق والمدة', 'Market and Duration'],
+        description: [
             'يوضح هذا الجزء السوق المختار، سواء السوق الأولي أو الثانوي، وعدد الأيام المحدد لاستحقاق الأذون.',
             'Shows the selected market, primary or secondary, and the selected number of days until maturity.'
         ]
     },
     {
-        key:'rate',
-        title:['سعر العائد','Yield Rate'],
-        description:[
+        key: 'rate',
+        title: ['سعر العائد', 'Yield Rate'],
+        description: [
             'هو معدل العائد السنوي المدخل في الحاسبة، ويُستخدم في تحديد معامل القيمة الحالية وسعر الشراء.',
             'The annual yield rate entered in the calculator. It is used to determine the present-value factor and purchase price.'
         ]
     },
     {
-        key:'price',
-        title:['قيمة الشراء','Purchase Value'],
-        description:[
+        key: 'price',
+        title: ['قيمة الشراء', 'Purchase Value'],
+        description: [
             'تمثل المبلغ المدفوع لشراء الأذون بعد تطبيق معامل الخصم المرتبط بسعر العائد ومدة الأذون.',
             'The amount paid to purchase the bills after applying the discount factor based on the yield rate and duration.'
         ]
     },
     {
-        key:'discount',
-        title:['خصم الشراء المسترد','Purchase Discount Returned'],
-        description:[
+        key: 'discount',
+        title: ['خصم الشراء المسترد', 'Purchase Discount Returned'],
+        description: [
             'يمثل الفرق بين القيمة الاسمية وقيمة الشراء، وهو إجمالي الخصم الناتج عن شراء الأذون بأقل من قيمتها الاسمية.',
             'The difference between the nominal value and the purchase value. It represents the gross discount from purchasing below face value.'
         ]
     },
     {
-        key:'tax',
-        title:['الضريبة (20%)','Tax (20%)'],
-        description:[
+        key: 'tax',
+        title: ['الضريبة (20%)', 'Tax (20%)'],
+        description: [
             'تمثل الضريبة المحسوبة بنسبة 20% من إجمالي خصم الشراء.',
             'The tax calculated at 20% of the gross purchase discount.'
         ]
     },
     {
-        key:'net',
-        title:['الربح الصافي','Net Profit'],
-        description:[
+        key: 'net',
+        title: ['الربح الصافي', 'Net Profit'],
+        description: [
             'هو إجمالي خصم الشراء بعد خصم الضريبة المحسوبة.',
             'The gross purchase discount after deducting the calculated tax.'
         ]
     },
     {
-        key:'maturity',
-        title:['المبلغ المسترد','Amount at Maturity'],
-        description:[
+        key: 'maturity',
+        title: ['المبلغ المسترد', 'Amount at Maturity'],
+        description: [
             'هو إجمالي المبلغ الناتج عن قيمة الشراء مضافًا إليها الربح الصافي، وفق نتائج العملية المحسوبة.',
             'The total amount resulting from adding the net profit to the purchase value, according to the calculated operation.'
         ]
     },
     {
-        key:'annual',
-        title:['نسبة العائد السنوي','Annual Yield'],
-        description:[
+        key: 'annual',
+        title: ['نسبة العائد السنوي', 'Annual Yield'],
+        description: [
             'توضح نسبة العائد الصافي بعد الضريبة محسوبة على أساس سنوي وفق مدة الأذون.',
             'The net yield after tax, annualized according to the bill duration.'
         ]
     }
 ];
 
-function readCalculation(){
-    try{
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
-    }catch(e){return null}
+function readCalculation() {
+    try {
+        return JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || 'null'
+        );
+    } catch (e) {
+        return null;
+    }
 }
 
-function getValue(data,key){
-    const aliases={
-        nominal:['nominal','P'],
-        rate:['rate','R'],
-        days:['days','duration','D'],
-        market:['market','marketName'],
-        price:['price','purchasePrice'],
-        discount:['discount','profit','grossProfit'],
-        tax:['tax'],
-        net:['netProfit','net'],
-        maturity:['finalAmount','maturity','total'],
-        annual:['annualYield','yield']
+function getValue(data, key) {
+    const aliases = {
+        nominal: ['nominal', 'P'],
+        rate: ['rate', 'R'],
+        days: ['days', 'duration', 'D'],
+        market: ['market', 'marketName'],
+        price: ['price', 'purchasePrice'],
+        discount: ['discount', 'profit', 'grossProfit'],
+        tax: ['tax'],
+        net: ['netProfit', 'net'],
+        maturity: ['finalAmount', 'maturity', 'total'],
+        annual: ['annualYield', 'yield']
     };
 
-    for(const name of aliases[key]||[]){
-        if(data[name]!==undefined&&data[name]!==null)return data[name];
+    for (const name of aliases[key] || []) {
+        if (data[name] !== undefined && data[name] !== null) {
+            return data[name];
+        }
     }
+
     return null;
 }
 
-function fmt(value){
-    if(value===null||value===undefined||value==='')return '—';
-    if(typeof value==='number'){
-        return value.toLocaleString('en-US',{
-            minimumFractionDigits:2,maximumFractionDigits:2
+function fmt(value) {
+    if (value === null || value === undefined || value === '') {
+        return '—';
+    }
+
+    if (typeof value === 'number') {
+        return value.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         });
     }
+
     return String(value);
 }
 
-function render(){
-    const data=readCalculation();
-    const steps=document.getElementById('steps');
+function render() {
+    const data = readCalculation();
+    const steps = document.getElementById('steps');
 
-    if(!data){
-        steps.innerHTML=`<div class="empty">${
-            isAr
-            ?'لا توجد عملية حساب مكتملة لشرحها حتى الآن. ارجع إلى الحاسبة واضغط على «احسب الآن».'
-            :'No completed calculation is available yet. Return to the calculator and press Calculate Now.'
-        }</div>`;
+    if (!data) {
+        steps.innerHTML = `
+            <div class="empty">
+                ${isAr
+                ? 'لا توجد عملية حساب مكتملة لشرحها حتى الآن. ارجع إلى الحاسبة واضغط على «احسب الآن».'
+                : 'No completed calculation is available yet. Return to the calculator and press Calculate Now.'}
+            </div>
+        `;
         return;
     }
 
-    steps.innerHTML=stepInfo.map((step,index)=>{
-        let value='—';
+    steps.innerHTML = stepInfo.map((step, index) => {
 
-        if(step.key==='marketDays'){
-            const market=getValue(data,'market');
-            const days=getValue(data,'days');
-            let marketText=market;
+        let value = '—';
 
-            if(market==='primary')marketText=isAr?'السوق الأولي':'Primary Market';
-            if(market==='secondary')marketText=isAr?'السوق الثانوي':'Secondary Market';
+        if (step.key === 'marketDays') {
 
-            value=(marketText||'—')+' • '+(days??'—')+(isAr?' يوم':' Days');
-        }else{
-            const key=step.key==='annual'?'annual':
-                      step.key==='maturity'?'maturity':step.key;
-            value=fmt(getValue(data,key));
+            const market = getValue(data, 'market');
+            const days = getValue(data, 'days');
 
-            if(step.key==='rate'||step.key==='annual'){
-                if(value!=='—')value+='%';
+            let marketText = market;
+
+            if (market === 'primary') {
+                marketText = isAr ? 'السوق الأولي' : 'Primary Market';
+            }
+
+            if (market === 'secondary') {
+                marketText = isAr ? 'السوق الثانوي' : 'Secondary Market';
+            }
+
+            value =
+                (marketText || '—') +
+                ' • ' +
+                (days ?? '—') +
+                (isAr ? ' يوم' : ' Days');
+
+        } else {
+
+            value = fmt(getValue(data, step.key));
+
+            if (
+                step.key === 'rate' ||
+                step.key === 'annual'
+            ) {
+                if (value !== '—') {
+                    value += '%';
+                }
             }
         }
 
         return `
-        <section class="step">
-            <div class="step-head">
-                <span class="number">${index+1}</span>
-                <span class="step-title">${step.title[isAr?0:1]}</span>
-            </div>
-            <div class="step-value">${value}</div>
-            <div class="step-description">${step.description[isAr?0:1]}</div>
-        </section>`;
+            <section class="step">
+
+                <div class="step-head">
+                    <span class="number">${index + 1}</span>
+                    <span class="step-title">
+                        ${step.title[isAr ? 0 : 1]}
+                    </span>
+                </div>
+
+                <div class="step-value">
+                    ${value}
+                </div>
+
+                <div class="step-description">
+                    ${step.description[isAr ? 0 : 1]}
+                </div>
+
+            </section>
+        `;
+
     }).join('');
 }
 
-function toggleLanguage(){
-    isAr=!isAr;
+function toggleLanguage() {
+    isAr = !isAr;
+
+    localStorage.setItem(
+        LANGUAGE_KEY,
+        isAr ? 'ar' : 'en'
+    );
+
     applyLanguage();
 }
 
-function applyLanguage(){
-    document.documentElement.lang=isAr?'ar':'en';
-    document.documentElement.dir=isAr?'rtl':'ltr';
+function applyLanguage() {
 
-    document.getElementById('langBtn').textContent=isAr?'English':'العربية';
-    document.getElementById('pageTitle').textContent=isAr?'المساعد الذكي':'Smart Assistant';
-    document.getElementById('groupName').textContent=isAr?'جروب عملاء البنوك المصرية':'Egyptian Bank Clients Group';
-    document.getElementById('intro').textContent=isAr
-        ?'شرح تفصيلي لنتائج عملية حساب أذون الخزانة، وفق البيانات المسجلة في الحاسبة الرئيسية.'
-        :'A detailed explanation of the Treasury Bills calculation based on the data recorded in the main calculator.';
-    document.getElementById('backBtn').textContent=isAr?'العودة إلى الحاسبة الرئيسية':'Back to Main Calculator';
+    document.documentElement.lang = isAr ? 'ar' : 'en';
+    document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+
+    document.getElementById('langBtn').textContent =
+        isAr ? 'English' : 'العربية';
+
+    document.getElementById('pageTitle').textContent =
+        isAr ? 'المساعد الذكي' : 'Smart Assistant';
+
+    document.getElementById('groupName').textContent =
+        isAr
+        ? 'جروب عملاء البنوك المصرية'
+        : 'Egyptian Bank Clients Group';
+
+    document.getElementById('intro').textContent =
+        isAr
+        ? 'شرح تفصيلي لنتائج عملية حساب أذون الخزانة، وفق البيانات المسجلة في الحاسبة الرئيسية.'
+        : 'A detailed explanation of the Treasury Bills calculation based on the data recorded in the main calculator.';
+
+    document.getElementById('backBtn').textContent =
+        isAr
+        ? 'العودة إلى الحاسبة الرئيسية'
+        : 'Back to Main Calculator';
 
     render();
 }
 
-function loadLanguage(){
-    const saved=localStorage.getItem('treasuryLanguage');
-    isAr=saved!=='en';
+function loadLanguage() {
+    const saved = localStorage.getItem(LANGUAGE_KEY);
+
+    isAr = saved !== 'en';
+
     applyLanguage();
 }
 
 loadLanguage();
+
 </script>
+
 </body>
 </html>
+

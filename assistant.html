@@ -8,9 +8,7 @@
 <title>المساعد الذكي</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html, body {
     width: 100%;
@@ -36,20 +34,11 @@ body {
     background: #1e293b;
     border: 2px solid #ffd700;
     border-radius: 14px;
-
     display: grid;
-    grid-template-rows:
-        auto
-        auto
-        auto
-        minmax(0, 1fr)
-        auto
-        auto;
-
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
     overflow: hidden;
 }
 
-/* الرأس الثابت */
 .header {
     display: flex;
     justify-content: space-between;
@@ -74,16 +63,9 @@ h1 {
     text-align: center;
     color: #ffd700;
     font-size: 23px;
-    margin: 12px 0 6px;
+    margin: 12px 0;
 }
 
-.group {
-    text-align: center;
-    font-size: 15px;
-    margin-bottom: 12px;
-}
-
-/* منطقة التمرير الوحيدة */
 .content-scroll {
     min-height: 0;
     width: 100%;
@@ -177,7 +159,6 @@ h1 {
     border-radius: 10px;
 }
 
-/* زر العودة ثابت */
 .back {
     display: block;
     width: 100%;
@@ -193,7 +174,6 @@ h1 {
     text-align: center;
 }
 
-/* اسم المطور ثابت */
 .footer {
     text-align: center;
     color: #ffd700;
@@ -215,19 +195,13 @@ h1 {
 
     <h1 id="pageTitle">المساعد الذكي</h1>
 
-    <div class="group" id="groupName">
-        جروب عملاء البنوك المصرية
-    </div>
-
     <div class="content-scroll" id="contentScroll">
-
         <div class="intro" id="intro">
             شرح تفصيلي لنتائج عملية حساب أذون الخزانة،
             وفق البيانات المسجلة في الحاسبة الرئيسية.
         </div>
 
         <div class="steps" id="steps"></div>
-
     </div>
 
     <a href="index.html" class="back" id="backBtn">
@@ -401,7 +375,6 @@ function render() {
 
             value = (marketText || '—') + ' • ' +
                     (days ?? '—') + (isAr ? ' يوم' : ' Days');
-
         } else {
             value = fmt(getValue(data, step.key));
 
@@ -448,11 +421,6 @@ function applyLanguage() {
     document.getElementById('pageTitle').textContent =
         isAr ? 'المساعد الذكي' : 'Smart Assistant';
 
-    document.getElementById('groupName').textContent =
-        isAr
-        ? 'جروب عملاء البنوك المصرية'
-        : 'Egyptian Bank Clients Group';
-
     document.getElementById('intro').textContent =
         isAr
         ? 'شرح تفصيلي لنتائج عملية حساب أذون الخزانة، وفق البيانات المسجلة في الحاسبة الرئيسية.'
@@ -477,3 +445,4 @@ loadLanguage();
 
 </body>
 </html>
+
